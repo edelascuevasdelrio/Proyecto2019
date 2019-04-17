@@ -20,7 +20,7 @@ if (isset($_POST['sesdes'])) {
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>Nombre de la página</title>
+        <title>Registro</title>
         <!-- jQuery -->
         <script src="../../librerias/jquery/jquery.min.js" type="text/javascript"></script>
         <!-- Booststrap -->
@@ -33,15 +33,33 @@ if (isset($_POST['sesdes'])) {
         <header>
             <div id="cabecera" class="container-fluid">
                 <div class="row">
-                    <div id="titulo" class="col-md-8 col-sm-8">
+                    <div id="titulo" class="col-md-12 col-sm-12">
                         <img id="logo" class="fl-left" src="../../img/logos/LOGO128.png">
                         <h1>Operación esto tiene que reventar</h1>
                         <p>Una frase con gancho irá aqui (un slogan, vaya)</p>
                     </div>
+                </div>
+            </div>
+        </header>
 
+        <section>
 
-                    <!-- Login -->
-                    <div class="col-md-3 col-sm-3 login">
+            <div class="container-fluid">
+   
+                <!-- DATOS -->
+                <div class="col-md-9 col-sd-9">
+                    <div class="cambiar1">
+                        <p>
+                            <h1>Ubicación del sitio</h1> 
+                        </p>
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2896.6184154187536!2d-3.8532828842272435!3d43.44768487371321!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd4949bb2a323c29%3A0xcbc1863c74913b6d!2sIES+Augusto+Gonz%C3%A1lez+de+Linares!5e0!3m2!1ses!2ses!4v1555427244122!5m2!1ses!2ses" width="100%" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>
+
+                    </div>
+
+                </div>
+
+                <!-- LOGING -->
+                <div class="col-md-3 col-sm-3 login">
                         <label><?php
                             if (isset($_SESSION['logged'])) {
                                 if ($_SESSION['logged'] == "no") {
@@ -66,66 +84,8 @@ if (isset($_POST['sesdes'])) {
                     </div>
 
                 </div>
-            </div>     
-        </header>
-
-        <section>
-
-            <div class="container-fluid">
-                <!-- DATOS 1 -->
-                <div class="col-md-4 col-sd-4">
-                    <div class="cambiar1">
-                        <p>
-                            <h1>Ubicación del sitio</h1> 
-                        </p>
-                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2896.6184154187536!2d-3.8532828842272435!3d43.44768487371321!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd4949bb2a323c29%3A0xcbc1863c74913b6d!2sIES+Augusto+Gonz%C3%A1lez+de+Linares!5e0!3m2!1ses!2ses!4v1555427244122!5m2!1ses!2ses" width="100%" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>
-
-
-                    </div>
-
-                </div>
-
-                <!-- DATOS 2 -->
-                <div class="col-md-4 col-sd-4">
-                    <div class="cambiar1">
-                        Lore Ipsum
-                        <p>.</p>
-                        <p>.</p>
-                        <p>.</p>
-                        <p>.</p>
-                        <p>.</p>
-                        <p>.</p><p>.</p>
-                        <p>.</p>
-                        <p>.</p>
-                        <p>.</p>
-                        <p>.</p>
-                        <p>.</p>
-                    </div>
-                </div>
-
-                <!-- DATOS 3 -->
-                <div class="col-md-4 col-sd-4">
-                    <div class="cambiar1">
-                        Lore Ipsum
-                        <p>.</p>
-                        <p>.</p>
-                        <p>.</p>
-                        <p>.</p>
-                        <p>.</p>
-                        <p>.</p><p>.</p>
-                        <p>.</p>
-                        <p>.</p>
-                        <p>.</p>
-                        <p>.</p>
-                        <p>.</p><p>.</p>
-                        <p>.</p>
-                        <p>.</p>
-                        <p>.</p>
-
-                    </div>
-                </div>
-
-            </div>
+            </div> 
+                
         </section>
         <br>
 
@@ -134,3 +94,16 @@ if (isset($_POST['sesdes'])) {
         </footer>
     </body>
 </html>
+
+
+<!--
+
+
+                    
+
+
+
+
+
+
+-->
