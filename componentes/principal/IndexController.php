@@ -5,14 +5,14 @@
  *
  * @author Enrique de las Cuevas
  */
-require_once './indexModel.php';
+require_once './IndexModel.php';
 
-class indexController {
+class IndexController {
 
     //put your code here
 
     public function recibeDatos($proceso, $args) {
-        $model = new indexModel();
+        $model = new IndexModel();
         switch ($proceso) {
             case 'login':
                 if ($model->login($args[0], $args[1])) {

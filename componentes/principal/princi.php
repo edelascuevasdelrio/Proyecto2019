@@ -1,6 +1,6 @@
 <?php
-require_once './indexController.php';
-$controller = new indexController();
+require_once './IndexController.php';
+$controller = new IndexController();
 
 if (!isset($_SESSION['sesion'])) {
 
@@ -79,7 +79,7 @@ if (isset($_POST['sesdes'])) {
                             </div>
                             <br>
                             <input type="submit" class="input-group fl-left" value="Iniciar sesión" name="login">
-                            <a id="registro" href="./componentes/registro/registro.php" class="text-center" >¿No tienes cuenta? Regístrate</a>
+                            <a id="registro" href="../registro/registro.php" class="text-center" >¿No tienes cuenta? Regístrate</a>
                         </form> 
                     </div>
 

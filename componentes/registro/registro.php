@@ -6,7 +6,7 @@ and open the template in the editor.
 -->
 
 <?php
-require_once './registroController.php';
+require_once './RegistroController.php';
 
 session_start();
 $controller = new registroController();
@@ -27,6 +27,9 @@ if (!isset($_POST['section'])) {
         case 'r3':
             $proceso = 'r3';
             break;
+        case 'r4':
+            $proceso = 'r4';
+            break;
         case 'rfin':
             $proceso = 'rfin';
             break;
@@ -45,6 +48,7 @@ if (!isset($_POST['section'])) {
         <script src="../../librerias/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
         <!-- Propio -->
         <link href="../../css/registro/styles.css" rel="stylesheet" type="text/css"/>
+        
     </head>
     <body>
         <header>
@@ -66,9 +70,7 @@ if (!isset($_POST['section'])) {
                 <?php
                 
                     echo $controller->recibeDatos($proceso, $argumentos)
-              
-                
-                
+
                 ?>
             </div>
 
