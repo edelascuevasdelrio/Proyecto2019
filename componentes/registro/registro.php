@@ -13,6 +13,10 @@ $controller = new registroController();
 $proceso = '';
 $argumentos = 0;
 
+/*
+ * Comprobamos en que parte del proceso del registro nos encontramos.
+ * Si es la primera vez, nos coloca por defecto en la primera sección.
+ */
 if (!isset($_POST['section'])) {
     $proceso = 'r1';
     $argumentos = 0;
@@ -29,6 +33,9 @@ if (!isset($_POST['section'])) {
             break;
         case 'r4':
             $proceso = 'r4';
+            break;
+        case 'r5':
+            $proceso = 'r5';
             break;
         case 'rfin':
             $proceso = 'rfin';

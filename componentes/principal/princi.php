@@ -20,7 +20,8 @@ if (isset($_POST['sesdes'])) {
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>Registro</title>
+        <title>Bienvenido</title>
+        
         <!-- jQuery -->
         <script src="../../librerias/jquery/jquery.min.js" type="text/javascript"></script>
         <!-- Booststrap -->
