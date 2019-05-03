@@ -50,6 +50,9 @@ class RegistroController {
         }
 
         //Cuarta sección
+        if(isset($_POST['conduce'])){
+            $_SESSION['conduce'] = $_POST['conduce'];
+        }
         if (isset($_POST['permiso'])) {
             $_SESSION['registro_permiso'] = $_POST['permiso'];
         }
@@ -62,7 +65,7 @@ class RegistroController {
         if (isset($_POST['descrip'])) {
             $_SESSION['registro_descrip'] = $_POST['descrip'];
         }
-        
+
         //Quinta sección
         if (isset($_POST['username'])) {
             $_SESSION['registro_username'] = $_POST['username'];
@@ -213,7 +216,7 @@ class RegistroController {
 //                echo $_SESSION['registro_saludo'];
                 return $formulario;
             case 'r4':
-                $formulario = "<form action='' method='POST'>
+                $formulario = "
 
                     <div class='row'>
                         <div class='col-md-12 col-sm-12'>
@@ -221,54 +224,61 @@ class RegistroController {
                                 <h3><label class='control-label'>Datos como conductor</label></h3>         
                                 
                             </div>
+                            <form action='' method='POST'>
+                                <div class='form-check'>
+                                    <label for='conducesi' class='control-label'>¿Vas a ejercer como conductor?</label>
+                                    <input type='checkbox' class='form-check' name='conduce' id='conducesi' data-toggle='collapse' data-target='#datoscoche'>Si
+                                </div>
                             
-                            <div class='form-check'>
-                                <label for='conducesi' class='control-label'>¿Vas a ejercer como conductor?</label>
-                                <input type='checkbox' class='form-check' name='conduce' id='conducesi' data-toggle='collapse' data-target='#datoscoche'>Si
-                            </div>
+                                <div id='datoscoche' class='collapse'>
+
+                                        <div class='form-group'>
+                                            <label for='permiso' class='control-label'>Permiso de conducir</label>
+                                            <select class='form-control' name='permiso'>
+                                                <option value='B'>B</option>
+                                                <option value='B'>A1</option>
+                                                <option value='B'>A2</option>
+                                                <option value='B'>A</option>
+                                            </select>
+                                        </div>
+                                        <div class='form-group'>
+                                            <label class='control-label'>Seleccione tipo de vehiculo</label>
+                                            <select class='form-control' name='tipovehiculo'>
+                                                <option value='coche'>Coche</option>
+                                                <option value='moto'>Moto</option>
+                                                <option value='ciclomotor'>Ciclomotor</option>
+                                                <option value='scooter'>Scooter</option>
+                                                <option value='furgoneta'>Furgoneta</option>
+                                            </select>
+                                        </div>
+                                        <div class='form-group'>
+                                            <label class='control-label'>Introduce la matricula</label>
+                                            <input type='text' class='form-control' id='matricula' name='matricula' placeholder='0000AAA' required>
+                                        </div>
+                                        <div class='form-group'>
+                                            <label class='control-label'>Una breve descripción del vehiculo</label>
+                                            <textarea id='descrip'class='form-control' name='descrip'></textarea>
+                                        </div>
+                                        <div class='form-group'>
+                                            <input type='submit' class='btn btn-success' id='siguiente' name'siguiente' value='Siguiente'>
+                                        </div> 
+                                        <input type='hidden' name='section' value='r5'>
+                                    
+                                </div>
+                            </form>
                             
-                            <div id='datoscoche' class='collapse'>
-                                <div class='form-group'>
-                                    <label for='permiso' class='control-label'>Permiso de conducir</label>
-                                    <select class='form-control' name='permiso'>
-                                        <option value='B'>B</option>
-                                        <option value='B'>A1</option>
-                                        <option value='B'>A2</option>
-                                        <option value='B'>A</option>
-                                    </select>
+                            <form action='' method='POST'>
+                                <div class='form-group'>         
+                                    <input type='submit' class='btn btn-success' id='saltar' name'saltar' value='Omitir este paso'>
                                 </div>
-                                <div class='form-group'>
-                                    <label class='control-label'>Seleccione tipo de vehiculo</label>
-                                    <select class='form-control' name='tipovehiculo'>
-                                        <option value='coche'>Coche</option>
-                                        <option value='moto'>Moto</option>
-                                        <option value='ciclomotor'>Ciclomotor</option>
-                                        <option value='scooter'>Scooter</option>
-                                        <option value='furgoneta'>Furgoneta</option>
-                                    </select>
-                                </div>
-                                <div class='form-group'>
-                                    <label class='control-label'>Introduce la matricula</label>
-                                    <input type='text' class='form-control' id='matricula' name='matricula' placeholder='0000AAA'>
-                                </div>
-                                <div class='form-group'>
-                                    <label class='control-label'>Una breve descripción del vehiculo</label>
-                                    <textarea id='descrip'class='form-control' name='descrip'></textarea>
-                                </div>
-                                <div class='form-group'>
-                                    <input type='submit' class='btn btn-success' id='siguiente' name'siguiente' value='Siguiente'>
-                                </div> 
-                            </div>
-                            
-                            <div class='form-group'>         
-                                <input type='submit' class='btn btn-success' id='siguiente' name'saltar' value='Omitir este paso'>
-                            </div>
+                                <input type='hidden' name='section' value='r5'>
+                            </form>   
                         </div>    
 
-                        <input type='hidden' name='section' value='r5'>
+                        
 
                     </div>
-                </form>
+                
                 <div class='modal fade' id='añadir' tabindex='-1' role='dialog' aria-labelledby='Añadir localidad' aria-hidden='true'>
                     <div class='modal-dialog' role='document'>
                       <div class='modal-content'>
@@ -288,8 +298,10 @@ class RegistroController {
                     </div>
                   </div>
 ";
+
                 return $formulario;
             case 'r5':
+
                 $formulario = "<form action='' method='POST'>
 
                     <div class='row'>
@@ -332,7 +344,7 @@ class RegistroController {
 ";
 
 
-
+//                  echo "Conduce: " . $_POST['conduce'];
 //                echo $_SESSION['registro_permiso'];
 //                echo $_SESSION['registro_tipovehiculo'];
 //                echo $_SESSION['registro_matricula'];
@@ -340,9 +352,9 @@ class RegistroController {
 
                 return $formulario;
             case 'rfin':
-                
-                
-                header("Location: ../principal/princi.php");
+                $model->registrarUsuario();
+                session_destroy();
+                //header("Location: ../principal/princi.php");
                 break;
             default:
                 return "NOOOOOOOOPE, tenemos esto: " . $proceso;

@@ -42,6 +42,8 @@ if (!isset($_POST['section'])) {
             break;
     }
 }
+
+$controller->recogeDatos();
 ?>
 <html>
     <head>
