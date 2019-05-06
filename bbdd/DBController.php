@@ -17,14 +17,13 @@ class DBController {
 
     //put your code here
     public function conectar() {
-        $hostname = 'localhost';
-        $database = 'pruebaproyecto';
-        $username = 'root';
-        $password = '';
+        $hostname = 'http://aglinformatica.es:6080/phpmyadmin';
+        $database = '2019p_ecuevas';
+        $username = 'ecuevas';
+        $password = 'ec_659';
         
         
-        try {
-            
+        try {   
             $objetoPDO = new PDO('mysql:host='.$hostname.';dbname='.$database.'', $username, $password);
             $objetoPDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         } catch (PDOException $e) {
@@ -47,9 +46,9 @@ class DBController {
         $resultado = $sentencia->fetch();
        
         if($resultado == null){
-            return "Usuario y/o contraseña incorrectas";
+            echo "Usuario y/o contraseña incorrectas";
         }else{
-            return "Usuario y/o contraseña correctas";
+            echo "Usuario y/o contraseña correctas";
         }
        
         
@@ -59,3 +58,7 @@ class DBController {
     
     
 }
+
+$algo = new DBController();
+
+echo $algo->login("asdasd", "ddddddd");

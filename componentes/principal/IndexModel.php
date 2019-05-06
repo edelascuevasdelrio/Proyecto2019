@@ -11,7 +11,7 @@
  *
  * @author Enrique de las Cueva
  */
-class indexModel {
+class IndexModel {
 
     //put your code here
 
