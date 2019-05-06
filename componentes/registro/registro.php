@@ -6,13 +6,17 @@ and open the template in the editor.
 -->
 
 <?php
-require_once './registroController.php';
+require_once './RegistroController.php';
 
 session_start();
 $controller = new registroController();
 $proceso = '';
 $argumentos = 0;
 
+/*
+ * Comprobamos en que parte del proceso del registro nos encontramos.
+ * Si es la primera vez, nos coloca por defecto en la primera sección.
+ */
 if (!isset($_POST['section'])) {
     $proceso = 'r1';
     $argumentos = 0;
@@ -27,11 +31,19 @@ if (!isset($_POST['section'])) {
         case 'r3':
             $proceso = 'r3';
             break;
+        case 'r4':
+            $proceso = 'r4';
+            break;
+        case 'r5':
+            $proceso = 'r5';
+            break;
         case 'rfin':
             $proceso = 'rfin';
             break;
     }
 }
+
+$controller->recogeDatos();
 ?>
 <html>
     <head>
@@ -45,6 +57,7 @@ if (!isset($_POST['section'])) {
         <script src="../../librerias/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
         <!-- Propio -->
         <link href="../../css/registro/styles.css" rel="stylesheet" type="text/css"/>
+        
     </head>
     <body>
         <header>
@@ -66,9 +79,7 @@ if (!isset($_POST['section'])) {
                 <?php
                 
                     echo $controller->recibeDatos($proceso, $argumentos)
-              
-                
-                
+
                 ?>
             </div>
 

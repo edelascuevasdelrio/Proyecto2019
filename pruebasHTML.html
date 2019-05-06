@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- jQuery -->
+        <script src="librerias/jquery/jquery.min.js" type="text/javascript"></script>
+        <!-- Booststrap -->
+        <link href="librerias/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+        <script src="librerias/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+        <!-- Propio -->
+        <link href="css/registro/styles.css" rel="stylesheet" type="text/css"/>
+    </head>
+    <body>
+       <form action='' method='POST'>
+
+                    <div class='row'>
+                        <div class='col-md-12 col-sm-12'>
+                            <div class='form-group'>
+                                <h3><label class='control-label'>Datos como conductor</label></h3>         
+                                
+                            </div>
+                            
+                            <div class='form-check'>
+                                <label for='vpropio' class='control-label'>¿Vas a ejercer como conductor?</label>
+                                
+                                <input type="checkbox" data-toggle="collapse" data-target='#datoscoche'> Si
+                                
+                            </div>
+                            
+                            <div id='datoscoche' class='collapse'>
+                                <div class='form-group'>
+                                    <label for='permiso' class='control-label'>Permiso de conducir</label>
+                                    <select class='form-control' name='permiso'>
+                                        <option value='B'>B</option>
+                                        <option value='B'>A1</option>
+                                        <option value='B'>A2</option>
+                                        <option value='B'>A</option>
+                                    </select>
+                                </div>
+                                <div class='form-group'>
+                                    <label class='control-label'>Seleccione tipo de vehiculo</label>
+                                    <select class='form-control' name='tipovehiculo'>
+                                        <option value='coche'>Coche</option>
+                                        <option value='moto'>Moto</option>
+                                        <option value='ciclomotor'>CCiclomotor</option>
+                                        <option value='scooter'>Scooter</option>
+                                        <option value='furgoneta'>Furgoneta</option>
+                                    </select>
+                                </div>
+                                <div class='form-group'>
+                                    <label class='control-label'>Introduce la matricula</label>
+                                    <input type='text' class='form-control' id='matricula' name='matricula' placeholder='0000AAA'>
+                                </div>
+                                <div class='form-group'>
+                                    <label class='control-label'>Una breve descripción del vehiculo</label>
+                                    <textarea id='descrip' class='form-control' name='descrip'></textarea>
+                                </div>
+                            </div>
+                            
+                            <div class='form-group'>
+                                <input type='submit' id='siguiente' name='siguiente' value='Siguiente'>
+                                <input type='submit' id='saltar' name='saltar' value='Saltar'>
+                            </div>
+                        </div>    
+
+                        <input type='hidden' name='section' value='rfin'>
+
+                    </div>
+                </form>
+        
+                <div class='modal fade' id='añadir' tabindex='-1' role='dialog' aria-labelledby='Añadir localidad' aria-hidden='true'>
+                    <div class='modal-dialog' role='document'>
+                      <div class='modal-content'>
+                        <div class='modal-header'>
+                          <h2 class='modal-title' >Añadir localidad</h2>
+                          
+                        </div>
+                        <div class='modal-body'>
+                          <label for='nombre_localidad' class='form-label'>Nombre: </label>
+                          <input type='text' id='nombre_localidad' name='nombre_localidad' class='form-control' placeholder='Ej. Santander'>
+                        </div>
+                        <div class='modal-footer'>
+                          <button type='button' class='btn btn-secondary' data-dismiss='modal'>Cancelar</button>
+                          <button type='button' class='btn btn-primary'>Añadir</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+    </body>
+</html>
