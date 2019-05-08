@@ -35,10 +35,10 @@ class RegistroModel {
 
     private function CalculaEdad($fecha) {
         //list($Y, $m, $d) = explode("-", $fecha);
-        $Y = intval(substr($fecha, 0,4));
-        $m = intval(substr($fecha, 5,2));
-        $d = intval(substr($fecha, 8,2));
-        
+        $Y = intval(substr($fecha, 0, 4));
+        $m = intval(substr($fecha, 5, 2));
+        $d = intval(substr($fecha, 8, 2));
+
         return( date("md") < $m . $d ? date("Y") - $Y - 1 : date("Y") - $Y );
     }
 
@@ -108,7 +108,7 @@ class RegistroModel {
 
             echo "usuario insertado <br>";
 
-            
+
             //Guardamos el index, que corresponderá al id del usuario insertado
             $id_usuario = $con->lastInsertId();
 
@@ -167,12 +167,38 @@ class RegistroModel {
                 echo "vehiculo insertado <br>";
             }
 
- 
+
 
             $con->commit();
         } catch (Exception $e) {
             $con->rollBack();
             echo "Fallo: " . $e->getMessage();
+        }
+    }
+
+    public function cargaCentros() {
+        //HABRÁ QUE PASARLE POR PARAMETRO LA LOCALIDAD (LA COGEREMOS CON AJAX SEGURAMENTE)
+        //Por ahora por defecto estará Santander
+        //VARIABLES
+        $con = self::conectar();
+        $salida = "";
+        $localidad = 1;
+
+
+        try {
+            $stmt = $con->prepare("SELECT * FROM centro WHERE localidad = :localidad");
+            $stmt->bindParam(":localidad", $localidad); //ESTO HABRA QUE PONER LA ID DE LA LOCALIDAD QUE SE NOS PASE POR PARAMETRO
+            $stmt->execute();
+
+            $resultado = $stmt->fetch();
+            while ($resultado != null) {
+                $salida .= "<option value='" . $resultado[0] . "'>" . $resultado[1] . "</option>";
+                $resultado = $stmt->fetch();
+            }
+
+            return $salida;
+        } catch (Exception $ex) {
+            return "<option>Esta mierda da falletes majo</option>";
         }
     }
 

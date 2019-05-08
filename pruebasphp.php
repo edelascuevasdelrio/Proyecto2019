@@ -20,31 +20,26 @@ try {
     echo "ERROR: " . $e->getMessage();
 }
 
-$stmt = $objetoPDO->prepare("SELECT fecha_nacimiento FROM persona WHERE id_usuario = 2");
-$stmt->execute();
-$resultado = $stmt->fetch();
-
-$anno = substr($resultado[0], 0, 4);
-$date = getdate()['year'];
-$date2 = getdate()['month'];
-
-echo $resultado[0] . "<br>";
-echo $date2 . "<br>";
-
-echo $edad = $date - $anno;
 
 
+$localidad = 1;
+$salida = "";
 
 
+$stmt2 = $objetoPDO->prepare("SELECT id, nombre FROM centro WHERE localidad = :localidad");
+            $stmt2->bindParam(":localidad", $localidad); //ESTO HABRA QUE PONER LA ID DE LA LOCALIDAD QUE SE NOS PASE POR PARAMETRO
+            $stmt2->execute();
 
-echo "<hr>";
-
-
-
-function CalculaEdad( $fecha ) {
-    list($Y,$m,$d) = explode("-",$fecha);
-    return( date("md") < $m.$d ? date("Y")-$Y-1 : date("Y")-$Y );
-}
-
-
-echo CalculaEdad($resultado[0]);
+            $resultado2 = $stmt2->fetch();
+            while ($resultado2 != null) {
+                $salida .= "<option value='";
+                $salida .= $resultado2['id'];
+                $salida .= "'>";
+                $salida .= $resultado2[1];
+                $salida .= "</option>";
+                
+                $resultado2 = $stmt2->fetch();
+            }
+            print_r($salida);
+            
+            

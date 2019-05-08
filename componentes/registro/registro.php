@@ -57,7 +57,8 @@ $controller->recogeDatos();
         <script src="../../librerias/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
         <!-- Propio -->
         <link href="../../css/registro/styles.css" rel="stylesheet" type="text/css"/>
-        
+
+
     </head>
     <body>
         <header>
@@ -77,9 +78,7 @@ $controller->recogeDatos();
         <section>
             <div class="col-md-4 col-md-offset-4">
                 <?php
-                
-                    echo $controller->recibeDatos($proceso, $argumentos)
-
+                echo $controller->recibeDatos($proceso, $argumentos)
                 ?>
             </div>
 
@@ -92,7 +91,7 @@ $controller->recogeDatos();
         </footer>
 
 
-
+        <script src="js/funciones.js" type="text/javascript"></script>
     </body>
 </html>
 

@@ -105,14 +105,14 @@ class RegistroController {
                             </div>
                             <div class='form-group'>
                                 <label for='telefono' class='control-label'>Teléfono</label>
-                                <input type='text' class='form-control' id='telefono' name='telefono' placeholder='Ej. 999666222'>
+                                <input id='telefono' type='text' class='form-control' id='telefono' name='telefono' placeholder='Ej. 999666222' required>
                             </div>
                             <div class='form-group'>
                                 <label for='fecha_nacimiento' class='control-label'>Fecha de nacimiento</label>
                                 <input type='date' class='form-control' id='fecha_nacimiento' name='fecha_nacimiento'>
                             </div>
                             <div class='form-group'>
-                                <input type='submit' class='btn btn-primary' id='siguiente' value='Siguiente'>
+                                <input type='submit' class='btn btn-primary' id='siguiente' value='Siguiente' disabled>
                             </div>
                         </div>    
                         <input type='hidden' name='section' value='r2'>
@@ -168,18 +168,23 @@ class RegistroController {
                                 <label for='localidad' class='control-label'>¿Desde donde sales?</label>
                                 <select id='localidad' class='form-control' name='localidad'>
                                 " .
-                        $model->localidadesUsuarios()
-                        .
-                        "</select>
+                                    $model->localidadesUsuarios().
+                                "</select>
                                    ¿No aparece tu localidad? <a data-toggle='modal' data-target='#añadir' >Añadela desde aquí </a>
                             </div>
                             <div class='form-group'>
                                 <label for='destino' class='control-label'>¿Dónde estudias?</label>
-                                <select id='destino' class='form-control' name='destino'>
+                                <select id='destino' class='form-control' name='localDestino'>
                                 " .
-                        $model->localidadesCentros()
-                        .
-                        "</select>
+                                    $model->localidadesCentros().
+                                "</select>
+                            </div> 
+                            
+                            <div class='form-group'>
+                                <select id='destinoCentro' class='form-control' name='destino'>
+                                ".
+                                    $model->cargaCentros().
+                                "</select>
                             </div>
                             
                             <div class='form-group'>
