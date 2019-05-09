@@ -102,17 +102,19 @@ class RegistroController {
                             <div class='form-group'>
                                 <label for='dni' class='control-label'>DNI</label>
                                 <input type='text' class='form-control' id='dni' name='dni' placeholder='Ej. 00000000A' required>
+                                <label class='control-label' id='dniError'></label>
                             </div>
                             <div class='form-group'>
                                 <label for='telefono' class='control-label'>Teléfono</label>
                                 <input id='telefono' type='text' class='form-control' id='telefono' name='telefono' placeholder='Ej. 999666222' required>
+                                <label class='control-label' id='telError' >Formato del telefono no es valido</label>
                             </div>
                             <div class='form-group'>
                                 <label for='fecha_nacimiento' class='control-label'>Fecha de nacimiento</label>
                                 <input type='date' class='form-control' id='fecha_nacimiento' name='fecha_nacimiento'>
                             </div>
                             <div class='form-group'>
-                                <input type='submit' class='btn btn-primary' id='siguiente' value='Siguiente' disabled>
+                                <input type='submit' class='btn btn-primary' id='siguienter1' value='Siguiente' disabled>
                             </div>
                         </div>    
                         <input type='hidden' name='section' value='r2'>
@@ -140,7 +142,7 @@ class RegistroController {
                                 <textarea class='form-control' id='saludo' name='saludo' placeholder='Hola!'></textarea>
                             </div>                           
                             <div class='form-group'>
-                                <input type='submit' class='btn btn-primary' id='siguiente' value='Siguiente'>
+                                <input type='submit' class='btn btn-primary' id='siguienter2' value='Siguiente'>
                             </div>
                         </div>    
                         <input type='hidden'  name='section' value='r3'>
@@ -188,7 +190,7 @@ class RegistroController {
                             </div>
                             
                             <div class='form-group'>
-                                <input type='submit' class='btn btn-primary' id='siguiente' value='Siguiente'>
+                                <input type='submit' class='btn btn-primary' id='siguienter3' value='Siguiente'>
                             </div>
                         </div>    
 
@@ -265,7 +267,7 @@ class RegistroController {
                                             <textarea id='descrip'class='form-control' name='descrip'></textarea>
                                         </div>
                                         <div class='form-group'>
-                                            <input type='submit' class='btn btn-success' id='siguiente' name'siguiente' value='Siguiente'>
+                                            <input type='submit' class='btn btn-success' id='siguiente' name'siguienter4' value='Siguiente'>
                                         </div> 
                                         <input type='hidden' name='section' value='r5'>
                                     
@@ -284,24 +286,6 @@ class RegistroController {
 
                     </div>
                 
-                <div class='modal fade' id='añadir' tabindex='-1' role='dialog' aria-labelledby='Añadir localidad' aria-hidden='true'>
-                    <div class='modal-dialog' role='document'>
-                      <div class='modal-content'>
-                        <div class='modal-header'>
-                          <h2 class='modal-title' >Añadir localidad</h2>
-                          
-                        </div>
-                        <div class='modal-body'>
-                          <label for='nombre_localidad' class='form-label'>Nombre: </label>
-                          <input type='text' id='nombre_localidad' name='nombre_localidad' class='form-control' placeholder='Ej. Santander'>
-                        </div>
-                        <div class='modal-footer'>
-                          <button type='button' class='btn btn-secondary' data-dismiss='modal'>Cancelar</button>
-                          <button type='button' class='btn btn-primary'>Añadir</button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
 ";
 
                 return $formulario;
@@ -337,7 +321,7 @@ class RegistroController {
                             </div>
 
                             <div class='form-group'>         
-                                <input type='submit' class='btn btn-success' id='siguiente' name'saltar' value='Registrar'>
+                                <input type='submit' class='btn btn-success' id='siguienter5' name'saltar' value='Registrar'>
                             </div>
                         </div>    
 
@@ -349,7 +333,7 @@ class RegistroController {
 ";
 
 
-//                  echo "Conduce: " . $_POST['conduce'];
+//                echo "Conduce: " . $_POST['conduce'];
 //                echo $_SESSION['registro_permiso'];
 //                echo $_SESSION['registro_tipovehiculo'];
 //                echo $_SESSION['registro_matricula'];

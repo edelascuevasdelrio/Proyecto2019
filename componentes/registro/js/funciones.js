@@ -4,17 +4,90 @@
  * and open the template in the editor.
  */
 
+/////////////////////////////////////////////////////////////////
+//                        VARIABLES                            //
+/////////////////////////////////////////////////////////////////
+var flagDNI;
+var flagTel;
+var flagNombre;
+var flagApellidos;
 
-//RESVISA COMO SE HACIA LO DE AJAX!!!!!!!!!!!
+//sessionStorage.get('Nombredelavariable') -> Te devuelve en tipo String el contenido (NULL si no existe)
+//sessionStorage.set('Nombredelavariable', 'valor de la variable') -> Añade cosas
+//AL SER DE SESSION, SE MANTENDRÁN HASTA QUE CERREMOS EL NAVEGADOR
 
-var flagDNI = false;
-var flagTel = false;
+
+//COMPROBAMOS SI EXISTEN LAS VARIABLES VARIABLES (SE HA PASADO POR CADA PARTE DEL PROCESO)
+
+function revisaFlags() {
+    console.warn("Compruebo flags...");
+    flagDNI = sessionStorage.getItem('flagDNI');
+    if (flagDNI === null) {
+        flagDNI = false;
+    } else {
+        if (flagDNI === '1') {
+            flagDNI = true;
+        } else {
+            flagDNI = false;
+        }
+    }
+
+    flagTel = sessionStorage.getItem('flagTel');
+    if (flagTel === null) {
+        flagTel = false;
+    } else {
+        if (flagTel === '1') {
+            flagTel = true;
+        } else {
+            flagTel = false;
+        }
+    }
+
+    flagNombre = sessionStorage.getItem('flagNombre');
+    if (flagNombre === null) {
+        flagNombre = false;
+    } else {
+        if (flagNombre === '1') {
+            flagNombre = true;
+        } else {
+            flagNombre = false;
+        }
+    }
+
+    flagApellidos = sessionStorage.getItem('flagApellidos');
+    if (flagApellidos === null) {
+        flagApellidos = false;
+    } else {
+        if (flagApellidos === '1') {
+            flagApellidos = true;
+        } else {
+            flagApellidos = false;
+        }
+    }
+    
+    console.log("Nombre: " + flagNombre);
+    console.log("Apellidos: " + flagApellidos);
+    console.log("Telefono: " + flagTel);
+    console.log("DNI: " + flagDNI);
+    console.log("Listo");
+}
 
 $(document).ready(init);
 
-function init(){
-    jQuery('#dni').blur(validaDNI); 
-    jQuery('#telefono').blur(validaTelefono); 
+function init() {
+    //Asignamos los eventos a los distintos componentes
+    jQuery('#dni').blur(validaDNI);
+    jQuery('#telefono').blur(validaTelefono);
+    jQuery('#nombre').blur(validarNombre);
+    jQuery('#apellidos').blur(validarApellidos);
+
+    //ocultamos los dos mensajes de posibles errores
+    jQuery('#telError').hide();
+    jQuery('#dniError').hide();
+
+    revisaFlags();
+
+    todoComprobadoR_uno();
 }
 
 
@@ -32,37 +105,136 @@ function validaDNI() {
         letra = 'TRWAGMYFPDXBNJZSQVHLCKET';
         letra = letra.substring(numero, numero + 1);
         if (letra !== letr.toUpperCase()) {
-            alert('Dni erroneo, la letra del NIF no se corresponde'); //Esto igual lo puedes cambiar por un texto o asi, mejor un alert
-        } else{
+            jQuery('#dniError').text('Dni erroneo, la letra del NIF no se corresponde');
+            jQuery('#dniError').show();
+            sessionStorage.setItem('flagDNI', 0);
+            flagDNI = false;
+        } else {
+            jQuery('#dniError').hide();
             flagDNI = true;
-            
+            sessionStorage.setItem('flagDNI', 1);
+
         }
     } else {
-        alert('Dni erroneo, formato no válido');
+        jQuery('#dniError').text('Dni erroneo, formato no válido');
+        jQuery('#dniError').show();
+        sessionStorage.setItem('flagDNI', 0);
         flagDNI = false;
     }
-    todoComprobado();
+    
+//    console.log("Nombre: " + flagNombre);
+//    console.log("Apellidos: " + flagApellidos);
+//    console.log("Telefono: " + flagTel);
+//    console.log("DNI: " + flagDNI);
+
+
+    todoComprobadoR_uno();
 }
 
-function validaTelefono(){
+function validaTelefono() {
     var exp = /^[6,9][0-9]{8}$/;
-    
-    if(exp.test(jQuery("#telefono").val())){
+
+    if (exp.test(jQuery("#telefono").val())) {
+        jQuery('#telError').hide();
+        sessionStorage.setItem('flagTel', 1);
         flagTel = true;
-        
-    }else{
-        alert('Formato del telefono no es valido');
+
+    } else {
+        jQuery('#telError').show();
+        sessionStorage.setItem('flagTel', 0);
         flagTel = false;
     }
-    
-    todoComprobado();
-    
+
+    todoComprobadoR_uno();
+
 }
 
-function todoComprobado(){
-    if(flagDNI && flagTel){
-        jQuery('#siguiente').removeAttr('disabled');
-    }else{
-        jQuery('#siguiente').attr('disabled', 'disabled');
+function validarNombre() {
+    if ($('#nombre').val() !== "") {
+        sessionStorage.setItem('flagNombre', 1);
+        flagNombre = true;
+    } else {
+        sessionStorage.setItem('flagNombre', 0);
+        flagNombre = false;
     }
+    todoComprobadoR_uno();
+}
+
+function validarApellidos() {
+    if ($('#apellidos').val() !== "") {
+        sessionStorage.setItem('flagApellidos', 1);
+        flagApellidos = true;
+    } else {
+        sessionStorage.setItem('flagApellidos', 0);
+        flagApellidos = false;
+    }
+    todoComprobadoR_uno();
+}
+
+
+
+function todoComprobadoR_uno() {
+    console.warn("Comprobando R1.....");
+    if (flagDNI && flagTel && flagNombre && flagApellidos) {
+        jQuery('#siguienter1').removeAttr('disabled');
+    } else {
+        jQuery('#siguienter1').attr('disabled', 'disabled');
+    }
+    console.log("Listo");
+//    console.log("Nombre: " + flagNombre);
+//    console.log("Apellidos: " + flagApellidos);
+//    console.log("Telefono: " + flagTel);
+//    console.log("DNI: " + flagDNI);
+}
+function todoComprobadoR_dos() {
+    if (flagDNI && flagTel && flagNombre && flagApellidos) {
+        jQuery('#siguienter1').removeAttr('disabled');
+    } else {
+        jQuery('#siguienter1').attr('disabled', 'disabled');
+    }
+
+//    console.log("Nombre: " + flagNombre);
+//    console.log("Apellidos: " + flagApellidos);
+//    console.log("Telefono: " + flagTel);
+//    console.log("DNI: " + flagDNI);
+}
+
+function todoComprobadoR_tres() {
+    if (flagDNI && flagTel && flagNombre && flagApellidos) {
+        jQuery('#siguienter1').removeAttr('disabled');
+    } else {
+        jQuery('#siguienter1').attr('disabled', 'disabled');
+    }
+
+//    console.log("Nombre: " + flagNombre);
+//    console.log("Apellidos: " + flagApellidos);
+//    console.log("Telefono: " + flagTel);
+//    console.log("DNI: " + flagDNI);
+}
+
+function todoComprobadoR_cuatro() {
+    if (flagDNI && flagTel && flagNombre && flagApellidos) {
+        jQuery('#siguienter1').removeAttr('disabled');
+    } else {
+        jQuery('#siguienter1').attr('disabled', 'disabled');
+    }
+
+//    console.log("Nombre: " + flagNombre);
+//    console.log("Apellidos: " + flagApellidos);
+//    console.log("Telefono: " + flagTel);
+//    console.log("DNI: " + flagDNI);
+}
+
+function todoComprobadoR_cinco() {
+    
+    if (flagDNI && flagTel && flagNombre && flagApellidos) {
+        jQuery('#siguienter1').removeAttr('disabled');
+    } else {
+        jQuery('#siguienter1').attr('disabled', 'disabled');
+    }
+
+//    console.log("Nombre: " + flagNombre);
+//    console.log("Apellidos: " + flagApellidos);
+//    console.log("Telefono: " + flagTel);
+//    console.log("DNI: " + flagDNI);
 }
