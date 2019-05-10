@@ -117,7 +117,7 @@ class RegistroController {
                                 <input type='submit' class='btn btn-primary' id='siguienter1' value='Siguiente' disabled>
                             </div>
                         </div>    
-                        <input type='hidden' name='section' value='r2'>
+                        <input type='hidden' id='section' name='section' value='r2'>
 
 
                     </div>
@@ -169,6 +169,7 @@ class RegistroController {
                             <div class='form-group'>
                                 <label for='localidad' class='control-label'>¿Desde donde sales?</label>
                                 <select id='localidad' class='form-control' name='localidad'>
+                                
                                 " .
                                     $model->localidadesUsuarios().
                                 "</select>
@@ -177,6 +178,7 @@ class RegistroController {
                             <div class='form-group'>
                                 <label for='destino' class='control-label'>¿Dónde estudias?</label>
                                 <select id='destino' class='form-control' name='localDestino'>
+                                
                                 " .
                                     $model->localidadesCentros().
                                 "</select>
@@ -184,13 +186,14 @@ class RegistroController {
                             
                             <div class='form-group'>
                                 <select id='destinoCentro' class='form-control' name='destino'>
+                                <option></option>
                                 ".
-                                    $model->cargaCentros().
+                                    $model->cargaCentros(). //ESTE HAY QUE CAMBIARLO
                                 "</select>
                             </div>
                             
                             <div class='form-group'>
-                                <input type='submit' class='btn btn-primary' id='siguienter3' value='Siguiente'>
+                                <input type='submit' class='btn btn-primary' id='siguienter3' value='Siguiente' disabled>
                             </div>
                         </div>    
 
@@ -267,7 +270,7 @@ class RegistroController {
                                             <textarea id='descrip'class='form-control' name='descrip'></textarea>
                                         </div>
                                         <div class='form-group'>
-                                            <input type='submit' class='btn btn-success' id='siguiente' name'siguienter4' value='Siguiente'>
+                                            <input type='submit' class='btn btn-success' id='siguiente' name'siguienter4' value='Siguiente' disabled>
                                         </div> 
                                         <input type='hidden' name='section' value='r5'>
                                     
@@ -321,7 +324,7 @@ class RegistroController {
                             </div>
 
                             <div class='form-group'>         
-                                <input type='submit' class='btn btn-success' id='siguienter5' name'saltar' value='Registrar'>
+                                <input type='submit' class='btn btn-success' id='siguienter5' name'saltar' value='Registrar' disabled>
                             </div>
                         </div>    
 

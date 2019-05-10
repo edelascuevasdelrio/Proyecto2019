@@ -11,6 +11,7 @@ var flagDNI;
 var flagTel;
 var flagNombre;
 var flagApellidos;
+var flagFecha;
 
 //sessionStorage.get('Nombredelavariable') -> Te devuelve en tipo String el contenido (NULL si no existe)
 //sessionStorage.set('Nombredelavariable', 'valor de la variable') -> Añade cosas
@@ -20,56 +21,72 @@ var flagApellidos;
 //COMPROBAMOS SI EXISTEN LAS VARIABLES VARIABLES (SE HA PASADO POR CADA PARTE DEL PROCESO)
 
 function revisaFlags() {
-    console.warn("Compruebo flags...");
-    flagDNI = sessionStorage.getItem('flagDNI');
-    if (flagDNI === null) {
-        flagDNI = false;
+    if (jQuery('#section').val() === 'r1' && sessionStorage.getItem('flagNombre') === 1) {
+        
     } else {
-        if (flagDNI === '1') {
-            flagDNI = true;
-        } else {
+
+        console.warn("Compruebo flags...");
+        flagDNI = sessionStorage.getItem('flagDNI');
+        if (flagDNI === null) {
             flagDNI = false;
-        }
-    }
-
-    flagTel = sessionStorage.getItem('flagTel');
-    if (flagTel === null) {
-        flagTel = false;
-    } else {
-        if (flagTel === '1') {
-            flagTel = true;
         } else {
+            if (flagDNI === '1') {
+                flagDNI = true;
+            } else {
+                flagDNI = false;
+            }
+        }
+
+        flagTel = sessionStorage.getItem('flagTel');
+        if (flagTel === null) {
             flagTel = false;
-        }
-    }
-
-    flagNombre = sessionStorage.getItem('flagNombre');
-    if (flagNombre === null) {
-        flagNombre = false;
-    } else {
-        if (flagNombre === '1') {
-            flagNombre = true;
         } else {
+            if (flagTel === '1') {
+                flagTel = true;
+            } else {
+                flagTel = false;
+            }
+        }
+
+        flagNombre = sessionStorage.getItem('flagNombre');
+        if (flagNombre === null) {
             flagNombre = false;
-        }
-    }
-
-    flagApellidos = sessionStorage.getItem('flagApellidos');
-    if (flagApellidos === null) {
-        flagApellidos = false;
-    } else {
-        if (flagApellidos === '1') {
-            flagApellidos = true;
         } else {
-            flagApellidos = false;
+            if (flagNombre === '1') {
+                flagNombre = true;
+            } else {
+                flagNombre = false;
+            }
         }
+
+        flagApellidos = sessionStorage.getItem('flagApellidos');
+        if (flagApellidos === null) {
+            flagApellidos = false;
+        } else {
+            if (flagApellidos === '1') {
+                flagApellidos = true;
+            } else {
+                flagApellidos = false;
+            }
+        }
+        flagFecha = sessionStorage.getItem('flagFecha');
+        if (flagFecha === null) {
+            flagFecha = false;
+        } else {
+            if (flagFecha === '1') {
+                flagFecha = true;
+            } else {
+                flagFecha = false;
+            }
+        }
+
+        console.log("Nombre: " + flagNombre);
+        console.log("Apellidos: " + flagApellidos);
+        console.log("Telefono: " + flagTel);
+        console.log("DNI: " + flagDNI);
+        console.log("Fecha: " + flagFecha);
+        console.log("Listo");
     }
-    
-    console.log("Nombre: " + flagNombre);
-    console.log("Apellidos: " + flagApellidos);
-    console.log("Telefono: " + flagTel);
-    console.log("DNI: " + flagDNI);
-    console.log("Listo");
 }
 
 $(document).ready(init);
@@ -80,7 +97,7 @@ function init() {
     jQuery('#telefono').blur(validaTelefono);
     jQuery('#nombre').blur(validarNombre);
     jQuery('#apellidos').blur(validarApellidos);
-
+    jQuery('#fecha_nacimiento').blur(validaFecha);
     //ocultamos los dos mensajes de posibles errores
     jQuery('#telError').hide();
     jQuery('#dniError').hide();
@@ -121,7 +138,7 @@ function validaDNI() {
         sessionStorage.setItem('flagDNI', 0);
         flagDNI = false;
     }
-    
+
 //    console.log("Nombre: " + flagNombre);
 //    console.log("Apellidos: " + flagApellidos);
 //    console.log("Telefono: " + flagTel);
@@ -171,11 +188,20 @@ function validarApellidos() {
     todoComprobadoR_uno();
 }
 
-
+function validaFecha() {
+    if ($('#fecha_nacimiento').val() !== "") {
+        sessionStorage.setItem('flagFecha', 1);
+        flagFecha = true;
+    } else {
+        sessionStorage.setItem('flagFecha', 0);
+        flagFecha = false;
+    }
+    todoComprobadoR_uno();
+}
 
 function todoComprobadoR_uno() {
     console.warn("Comprobando R1.....");
-    if (flagDNI && flagTel && flagNombre && flagApellidos) {
+    if (flagDNI && flagTel && flagNombre && flagApellidos && flagFecha) {
         jQuery('#siguienter1').removeAttr('disabled');
     } else {
         jQuery('#siguienter1').attr('disabled', 'disabled');
@@ -185,6 +211,7 @@ function todoComprobadoR_uno() {
 //    console.log("Apellidos: " + flagApellidos);
 //    console.log("Telefono: " + flagTel);
 //    console.log("DNI: " + flagDNI);
+//    console.log("Fecha: " + flagFecha);
 }
 function todoComprobadoR_dos() {
     if (flagDNI && flagTel && flagNombre && flagApellidos) {
@@ -226,7 +253,7 @@ function todoComprobadoR_cuatro() {
 }
 
 function todoComprobadoR_cinco() {
-    
+
     if (flagDNI && flagTel && flagNombre && flagApellidos) {
         jQuery('#siguienter1').removeAttr('disabled');
     } else {
@@ -237,4 +264,5 @@ function todoComprobadoR_cinco() {
 //    console.log("Apellidos: " + flagApellidos);
 //    console.log("Telefono: " + flagTel);
 //    console.log("DNI: " + flagDNI);
+
 }
