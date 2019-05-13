@@ -216,7 +216,7 @@ class RegistroController {
                         </div>
                         <div class='modal-footer'>
                           <button type='button' class='btn btn-secondary' data-dismiss='modal'>Cancelar</button>
-                          <button type='button' class='btn btn-primary'>Añadir</button>
+                          <button id='anadir' type='button' class='btn btn-primary'>Añadir</button>
                         </div>
                       </div>
                     </div>

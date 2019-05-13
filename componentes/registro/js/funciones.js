@@ -98,6 +98,9 @@ function init() {
     jQuery('#nombre').blur(validarNombre);
     jQuery('#apellidos').blur(validarApellidos);
     jQuery('#fecha_nacimiento').blur(validaFecha);
+    
+    jQuery('#anadir').click(anadeLocalidad);
+    
     //ocultamos los dos mensajes de posibles errores
     jQuery('#telError').hide();
     jQuery('#dniError').hide();
@@ -198,6 +201,12 @@ function validaFecha() {
     }
     todoComprobadoR_uno();
 }
+
+function anadeLocalidad(){
+    //AJAX O XAJAX para que añadirlo
+    
+}
+
 
 function todoComprobadoR_uno() {
     console.warn("Comprobando R1.....");
