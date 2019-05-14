@@ -5,4 +5,4 @@ To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
 <?php
-header("Location: ./componentes/principal/princi.php");
+header("Location: ./assets/componentes/principal/princi.php");

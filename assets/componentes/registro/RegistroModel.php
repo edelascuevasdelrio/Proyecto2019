@@ -179,6 +179,7 @@ class RegistroModel {
     public function cargaCentros() {
         //HABRÁ QUE PASARLE POR PARAMETRO LA LOCALIDAD (LA COGEREMOS CON AJAX SEGURAMENTE)
         //Por ahora por defecto estará Santander
+        
         //VARIABLES
         $con = self::conectar();
         $salida = "";
