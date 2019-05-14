@@ -15,7 +15,7 @@ class RegistroModel {
 
     //put your code here
 
-    private function conectar() {
+    public function conectar() {
         $hostname = 'localhost';
         $database = 'pruebaproyecto';
         $username = 'root';
@@ -67,8 +67,9 @@ class RegistroModel {
     public function localidadesCentros() {
         //VARIABLES
         $con = self::conectar();
-        $salida = "";
-
+        $salida = "<option></option>";
+        $index = 1;
+        
         //SQL CONTRA LA BBDD
         $sentencia = $con->prepare("SELECT nombre FROM localidad where id in ( SELECT localidad from centro )");
         $sentencia->execute();
@@ -76,7 +77,8 @@ class RegistroModel {
         //RECOGEMOS LOS RESULTADOS Y CONSTRUIMOS EL HTML
         $resultado = $sentencia->fetch();
         while ($resultado != null) {
-            $salida .= "<option value='" . $resultado[0] . "'>" . $resultado[0] . "</option>";
+            $salida .= "<option value='" . $index . "'>" . $resultado[0] . "</option>";
+            $index++;
             $resultado = $sentencia->fetch();
         }
 
@@ -177,30 +179,35 @@ class RegistroModel {
     }
 
     public function cargaCentros() {
-        //HABRÁ QUE PASARLE POR PARAMETRO LA LOCALIDAD (LA COGEREMOS CON AJAX SEGURAMENTE)
-        //Por ahora por defecto estará Santander
-        
-        //VARIABLES
-        $con = self::conectar();
-        $salida = "";
-        $localidad = 1;
-
-
-        try {
-            $stmt = $con->prepare("SELECT * FROM centro WHERE localidad = :localidad");
-            $stmt->bindParam(":localidad", $localidad); //ESTO HABRA QUE PONER LA ID DE LA LOCALIDAD QUE SE NOS PASE POR PARAMETRO
-            $stmt->execute();
-
-            $resultado = $stmt->fetch();
-            while ($resultado != null) {
-                $salida .= "<option value='" . $resultado[0] . "'>" . $resultado[1] . "</option>";
-                $resultado = $stmt->fetch();
-            }
-
-            return $salida;
-        } catch (Exception $ex) {
-            return "<option>Esta mierda da falletes majo</option>";
-        }
+//        //HABRÁ QUE PASARLE POR PARAMETRO LA LOCALIDAD (LA COGEREMOS CON AJAX SEGURAMENTE)
+//        //Por ahora por defecto estará Santander
+//        
+//        //VARIABLES
+//        $con = self::conectar();
+//        $salida = "";
+//        $index = 0;
+//        $localidad = 1;
+//
+//        
+//        try {
+//            $stmt = $con->prepare("SELECT * FROM centro WHERE localidad = :localidad");
+//            $stmt->bindParam(":localidad", $localidad); //ESTO HABRA QUE PONER LA ID DE LA LOCALIDAD QUE SE NOS PASE POR PARAMETRO
+//            $stmt->execute();
+//
+//            $resultado = $stmt->fetch();
+//            while ($resultado != null) {
+//                $salida .= "<option value='" . $index . "'>" . $resultado[1] . "</option>";
+//                $index++;
+//                $resultado = $stmt->fetch();
+//            }
+//            
+//
+//            
+//            echo $salida;
+//        } catch (Exception $ex) {
+//            echo $ex->getMessage();
+//            
+//        }
     }
 
 }

@@ -22,7 +22,7 @@ var flagFecha;
 
 function revisaFlags() {
     if (jQuery('#section').val() === 'r1' && sessionStorage.getItem('flagNombre') === 1) {
-        
+
     } else {
 
         console.warn("Compruebo flags...");
@@ -98,9 +98,11 @@ function init() {
     jQuery('#nombre').blur(validarNombre);
     jQuery('#apellidos').blur(validarApellidos);
     jQuery('#fecha_nacimiento').blur(validaFecha);
-    
+
     jQuery('#anadir').click(anadeLocalidad);
-    
+
+    jQuery('#destino').blur(cargaCentros);
+
     //ocultamos los dos mensajes de posibles errores
     jQuery('#telError').hide();
     jQuery('#dniError').hide();
@@ -202,9 +204,18 @@ function validaFecha() {
     todoComprobadoR_uno();
 }
 
-function anadeLocalidad(){
+function anadeLocalidad() {
     //AJAX O XAJAX para que añadirlo
+
+}
+
+function cargaCentros() {
+    console.log("Entramos en cargaCentros");
     
+    jQuery.post("ajax/funciones.php", {proceso: 'cargaCentros', localidad: jQuery('#destino').val()}, function(respuesta){
+        jQuery('#destinoCentro').html(respuesta);
+            console.log(respuesta);
+    });
 }
 
 
