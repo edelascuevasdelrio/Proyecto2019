@@ -13,6 +13,8 @@ var flagNombre;
 var flagApellidos;
 var flagFecha;
 
+var flagDestino;
+
 //sessionStorage.get('Nombredelavariable') -> Te devuelve en tipo String el contenido (NULL si no existe)
 //sessionStorage.set('Nombredelavariable', 'valor de la variable') -> Añade cosas
 //AL SER DE SESSION, SE MANTENDRÁN HASTA QUE CERREMOS EL NAVEGADOR
@@ -101,7 +103,8 @@ function init() {
 
     jQuery('#anadir').click(anadeLocalidad);
 
-    jQuery('#destino').blur(cargaCentros);
+    jQuery('#destino').change(cargaCentros);
+
 
     //ocultamos los dos mensajes de posibles errores
     jQuery('#telError').hide();
@@ -201,21 +204,64 @@ function validaFecha() {
         sessionStorage.setItem('flagFecha', 0);
         flagFecha = false;
     }
-    todoComprobadoR_uno();
+    todoComprobadoR_tres();
 }
 
+function validaDestino() {
+    console.log("validaDestino ==> validando");
+
+    if (jQuery('#destino').val() !== "") {
+        sessionStorage.setItem('flagDestino', 1);
+        flagDestino = true;
+    } else {
+        sessionStorage.setItem('flagDestino', 0);
+        flagDestino = false;
+    }
+
+    console.log(flagDestino);
+    todoComprobadoR_tres();
+}
+
+/**
+ * FUNCION: anadeLocalidad
+ * INPUTS: -
+ * OUTPUTS: -
+ * DESCRIPCION: Hace una peticion ajax para añadir una nueva localidad a la BBDD
+ * y acutaliza el desplegable
+ */
 function anadeLocalidad() {
-    //AJAX O XAJAX para que añadirlo
+    //Mandamos como parametros el proceso que queremos ejecutar, y el texto del input "nombre_localidad"
+    jQuery.post("ajax/funciones.php", {proceso: 'anadeLocalidad', localidad: jQuery('#nombre_localidad').val()}, function (respuesta) {
+        //SUCCESS: Modificamos el HTML del select para actualizarlo
+        jQuery('#localidad').html();
 
+        jQuery.post("ajax/funciones.php", {proceso: 'actualizaLocalidades'}, function(respuesta2){
+            jQuery('#localidad').html(respuesta2);
+        });
+
+        //Cerramos la ventana modal
+        jQuery('#añadir').modal('toggle');
+    });
 }
 
+/**
+ * FUNCION: cargaCentros
+ * INPUTS: -
+ * OUTPUTS: -
+ * DESCRIPCION: Hace una peticion ajax para cargar un desplegable en función de la licalidad seleccionada
+ */
 function cargaCentros() {
-    console.log("Entramos en cargaCentros");
-    
-    jQuery.post("ajax/funciones.php", {proceso: 'cargaCentros', localidad: jQuery('#destino').val()}, function(respuesta){
+    //Hacemos una petición ajax para recibir un listado de los centros asociados a una localidad
+    jQuery.post("ajax/funciones.php", {proceso: 'cargaCentros', localidad: jQuery('#destino').val()}, function (respuesta) {
+        //Cargamos el selector con los datos
         jQuery('#destinoCentro').html(respuesta);
-            console.log(respuesta);
+
     });
+
+    //Comprobamos que el destino es correcto
+    validaDestino();
+    //Hacemos la comprobación final para poder siguir con el formulario
+    todoComprobadoR_tres();
 }
 
 
@@ -233,30 +279,16 @@ function todoComprobadoR_uno() {
 //    console.log("DNI: " + flagDNI);
 //    console.log("Fecha: " + flagFecha);
 }
-function todoComprobadoR_dos() {
-    if (flagDNI && flagTel && flagNombre && flagApellidos) {
-        jQuery('#siguienter1').removeAttr('disabled');
-    } else {
-        jQuery('#siguienter1').attr('disabled', 'disabled');
-    }
 
-//    console.log("Nombre: " + flagNombre);
-//    console.log("Apellidos: " + flagApellidos);
-//    console.log("Telefono: " + flagTel);
-//    console.log("DNI: " + flagDNI);
-}
 
 function todoComprobadoR_tres() {
-    if (flagDNI && flagTel && flagNombre && flagApellidos) {
-        jQuery('#siguienter1').removeAttr('disabled');
+    console.warn("Comprobando R3.....");
+    if (flagDestino) {
+        jQuery('#siguienter3').removeAttr('disabled');
     } else {
-        jQuery('#siguienter1').attr('disabled', 'disabled');
+        jQuery('#siguienter3').attr('disabled', 'disabled');
     }
 
-//    console.log("Nombre: " + flagNombre);
-//    console.log("Apellidos: " + flagApellidos);
-//    console.log("Telefono: " + flagTel);
-//    console.log("DNI: " + flagDNI);
 }
 
 function todoComprobadoR_cuatro() {

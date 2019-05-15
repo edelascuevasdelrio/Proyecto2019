@@ -68,17 +68,17 @@ class RegistroModel {
         //VARIABLES
         $con = self::conectar();
         $salida = "<option></option>";
-        $index = 1;
+
         
         //SQL CONTRA LA BBDD
-        $sentencia = $con->prepare("SELECT nombre FROM localidad where id in ( SELECT localidad from centro )");
+        $sentencia = $con->prepare("SELECT * FROM localidad where id in ( SELECT localidad from centro )");
         $sentencia->execute();
 
         //RECOGEMOS LOS RESULTADOS Y CONSTRUIMOS EL HTML
         $resultado = $sentencia->fetch();
         while ($resultado != null) {
-            $salida .= "<option value='" . $index . "'>" . $resultado[0] . "</option>";
-            $index++;
+            $salida .= "<option value='" . $resultado[0] . "'>" . $resultado[1] . "</option>";
+
             $resultado = $sentencia->fetch();
         }
 

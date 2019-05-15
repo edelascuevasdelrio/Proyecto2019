@@ -15,6 +15,17 @@ require_once './RegistroModel.php';
 
 class RegistroController {
 
+    /**
+     * FUNCION:recogeDatos
+     * 
+     * INPUTS: -
+     * 
+     * OUTPUTS: -
+     * 
+     * DESCRIPCION: Se encarga de subir los datos a la sesión
+     * 
+     * NOTAS:
+     */
     public function recogeDatos() {
         //Primera sección
         if (isset($_POST['nombre'])) {
@@ -78,11 +89,24 @@ class RegistroController {
         }
     }
 
+    
+    /**
+     * FUNCION: recibeDatos
+     * 
+     * INPUTS: proceso (string)
+     *         argumentos (array)
+     * 
+     * OUTPUTS: formulario (string)
+     * 
+     * DESCRIPCION: Devuelve el formulario ya construido en HTML
+     * 
+     * NOTAS:
+     */
     //Recibe el proceso que se desea controlar
     public function recibeDatos($proceso, $argumentos) {
 
         self::recogeDatos();
-        //el proceso indica en que parte del registro estamos, devolviendo en cada caso un HTML diferente
+        //El proceso indica en que parte del registro estamos, devolviendo en cada caso un HTML diferente
         $model = new RegistroModel();
         switch ($proceso) {
             //r1: Primera sección del registro
@@ -151,12 +175,6 @@ class RegistroController {
                     </div>
                 </form>";
 
-//                echo $_SESSION['registro_nombre'];
-//                echo $_SESSION['registro_apellidos'];
-//                echo $_SESSION['registro_dni'];
-//                echo $_SESSION['registro_telefono'];
-//                echo $_SESSION['registro_fecha_nacimiento'];
-
                 return $formulario;
             case 'r3':
                 $formulario = "<form action='' method='POST'>
@@ -171,7 +189,8 @@ class RegistroController {
                                 <select id='localidad' class='form-control' name='localidad'>
                                 
                                 " .
-                                    $model->localidadesUsuarios().
+                                    $model->localidadesUsuarios(). //Cargamos las posibles localidades donde vive el
+                                                                   //pasajero
                                 "</select>
                                    ¿No aparece tu localidad? <a data-toggle='modal' data-target='#añadir' >Añadela desde aquí </a>
                             </div>
@@ -180,7 +199,8 @@ class RegistroController {
                                 <select id='destino' class='form-control' name='localDestino'>
                                 
                                 " .
-                                    $model->localidadesCentros().
+                                    $model->localidadesCentros().//Cargamos las localidades donde se encuentran
+                                                                   //los centros de estudio
                                 "</select>
                             </div> 
                             
@@ -188,7 +208,7 @@ class RegistroController {
                                 <select id='destinoCentro' class='form-control' name='destino'>
                                 <option></option>
                                 ".
-                                    $model->cargaCentros(). //ESTE HAY QUE CAMBIARLO
+                                    $model->cargaCentros(). //Cargamos los centros de estudios en funcion
                                 "</select>
                             </div>
                             
@@ -222,8 +242,6 @@ class RegistroController {
                     </div>
                   </div>";
 
-//                echo $_SESSION['registro_horario'];
-//                echo $_SESSION['registro_saludo'];
                 return $formulario;
             case 'r4':
                 $formulario = "
@@ -335,12 +353,6 @@ class RegistroController {
                 
 ";
 
-
-//                echo "Conduce: " . $_POST['conduce'];
-//                echo $_SESSION['registro_permiso'];
-//                echo $_SESSION['registro_tipovehiculo'];
-//                echo $_SESSION['registro_matricula'];
-//                echo $_SESSION['registro_descrip'];
 
                 return $formulario;
             case 'rfin':

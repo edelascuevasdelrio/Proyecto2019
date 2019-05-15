@@ -8,3 +8,14 @@ and open the template in the editor.
 header("Location: ./assets/componentes/principal/princi.php");
 
 //link a las tablas del kraken: https://app.gitkraken.com/glo/board/XNBNTN-3qwAPISWs
+/**
+ * FUNCION:
+ * 
+ * INPUTS: 
+ * 
+ * OUTPUTS:
+ * 
+ * DESCRIPCION
+ * 
+ * NOTAS:
+ */

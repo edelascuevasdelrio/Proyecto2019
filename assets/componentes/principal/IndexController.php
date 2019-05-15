@@ -9,16 +9,31 @@ require_once './IndexModel.php';
 
 class IndexController {
 
-    //put your code here
-
+   
+    /**
+     * FUNCION: recibeDatos
+     * 
+     * INPUTS: $proceso(string)
+     * 
+     * OUTPUTS: $args (array)
+     * 
+     * DESCRIPCION: Se encarga de recibir tanto el procso a realizar como los argunmentos para los mismos y de llamar
+     * a los metodos correspondientes
+     * 
+     * NOTAS:Añade una variable de sesion, 'logged' para que en caso de error, muestre una label
+     */
     public function recibeDatos($proceso, $args) {
         $model = new IndexModel();
         switch ($proceso) {
+            //Si el proceso es login
             case 'login':
+                //Hacemos una llamada al metodo login del modelo. Este devuelve true si existe en la BBDD
+                //un usuario con esas credenciales.
                 if ($model->login($args[0], $args[1])) {
+                    //En caso de que exista, iniciamos una sesión y pasamos a la siguiente página
                     session_start();
                     $_SESSION['logged'] = "yes";
-                    header('Location: ../registro/registro.php');
+                    header('Location: ../registro/registro.php'); //PROVISIONAL
                 } else {
                     $_SESSION['logged'] = "no";
                 }

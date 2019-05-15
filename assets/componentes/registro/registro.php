@@ -43,6 +43,7 @@ if (!isset($_POST['section'])) {
     }
 }
 
+//Recogemos los datos de las distintas sesiones y los subimos a sesion
 $controller->recogeDatos();
 ?>
 <html>
@@ -67,7 +68,7 @@ $controller->recogeDatos();
                     <div id="titulo" class="col-md-12 col-sm-12">
                         <img id="logo" class="fl-left" src="../../img/logos/LOGO64.png">
                         <h1>Operación esto tiene que reventar</h1>
-                        <h3> INES, EL COLOR DE FONDO ES TEMPORAL, PARA VER LOS LIMITES!!!!!</h3>
+                        <h3> </h3>
                     </div>
                 </div>
             </div>
@@ -78,6 +79,7 @@ $controller->recogeDatos();
         <section>
             <div class="col-md-4 col-md-offset-4">
                 <?php
+                //Pedimos al controlador el formulario correspondiente
                 echo $controller->recibeDatos($proceso, $argumentos)
                 ?>
             </div>
@@ -95,38 +97,3 @@ $controller->recogeDatos();
     </body>
 </html>
 
-
-<!--
-
-<div class="row">
-                        <div class="col-md-12 col-sm-12">
-                            <div class="form-group">
-                                <label for="nombre" class="control-label">Nombre</label>
-                                <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Ej. Antonio">
-                            </div>
-                            <div class="form-group">
-                                <label for="apellidos" class="control-label">Apellidos</label>
-                                <input type="text" class="form-control" id="apellidos" name="apellidos" placeholder="Ej. Sierra">
-                            </div>
-                            <div class="form-group">
-                                <label for="dni" class="control-label">DNI</label>
-                                <input type="text" class="form-control" id="dni" name="dni" placeholder="Ej. 00000000-A">
-                            </div>
-                            <div class="form-group">
-                                <label for="telefono" class="control-label">Teléfono</label>
-                                <input type="text" class="form-control" id="telefono" name="telefono" placeholder="Ej. 999666222">
-                            </div>
-                            <div class="form-group">
-                                <label for="fecha_nacimiento" class="control-label">Fecha de nacimiento</label>
-                                <input type="date" class="form-control" id="fecha_nacimiento" name="fecha_nacimiento">
-                            </div>
-                        </div>    
-
-
-
-                    </div>
-
-
-
-
--->

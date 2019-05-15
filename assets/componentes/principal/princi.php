@@ -5,7 +5,6 @@ $controller = new IndexController();
 if (!isset($_SESSION['sesion'])) {
 
     $_SESSION['sesion'] = 1;
-
 }
 
 if (isset($_POST['login'])) {
