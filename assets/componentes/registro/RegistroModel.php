@@ -11,20 +11,37 @@
  *
  * @author Enrique de las Cueva
  */
+
+require_once '../../bbdd/credenciales.php';
+
 class RegistroModel {
 
     //put your code here
 
+    /**
+     * FUNCION: conectar
+     * 
+     * INPUTS: -
+     * 
+     * OUTPUTS: objetoPDO (PDO)
+     * 
+     * DESCRIPCION: Realiza la conexión con la BBDD
+     * 
+     * NOTAS:
+     */
     public function conectar() {
-        $hostname = 'localhost';
-        $database = 'pruebaproyecto';
-        $username = 'root';
-        $password = '';
+        $credObject = new Credenciales();
+        $credenciales = $credObject ->getCredenciales();
+        
+        $hostname = $credenciales['hostname'];
+        $database = $credenciales['database'];
+        $username = $credenciales['username'];
+        $password = $credenciales['password'];
 
 
         try {
-
-            $objetoPDO = new PDO('mysql:host=' . $hostname . ';dbname=' . $database . '', $username, $password);
+            $opciones = array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8");
+            $objetoPDO = new PDO('mysql:host=' . $hostname . ';dbname=' . $database . '', $username, $password, $opciones);
             $objetoPDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         } catch (PDOException $e) {
             echo "ERROR: " . $e->getMessage();
@@ -33,7 +50,18 @@ class RegistroModel {
         return $objetoPDO;
     }
 
-    private function CalculaEdad($fecha) {
+    /**
+     * FUNCION: calculaEdad
+     * 
+     * INPUTS: fecha (date)
+     * 
+     * OUTPUTS: (int)
+     * 
+     * DESCRIPCION: En función de la fecha que se introduzca, te devuelve la edad comparando con la fecha actual
+     * 
+     * NOTAS:
+     */
+    private function calculaEdad($fecha) {
         //list($Y, $m, $d) = explode("-", $fecha);
         $Y = intval(substr($fecha, 0, 4));
         $m = intval(substr($fecha, 5, 2));
@@ -43,7 +71,15 @@ class RegistroModel {
     }
 
     /**
+     * FUNCION: localidadesUsuarios
      * 
+     * INPUTS: -
+     * 
+     * OUTPUTS: salida (string)
+     * 
+     * DESCRIPCION: Pide a la BBDD una lista de las localidades y las añade al desplegable
+     * 
+     * NOTAS:
      */
     public function localidadesUsuarios() {
         //VARIABLES
@@ -64,6 +100,18 @@ class RegistroModel {
         return $salida;
     }
 
+    /**
+     * FUNCION: localidadesCentros
+     * 
+     * INPUTS: -
+     * 
+     * OUTPUTS: salida (string)
+     * 
+     * DESCRIPCION: Pide a la BBDD una lista de las localidades que tienen centros asociados y
+     *              las añade al desplegable
+     * 
+     * NOTAS:
+     */
     public function localidadesCentros() {
         //VARIABLES
         $con = self::conectar();
@@ -87,8 +135,11 @@ class RegistroModel {
 
     /*
      * FUNCIÓN: registrarUsuario
+     * 
      * INPUTS: Entradas realizadas por variables en $_SESSION
+     * 
      * OUTPUT: -
+     * 
      * DESCRIPCIÓN:Inserta en la BBDD un nuevo usuario con todos los datos
      */
 
@@ -178,36 +229,6 @@ class RegistroModel {
         }
     }
 
-    public function cargaCentros() {
-//        //HABRÁ QUE PASARLE POR PARAMETRO LA LOCALIDAD (LA COGEREMOS CON AJAX SEGURAMENTE)
-//        //Por ahora por defecto estará Santander
-//        
-//        //VARIABLES
-//        $con = self::conectar();
-//        $salida = "";
-//        $index = 0;
-//        $localidad = 1;
-//
-//        
-//        try {
-//            $stmt = $con->prepare("SELECT * FROM centro WHERE localidad = :localidad");
-//            $stmt->bindParam(":localidad", $localidad); //ESTO HABRA QUE PONER LA ID DE LA LOCALIDAD QUE SE NOS PASE POR PARAMETRO
-//            $stmt->execute();
-//
-//            $resultado = $stmt->fetch();
-//            while ($resultado != null) {
-//                $salida .= "<option value='" . $index . "'>" . $resultado[1] . "</option>";
-//                $index++;
-//                $resultado = $stmt->fetch();
-//            }
-//            
-//
-//            
-//            echo $salida;
-//        } catch (Exception $ex) {
-//            echo $ex->getMessage();
-//            
-//        }
-    }
+
 
 }

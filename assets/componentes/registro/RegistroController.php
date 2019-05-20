@@ -109,7 +109,7 @@ class RegistroController {
         //El proceso indica en que parte del registro estamos, devolviendo en cada caso un HTML diferente
         $model = new RegistroModel();
         switch ($proceso) {
-            //r1: Primera sección del registro
+            
             case 'r1':
                 $formulario = "<form action='' method='POST'>
 
@@ -206,10 +206,8 @@ class RegistroController {
                             
                             <div class='form-group'>
                                 <select id='destinoCentro' class='form-control' name='destino'>
-                                <option></option>
-                                ".
-                                    $model->cargaCentros(). //Cargamos los centros de estudios en funcion
-                                "</select>
+                                    <option></option>
+                                </select>
                             </div>
                             
                             <div class='form-group'>
@@ -282,13 +280,14 @@ class RegistroController {
                                         <div class='form-group'>
                                             <label class='control-label'>Introduce la matricula</label>
                                             <input type='text' class='form-control' id='matricula' name='matricula' placeholder='0000AAA' required>
+                                            <label id='matriculaError')></label>
                                         </div>
                                         <div class='form-group'>
                                             <label class='control-label'>Una breve descripción del vehiculo</label>
                                             <textarea id='descrip'class='form-control' name='descrip'></textarea>
                                         </div>
                                         <div class='form-group'>
-                                            <input type='submit' class='btn btn-success' id='siguiente' name'siguienter4' value='Siguiente' disabled>
+                                            <input type='submit' class='btn btn-success' id='siguienter4' name'siguiente' value='Siguiente' disabled>
                                         </div> 
                                         <input type='hidden' name='section' value='r5'>
                                     
@@ -324,16 +323,24 @@ class RegistroController {
                             <div class='form-group'>
                                 <label for='username' class='control-label'>Nombre de usuario</label>
                                 <input type='input' class='form-control' name='username' id='username'>
+                                <label id='userError' class='marginb15px'></label>
                             </div>
                             
                             <div class='form-group'>
+                            <row>
                                 <label for='passw' class='control-label'>Contraseña</label>
-                                <input type='input' class='form-control' name='passw' id='passw'>
+                            </row>
+                            <row>
+                                <input type='password' class='form-control marginb15px fl-left' name='passw' id='passw'><span id='verPass' class='fl-left btn glyphicon glyphicon-eye-open' title='Ver contraseña'></span>
+                            </row>
+                            <row>
+                                <label id='passError'></label>
+                            </row>
                             </div>
                             
                             <div class='form-group'>
                                 <label for='passwR' class='control-label'>Repita la contraseña</label>
-                                <input type='input' class='form-control' name='passwR' id='passwR'>
+                                <input type='password' class='form-control' name='passwR' id='passwR'>
                             </div>
                             
                             <div class='form-group'>
@@ -342,7 +349,7 @@ class RegistroController {
                             </div>
 
                             <div class='form-group'>         
-                                <input type='submit' class='btn btn-success' id='siguienter5' name'saltar' value='Registrar' disabled>
+                                <input type='submit' class='btn btn-success' id='finalizar' name'finalizar' value='Registrar' disabled>
                             </div>
                         </div>    
 
@@ -352,12 +359,10 @@ class RegistroController {
                 </form>
                 
 ";
-
-
                 return $formulario;
             case 'rfin':
                 $model->registrarUsuario();
-                session_destroy();
+                session_destroy(); //Destruimos la sesión para limpiar los datos
                 //header("Location: ../principal/princi.php");
                 break;
             default:

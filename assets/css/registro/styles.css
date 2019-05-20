@@ -9,6 +9,20 @@
     float: left;
 }
 
+.form-control{
+       width: 90%; 
+    }
+    
 #conducesi{
     margin-left: 10px;
+}
+
+
+.marginb15px{
+    margin-bottom: 15px;
+    
+}
+
+label{
+    width: 90%;
 }
