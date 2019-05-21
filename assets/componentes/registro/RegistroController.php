@@ -341,11 +341,13 @@ class RegistroController {
                             <div class='form-group'>
                                 <label for='passwR' class='control-label'>Repita la contraseña</label>
                                 <input type='password' class='form-control' name='passwR' id='passwR'>
+                                <label id='passwRerror'></label>
                             </div>
                             
                             <div class='form-group'>
                                 <label for='email' class='control-label'>Email</label>
-                                <input type='email' class='form-control' name='email' id='email'>
+                                <input type='email' class='form-control' name='email' id='email' placeholder='ejemplo.email@servidor.xxx'>
+                                <label id='emailError'></label>
                             </div>
 
                             <div class='form-group'>         
