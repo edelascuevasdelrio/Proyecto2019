@@ -255,9 +255,19 @@ function validaFormatoDNI() {
 }
 
 function isDNIinBBDD(dni) {
-    jQuery.post("ajax/funciones.php", {proceso: 'compruebaDNI', datos: dni}, function (respuesta) {
-
-        if (respuesta === "0") {
+    var opciones = {
+        url: "ajax/funciones.php",
+        type: "POST",
+        data: {
+            proceso : "compruebaDNI",
+            datos: dni
+        }
+    };
+    
+    jQuery.ajax(opciones).done(function(responseText){
+        
+        console.error("RESPONSETEXT: " + responseText);
+        if (responseText === "0") {
             jQuery('#dniError').hide();
             sessionStorage.setItem('flagDNI', 1);
             flagDNI = true;
@@ -269,9 +279,9 @@ function isDNIinBBDD(dni) {
             jQuery('#dniError').show();
 
         }
-
         todoComprobadoR_uno();
     });
+    
 
 
 }

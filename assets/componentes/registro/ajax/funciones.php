@@ -17,12 +17,10 @@ if (isset($_POST['proceso'])) {
         
         case 'cargaCentros':
             $respuesta = cargaCentros($_POST['localidad']);
-            break;
-        
+            break;  
         case 'anadeLocalidad':
             $respuesta = anadeLocalidad($_POST['localidad']);
-            break;
-        
+            break;  
         case 'actualizaLocalidades':
             $respuesta = actualizarLocalidades();
             break;
