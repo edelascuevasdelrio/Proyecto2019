@@ -43,3 +43,21 @@ $stmt2 = $objetoPDO->prepare("SELECT id, nombre FROM centro WHERE localidad = :l
             print_r($salida);
             
             
+echo "<hr>";
+
+
+function calculaEdad($fecha) {
+        //list($Y, $m, $d) = explode("-", $fecha);
+        $Y = intval(substr($fecha, 0, 4));
+        $m = intval(substr($fecha, 5, 2));
+        $d = intval(substr($fecha, 8, 2));
+
+        echo "<script>alert('LOOOOL');</script>";
+        return( date("md") < $m . $d ? date("Y") - $Y - 1 : date("Y") - $Y );
+    }
+
+    
+    $stmt_edad = $objetoPDO->prepare("SELECT fecha_nacimiento FROM persona WHERE id_usuario = 3");
+            $stmt_edad->execute();
+            $resultado = $stmt_edad->fetch();
+            echo calculaEdad($resultado[0]);

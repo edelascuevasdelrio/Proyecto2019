@@ -172,12 +172,15 @@ function init() {
     jQuery('#destino').change(cargaCentros);
 
     jQuery('#matricula').keyup(validaMatricula);
+    jQuery('#matricula').blur(validaMatricula);
 
-    jQuery('#username').blur(validaUsername);
+
+    jQuery('#username').change(validaUsername);
     jQuery('#passw').blur(validaPassword);
     jQuery('#passwR').blur(passworRepetida);
     jQuery('#email').blur(validaEmail);
 
+    jQuery('#finalizar').click(limpiaSesion);
 
     //ocultamos los dos mensajes de posibles errores
     jQuery('#telError').hide();
@@ -536,6 +539,7 @@ function isMatriculainBBDD(matricula) {
                     jQuery('#matriculaError').hide();
                     flagMatricula = true;
                     sessionStorage.setItem('flagMatricula', 1);
+                    todoComprobadoR_cuatro();
                 } else {
                     //HAY repetidos
                     jQuery('#matriculaError').html("La matricula ya está registrada");
@@ -544,6 +548,7 @@ function isMatriculainBBDD(matricula) {
                     sessionStorage.setItem('flagMatricula', 0);
                 }
             });
+
 }
 
 ///////////////////R5///////////////////
@@ -593,8 +598,10 @@ function isUsernameInBBDD(username) {
                     flagUsername = true;
                     sessionStorage.setItem("flagUsername", "1");
                 }
+                todoComprobadoR_cinco();
             });
-
+    
+            
 
 }
 
@@ -829,4 +836,10 @@ function todoComprobadoR_cinco() {
     }
 
 
+
+
+}
+
+function limpiaSesion() {
+    sessionStorage.clear();
 }

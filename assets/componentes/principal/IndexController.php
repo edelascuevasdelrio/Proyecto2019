@@ -33,7 +33,8 @@ class IndexController {
                     //En caso de que exista, iniciamos una sesión y pasamos a la siguiente página
                     session_start();
                     $_SESSION['logged'] = "yes";
-                    header('Location: ../registro/registro.php'); //PROVISIONAL
+                    header('Location: ../pasajero/pasajero.php');
+                    
                 } else {
                     $_SESSION['logged'] = "no";
                 }

@@ -58,7 +58,7 @@ function cargaCentros($localidad) {
     $media = $con->conectar();
 
     //Preparamos y ejecutamos la sentencia SQL
-    $stmt = $media->prepare("SELECT * FROM centro WHERE localidad = :localidad");
+    $stmt = $media->prepare("SELECT * FROM centro WHERE localidad = :localidad ORDER BY nombre");
     $stmt->bindParam(":localidad", $localidad);
     $stmt->execute();
 

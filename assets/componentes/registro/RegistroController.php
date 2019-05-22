@@ -126,12 +126,12 @@ class RegistroController {
                             <div class='form-group'>
                                 <label for='dni' class='control-label'>DNI</label>
                                 <input type='text' class='form-control' id='dni' name='dni' placeholder='Ej. 00000000A' required>
-                                <label class='control-label' id='dniError'></label>
+                                <label class='control-label errorLabel' id='dniError'></label>
                             </div>
                             <div class='form-group'>
                                 <label for='telefono' class='control-label'>Teléfono</label>
                                 <input id='telefono' type='text' class='form-control' id='telefono' name='telefono' placeholder='Ej. 999666222' required>
-                                <label class='control-label' id='telError' >Formato del telefono no es valido</label>
+                                <label class='control-label errorLabel' id='telError' >Formato del telefono no es valido</label>
                             </div>
                             <div class='form-group'>
                                 <label for='fecha_nacimiento' class='control-label'>Fecha de nacimiento</label>
@@ -279,8 +279,8 @@ class RegistroController {
                                         </div>
                                         <div class='form-group'>
                                             <label class='control-label'>Introduce la matricula</label>
-                                            <input type='text' class='form-control' id='matricula' name='matricula' placeholder='0000AAA' required>
-                                            <label id='matriculaError')></label>
+                                            <input type='text' class='form-control' id='matricula' name='matricula' placeholder='0000BBB' required>
+                                            <label id='matriculaError' class='control-label errorLabel'></label>
                                         </div>
                                         <div class='form-group'>
                                             <label class='control-label'>Una breve descripción del vehiculo</label>
@@ -323,7 +323,7 @@ class RegistroController {
                             <div class='form-group'>
                                 <label for='username' class='control-label'>Nombre de usuario</label>
                                 <input type='input' class='form-control' name='username' id='username'>
-                                <label id='userError' class='marginb15px'></label>
+                                <label id='userError' class='control-label marginb15px'></label>
                             </div>
                             
                             <div class='form-group'>
@@ -334,20 +334,20 @@ class RegistroController {
                                 <input type='password' class='form-control marginb15px fl-left' name='passw' id='passw'><span id='verPass' class='fl-left btn glyphicon glyphicon-eye-open' title='Ver contraseña'></span>
                             </row>
                             <row>
-                                <label id='passError'></label>
+                                <label id='passError' class='control-label errorLabel'></label>
                             </row>
                             </div>
                             
                             <div class='form-group'>
                                 <label for='passwR' class='control-label'>Repita la contraseña</label>
                                 <input type='password' class='form-control' name='passwR' id='passwR'>
-                                <label id='passwRerror'></label>
+                                <label id='passwRerror' class='control-label errorLabel'></label>
                             </div>
                             
                             <div class='form-group'>
                                 <label for='email' class='control-label'>Email</label>
                                 <input type='email' class='form-control' name='email' id='email' placeholder='ejemplo.email@servidor.xxx'>
-                                <label id='emailError'></label>
+                                <label id='emailError' class='control-label errorLabel'></label>
                             </div>
 
                             <div class='form-group'>         
@@ -365,7 +365,7 @@ class RegistroController {
             case 'rfin':
                 $model->registrarUsuario();
                 session_destroy(); //Destruimos la sesión para limpiar los datos
-                //header("Location: ../principal/princi.php");
+                header("Location: ../pasajero/pasajero.php");
                 break;
             default:
                 return "NOOOOOOOOPE, tenemos esto: " . $proceso;

@@ -49,7 +49,7 @@ $controller->recogeDatos();
 <html>
     <head>
         <meta charset="UTF-8">
-        <title></title>
+        <title>Registro</title>
 
         <!-- jQuery -->
         <script src="../../librerias/jquery/jquery.min.js" type="text/javascript"></script>

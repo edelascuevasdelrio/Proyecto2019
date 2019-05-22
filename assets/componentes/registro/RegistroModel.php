@@ -1,23 +1,7 @@
 <?php
-
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/**
- * Description of registroModel
- *
- * @author Enrique de las Cueva
- */
-
-//require_once 'C:\xampp\htdocs\Proyecto2019Git\assets\bbdd\credenciales.php';
-//require_once '.\..\..\bbdd\credenciales.php';
-require_once $_SERVER['DOCUMENT_ROOT']."/Proyecto2019Git/assets/bbdd/credenciales.php";
-
-
-
+//require_once $_SERVER['DOCUMENT_ROOT']."/Proyecto2019Git/assets/bbdd/credenciales.php";
+require_once 'C:\xampp\htdocs\Proyecto2019Git\assets\bbdd\credenciales.php';
+//require_once '/hosting/ecuevas/www/assets/bbdd/credenciales.php';
 
 
 class RegistroModel {
@@ -95,7 +79,7 @@ class RegistroModel {
         $salida = "";
 
         //SQL CONTRA LA BBDD
-        $sentencia = $con->prepare("SELECT nombre FROM localidad");
+        $sentencia = $con->prepare("SELECT nombre FROM localidad ORDER BY nombre");
         $sentencia->execute();
 
         //RECOGEMOS LOS RESULTADOS Y CONSTRUIMOS EL HTML
@@ -127,7 +111,7 @@ class RegistroModel {
 
         
         //SQL CONTRA LA BBDD
-        $sentencia = $con->prepare("SELECT * FROM localidad where id in ( SELECT localidad from centro )");
+        $sentencia = $con->prepare("SELECT * FROM localidad where id in ( SELECT localidad from centro) ORDER BY nombre");
         $sentencia->execute();
 
         //RECOGEMOS LOS RESULTADOS Y CONSTRUIMOS EL HTML
@@ -155,6 +139,8 @@ class RegistroModel {
         //Nos conectamos
         $con = self::conectar();
         $con->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        
+        $conduce = false;
         try {
             //Iniciamos la transacción (Ya que incluye varios INSERT y algunos dependen de otros
             $con->beginTransaction();
@@ -184,9 +170,9 @@ class RegistroModel {
             $stmt_edad = $con->prepare("SELECT fecha_nacimiento FROM persona WHERE id_usuario = $id_usuario");
             $stmt_edad->execute();
             $resultado = $stmt_edad->fetch();
-
+   
             //Aqui hacemos los calculos que nos devuelve la edad
-            $edad = self::CalculaEdad($resultado[0]);
+            $edad = self::CalculaEdad('$resultado[0]');
 
             $stmt2->bindParam(":edad", $edad);
             $stmt2->bindParam(":horario", $_SESSION['registro_horario']);
@@ -226,10 +212,18 @@ class RegistroModel {
                 $stmt5->bindParam(":descripcion", $_SESSION['registro_descrip']);
                 $stmt5->execute();
                 echo "vehiculo insertado <br>";
+                
+                $conduce = true;
             }
 
-
-
+            //INSERT para la tabla 'rol'
+            if($conduce){
+                $stmt6 = $con ->prepare("INSERT INTO rol VALUES ($id_usuario, 1, 1, 0)");
+            }else{
+                $stmt6 = $con ->prepare("INSERT INTO rol VALUES ($id_usuario, 0, 1, 0)");
+            }
+            $stmt6->execute();
+            
             $con->commit();
         } catch (Exception $e) {
             $con->rollBack();
