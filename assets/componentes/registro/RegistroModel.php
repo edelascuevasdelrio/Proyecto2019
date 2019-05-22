@@ -13,9 +13,13 @@
  */
 
 //require_once 'C:\xampp\htdocs\Proyecto2019Git\assets\bbdd\credenciales.php';
-require_once '.\..\..\bbdd\credenciales.php';
+//require_once '.\..\..\bbdd\credenciales.php';
+require_once $_SERVER['DOCUMENT_ROOT']."/Proyecto2019Git/assets/bbdd/credenciales.php";
 
-echo $_SERVER['DOCUMENT_ROOT']."";
+
+
+
+
 class RegistroModel {
 
     //put your code here
@@ -42,8 +46,9 @@ class RegistroModel {
         $password = $credenciales['password'];
 
         try {
+            $opciones = array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8");
             //Hacemos la conexión con la BBDD
-            $objetoPDO = new PDO('mysql:host=' . $hostname . ';dbname=' . $database . '', $username, $password);
+            $objetoPDO = new PDO('mysql:host=' . $hostname . ';dbname=' . $database . '', $username, $password, $opciones);
             $objetoPDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         } catch (PDOException $e) {
             //En caso de error, mostramos el mensaje

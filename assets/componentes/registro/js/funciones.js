@@ -176,6 +176,7 @@ function init() {
     jQuery('#username').blur(validaUsername);
     jQuery('#passw').blur(validaPassword);
     jQuery('#passwR').blur(passworRepetida);
+    jQuery('#email').blur(validaEmail);
 
 
     //ocultamos los dos mensajes de posibles errores
@@ -184,6 +185,9 @@ function init() {
     jQuery('#matriculaError').hide();
     jQuery('#userError').hide();
     jQuery('#passError').hide();
+    jQuery('#passwRerror').hide();
+    jQuery('#emailError').hide();
+
 
     jQuery('#verPass').mousedown(verPass);
     jQuery('#verPass').mouseup(ocultarPass);
@@ -259,13 +263,13 @@ function isDNIinBBDD(dni) {
         url: "ajax/funciones.php",
         type: "POST",
         data: {
-            proceso : "compruebaDNI",
+            proceso: "compruebaDNI",
             datos: dni
         }
     };
-    
-    jQuery.ajax(opciones).done(function(responseText){
-        
+
+    jQuery.ajax(opciones).done(function (responseText) {
+
         console.error("RESPONSETEXT: " + responseText);
         if (responseText === "0") {
             jQuery('#dniError').hide();
@@ -281,7 +285,7 @@ function isDNIinBBDD(dni) {
         }
         todoComprobadoR_uno();
     });
-    
+
 
 
 }
@@ -586,7 +590,7 @@ function isUsernameInBBDD(username) {
                 } else {
                     jQuery('#userError').hide();
 
-                    flagUsername = false;
+                    flagUsername = true;
                     sessionStorage.setItem("flagUsername", "1");
                 }
             });
@@ -673,9 +677,13 @@ function passworRepetida() {
     if (pass === passR) {
         flagPassR = true;
         sessionStorage.setItem("flagPassR", "1");
+        jQuery('#passwRerror').hide();
     } else {
         flagPassR = false;
         sessionStorage.setItem("flagPassR", "0");
+
+        jQuery('#passwRerror').html("Las contraseñas no coinciden!");
+        jQuery('#passwRerror').show();
     }
     todoComprobadoR_cinco();
 }
@@ -693,22 +701,37 @@ function passworRepetida() {
  *        -Tras cada comprobación, se llama al metodo correspondiente para verificar si están todos los datos correctos
  */
 function validaEmail() {
-    var expReg = /^[-\w.%+]{1,64}@(?:[A-Z0-9-]{1,63}\.){1,125}[A-Z]{2,63}$/;
-    if (expReg.test(jQuery('#email'))) {
+    var expReg = /^[-._º\w]+@[a-z]+\.[a-z]{2,3}$/;
+    if (expReg.test(jQuery('#email').val())) {
         flagEmail = true;
         sessionStorage.setItem("flagEmail", "1");
+        jQuery('#emailError').hide();
     } else {
         flagEmail = false;
         sessionStorage.setItem("flagEmail", "0");
+        jQuery('#emailError').html("El email no es valido");
+        jQuery('#emailError').show();
     }
     todoComprobadoR_cinco();
 }
 
-function verPass(){
-    jQuery('#passw').attr('type','text');
+/**
+ * FUNCION: verPass / ocultarPass
+ * 
+ * INPUTS: -
+ * 
+ * OUTPUTS: -
+ * 
+ * DESCRIPCION: Hace visible el campo de contraseña, o lo devuelve a puntos
+ * 
+ * NOTAS: -Los valores los recogemos mediante jQuery
+ *        -Tras cada comprobación, se llama al metodo correspondiente para verificar si están todos los datos correctos
+ */
+function verPass() {
+    jQuery('#passw').attr('type', 'text');
 }
-function ocultarPass(){
-    jQuery('#passw').attr('type','password');
+function ocultarPass() {
+    jQuery('#passw').attr('type', 'password');
 }
 
 ///////////////////COMPROBACIONES FINALES///////////////////
@@ -798,7 +821,7 @@ function todoComprobadoR_cuatro() {
  *              Si están todos a true, activa el botón para pasar a la siguente sección. Si no, lo bloquea.
  */
 function todoComprobadoR_cinco() {
-
+    console.log("Comprobando R5.....");
     if (flagUsername && flagPass && flagPassR && flagEmail) {
         jQuery('#finalizar').removeAttr('disabled');
     } else {
