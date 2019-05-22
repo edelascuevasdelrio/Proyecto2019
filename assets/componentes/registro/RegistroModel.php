@@ -167,12 +167,9 @@ class RegistroModel {
             $stmt2->bindParam(":apellidos", $_SESSION['registro_apellidos']);
             $stmt2->bindParam(":fecha", $_SESSION['registro_fecha_nacimiento']);
 
-            $stmt_edad = $con->prepare("SELECT fecha_nacimiento FROM persona WHERE id_usuario = $id_usuario");
-            $stmt_edad->execute();
-            $resultado = $stmt_edad->fetch();
    
             //Aqui hacemos los calculos que nos devuelve la edad
-            $edad = self::CalculaEdad('$resultado[0]');
+            $edad = self::CalculaEdad($_SESSION['registro_fecha_nacimiento']);
 
             $stmt2->bindParam(":edad", $edad);
             $stmt2->bindParam(":horario", $_SESSION['registro_horario']);

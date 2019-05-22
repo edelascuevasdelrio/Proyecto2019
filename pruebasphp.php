@@ -52,7 +52,7 @@ function calculaEdad($fecha) {
         $m = intval(substr($fecha, 5, 2));
         $d = intval(substr($fecha, 8, 2));
 
-        echo "<script>alert('LOOOOL');</script>";
+      
         return( date("md") < $m . $d ? date("Y") - $Y - 1 : date("Y") - $Y );
     }
 

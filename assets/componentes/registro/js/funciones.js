@@ -340,7 +340,8 @@ function validaTelefono() {
  *        -Tras cada comprobación, se llama al metodo correspondiente para verificar si están todos los datos correctos  
  */
 function validarNombre() {
-    if ($('#nombre').val() !== "") {
+    var nombre = jQuery('#nombre').val();
+    if (nombre !== "" && /[A-Z a-z]+/.test(nombre)) {
         sessionStorage.setItem('flagNombre', 1);
         flagNombre = true;
     } else {
