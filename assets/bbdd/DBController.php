@@ -17,10 +17,15 @@ class DBController {
 
     //put your code here
     public function conectar() {
-        $hostname = 'http://aglinformatica.es:6080/phpmyadmin';
-        $database = '2019p_ecuevas';
-        $username = 'ecuevas';
-        $password = 'ec_659';
+        $hostname = 'localhost';
+        $database = 'pruebaproyecto';
+        $username = 'root';
+        $password = '';
+        
+//        $hostname = 'http://aglinformatica.es:6080/phpmyadmin';
+//        $database = '2019p_ecuevas';
+//        $username = 'ecuevas';
+//        $password = 'ec_659';
         
         
         try {   

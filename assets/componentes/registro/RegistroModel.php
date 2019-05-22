@@ -1,49 +1,77 @@
 <?php
+//require_once $_SERVER['DOCUMENT_ROOT']."/Proyecto2019Git/assets/bbdd/credenciales.php";
+require_once 'C:\xampp\htdocs\Proyecto2019Git\assets\bbdd\credenciales.php';
+//require_once '/hosting/ecuevas/www/assets/bbdd/credenciales.php';
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 
-/**
- * Description of registroModel
- *
- * @author Enrique de las Cueva
- */
 class RegistroModel {
 
     //put your code here
 
-    private function conectar() {
-        $hostname = 'localhost';
-        $database = 'pruebaproyecto';
-        $username = 'root';
-        $password = '';
-
+    /**
+     * FUNCION: conectar
+     * 
+     * INPUTS: -
+     * 
+     * OUTPUTS: objetoPDO (PDO)
+     * 
+     * DESCRIPCION: Realiza la conexión con la BBDD
+     * 
+     * NOTAS:
+     */
+    public function conectar() {
+        //Recojemos los datos para la conexión
+        $credObject = new Credenciales();
+        $credenciales = $credObject ->getCredenciales();
+        
+        $hostname = $credenciales['hostname'];
+        $database = $credenciales['database'];
+        $username = $credenciales['username'];
+        $password = $credenciales['password'];
 
         try {
-
-            $objetoPDO = new PDO('mysql:host=' . $hostname . ';dbname=' . $database . '', $username, $password);
+            $opciones = array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8");
+            //Hacemos la conexión con la BBDD
+            $objetoPDO = new PDO('mysql:host=' . $hostname . ';dbname=' . $database . '', $username, $password, $opciones);
             $objetoPDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         } catch (PDOException $e) {
+            //En caso de error, mostramos el mensaje
             echo "ERROR: " . $e->getMessage();
         }
 
         return $objetoPDO;
     }
 
-    private function CalculaEdad($fecha) {
+    /**
+     * FUNCION: calculaEdad
+     * 
+     * INPUTS: fecha (date)
+     * 
+     * OUTPUTS: (int)
+     * 
+     * DESCRIPCION: En función de la fecha que se introduzca, te devuelve la edad comparando con la fecha actual
+     * 
+     * NOTAS:
+     */
+    private function calculaEdad($fecha) {
         //list($Y, $m, $d) = explode("-", $fecha);
-        $Y = intval(substr($fecha, 0,4));
-        $m = intval(substr($fecha, 5,2));
-        $d = intval(substr($fecha, 8,2));
-        
+        $Y = intval(substr($fecha, 0, 4));
+        $m = intval(substr($fecha, 5, 2));
+        $d = intval(substr($fecha, 8, 2));
+
         return( date("md") < $m . $d ? date("Y") - $Y - 1 : date("Y") - $Y );
     }
 
     /**
+     * FUNCION: localidadesUsuarios
      * 
+     * INPUTS: -
+     * 
+     * OUTPUTS: salida (string)
+     * 
+     * DESCRIPCION: Pide a la BBDD una lista de las localidades y las añade al desplegable
+     * 
+     * NOTAS:
      */
     public function localidadesUsuarios() {
         //VARIABLES
@@ -51,7 +79,7 @@ class RegistroModel {
         $salida = "";
 
         //SQL CONTRA LA BBDD
-        $sentencia = $con->prepare("SELECT nombre FROM localidad");
+        $sentencia = $con->prepare("SELECT nombre FROM localidad ORDER BY nombre");
         $sentencia->execute();
 
         //RECOGEMOS LOS RESULTADOS Y CONSTRUIMOS EL HTML
@@ -64,19 +92,33 @@ class RegistroModel {
         return $salida;
     }
 
+    /**
+     * FUNCION: localidadesCentros
+     * 
+     * INPUTS: -
+     * 
+     * OUTPUTS: salida (string)
+     * 
+     * DESCRIPCION: Pide a la BBDD una lista de las localidades que tienen centros asociados y
+     *              las añade al desplegable
+     * 
+     * NOTAS:
+     */
     public function localidadesCentros() {
         //VARIABLES
         $con = self::conectar();
-        $salida = "";
+        $salida = "<option></option>";
 
+        
         //SQL CONTRA LA BBDD
-        $sentencia = $con->prepare("SELECT nombre FROM localidad where id in ( SELECT localidad from centro )");
+        $sentencia = $con->prepare("SELECT * FROM localidad where id in ( SELECT localidad from centro) ORDER BY nombre");
         $sentencia->execute();
 
         //RECOGEMOS LOS RESULTADOS Y CONSTRUIMOS EL HTML
         $resultado = $sentencia->fetch();
         while ($resultado != null) {
-            $salida .= "<option value='" . $resultado[0] . "'>" . $resultado[0] . "</option>";
+            $salida .= "<option value='" . $resultado[0] . "'>" . $resultado[1] . "</option>";
+
             $resultado = $sentencia->fetch();
         }
 
@@ -85,8 +127,11 @@ class RegistroModel {
 
     /*
      * FUNCIÓN: registrarUsuario
+     * 
      * INPUTS: Entradas realizadas por variables en $_SESSION
+     * 
      * OUTPUT: -
+     * 
      * DESCRIPCIÓN:Inserta en la BBDD un nuevo usuario con todos los datos
      */
 
@@ -94,6 +139,8 @@ class RegistroModel {
         //Nos conectamos
         $con = self::conectar();
         $con->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        
+        $conduce = false;
         try {
             //Iniciamos la transacción (Ya que incluye varios INSERT y algunos dependen de otros
             $con->beginTransaction();
@@ -108,7 +155,7 @@ class RegistroModel {
 
             echo "usuario insertado <br>";
 
-            
+
             //Guardamos el index, que corresponderá al id del usuario insertado
             $id_usuario = $con->lastInsertId();
 
@@ -123,9 +170,9 @@ class RegistroModel {
             $stmt_edad = $con->prepare("SELECT fecha_nacimiento FROM persona WHERE id_usuario = $id_usuario");
             $stmt_edad->execute();
             $resultado = $stmt_edad->fetch();
-
+   
             //Aqui hacemos los calculos que nos devuelve la edad
-            $edad = self::CalculaEdad($resultado[0]);
+            $edad = self::CalculaEdad('$resultado[0]');
 
             $stmt2->bindParam(":edad", $edad);
             $stmt2->bindParam(":horario", $_SESSION['registro_horario']);
@@ -165,15 +212,25 @@ class RegistroModel {
                 $stmt5->bindParam(":descripcion", $_SESSION['registro_descrip']);
                 $stmt5->execute();
                 echo "vehiculo insertado <br>";
+                
+                $conduce = true;
             }
 
- 
-
+            //INSERT para la tabla 'rol'
+            if($conduce){
+                $stmt6 = $con ->prepare("INSERT INTO rol VALUES ($id_usuario, 1, 1, 0)");
+            }else{
+                $stmt6 = $con ->prepare("INSERT INTO rol VALUES ($id_usuario, 0, 1, 0)");
+            }
+            $stmt6->execute();
+            
             $con->commit();
         } catch (Exception $e) {
             $con->rollBack();
             echo "Fallo: " . $e->getMessage();
         }
     }
+
+
 
 }

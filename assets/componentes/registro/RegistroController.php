@@ -15,6 +15,17 @@ require_once './RegistroModel.php';
 
 class RegistroController {
 
+    /**
+     * FUNCION:recogeDatos
+     * 
+     * INPUTS: -
+     * 
+     * OUTPUTS: -
+     * 
+     * DESCRIPCION: Se encarga de subir los datos a la sesión
+     * 
+     * NOTAS:
+     */
     public function recogeDatos() {
         //Primera sección
         if (isset($_POST['nombre'])) {
@@ -78,14 +89,27 @@ class RegistroController {
         }
     }
 
+    
+    /**
+     * FUNCION: recibeDatos
+     * 
+     * INPUTS: proceso (string)
+     *         argumentos (array)
+     * 
+     * OUTPUTS: formulario (string)
+     * 
+     * DESCRIPCION: Devuelve el formulario ya construido en HTML
+     * 
+     * NOTAS:
+     */
     //Recibe el proceso que se desea controlar
     public function recibeDatos($proceso, $argumentos) {
 
         self::recogeDatos();
-        //el proceso indica en que parte del registro estamos, devolviendo en cada caso un HTML diferente
+        //El proceso indica en que parte del registro estamos, devolviendo en cada caso un HTML diferente
         $model = new RegistroModel();
         switch ($proceso) {
-            //r1: Primera sección del registro
+            
             case 'r1':
                 $formulario = "<form action='' method='POST'>
 
@@ -102,20 +126,22 @@ class RegistroController {
                             <div class='form-group'>
                                 <label for='dni' class='control-label'>DNI</label>
                                 <input type='text' class='form-control' id='dni' name='dni' placeholder='Ej. 00000000A' required>
+                                <label class='control-label errorLabel' id='dniError'></label>
                             </div>
                             <div class='form-group'>
                                 <label for='telefono' class='control-label'>Teléfono</label>
-                                <input type='text' class='form-control' id='telefono' name='telefono' placeholder='Ej. 999666222'>
+                                <input id='telefono' type='text' class='form-control' id='telefono' name='telefono' placeholder='Ej. 999666222' required>
+                                <label class='control-label errorLabel' id='telError' >Formato del telefono no es valido</label>
                             </div>
                             <div class='form-group'>
                                 <label for='fecha_nacimiento' class='control-label'>Fecha de nacimiento</label>
                                 <input type='date' class='form-control' id='fecha_nacimiento' name='fecha_nacimiento'>
                             </div>
                             <div class='form-group'>
-                                <input type='submit' class='btn btn-primary' id='siguiente' value='Siguiente'>
+                                <input type='submit' class='btn btn-primary' id='siguienter1' value='Siguiente' disabled>
                             </div>
                         </div>    
-                        <input type='hidden' name='section' value='r2'>
+                        <input type='hidden' id='section' name='section' value='r2'>
 
 
                     </div>
@@ -140,7 +166,7 @@ class RegistroController {
                                 <textarea class='form-control' id='saludo' name='saludo' placeholder='Hola!'></textarea>
                             </div>                           
                             <div class='form-group'>
-                                <input type='submit' class='btn btn-primary' id='siguiente' value='Siguiente'>
+                                <input type='submit' class='btn btn-primary' id='siguienter2' value='Siguiente'>
                             </div>
                         </div>    
                         <input type='hidden'  name='section' value='r3'>
@@ -148,12 +174,6 @@ class RegistroController {
 
                     </div>
                 </form>";
-
-//                echo $_SESSION['registro_nombre'];
-//                echo $_SESSION['registro_apellidos'];
-//                echo $_SESSION['registro_dni'];
-//                echo $_SESSION['registro_telefono'];
-//                echo $_SESSION['registro_fecha_nacimiento'];
 
                 return $formulario;
             case 'r3':
@@ -167,23 +187,31 @@ class RegistroController {
                             <div class='form-group'>
                                 <label for='localidad' class='control-label'>¿Desde donde sales?</label>
                                 <select id='localidad' class='form-control' name='localidad'>
+                                
                                 " .
-                        $model->localidadesUsuarios()
-                        .
-                        "</select>
+                                    $model->localidadesUsuarios(). //Cargamos las posibles localidades donde vive el
+                                                                   //pasajero
+                                "</select>
                                    ¿No aparece tu localidad? <a data-toggle='modal' data-target='#añadir' >Añadela desde aquí </a>
                             </div>
                             <div class='form-group'>
                                 <label for='destino' class='control-label'>¿Dónde estudias?</label>
-                                <select id='destino' class='form-control' name='destino'>
+                                <select id='destino' class='form-control' name='localDestino'>
+                                
                                 " .
-                        $model->localidadesCentros()
-                        .
-                        "</select>
+                                    $model->localidadesCentros().//Cargamos las localidades donde se encuentran
+                                                                   //los centros de estudio
+                                "</select>
+                            </div> 
+                            
+                            <div class='form-group'>
+                                <select id='destinoCentro' class='form-control' name='destino'>
+                                    <option></option>
+                                </select>
                             </div>
                             
                             <div class='form-group'>
-                                <input type='submit' class='btn btn-primary' id='siguiente' value='Siguiente'>
+                                <input type='submit' class='btn btn-primary' id='siguienter3' value='Siguiente' disabled>
                             </div>
                         </div>    
 
@@ -206,14 +234,12 @@ class RegistroController {
                         </div>
                         <div class='modal-footer'>
                           <button type='button' class='btn btn-secondary' data-dismiss='modal'>Cancelar</button>
-                          <button type='button' class='btn btn-primary'>Añadir</button>
+                          <button id='anadir' type='button' class='btn btn-primary'>Añadir</button>
                         </div>
                       </div>
                     </div>
                   </div>";
 
-//                echo $_SESSION['registro_horario'];
-//                echo $_SESSION['registro_saludo'];
                 return $formulario;
             case 'r4':
                 $formulario = "
@@ -253,14 +279,15 @@ class RegistroController {
                                         </div>
                                         <div class='form-group'>
                                             <label class='control-label'>Introduce la matricula</label>
-                                            <input type='text' class='form-control' id='matricula' name='matricula' placeholder='0000AAA' required>
+                                            <input type='text' class='form-control' id='matricula' name='matricula' placeholder='0000BBB' required>
+                                            <label id='matriculaError' class='control-label errorLabel'></label>
                                         </div>
                                         <div class='form-group'>
                                             <label class='control-label'>Una breve descripción del vehiculo</label>
                                             <textarea id='descrip'class='form-control' name='descrip'></textarea>
                                         </div>
                                         <div class='form-group'>
-                                            <input type='submit' class='btn btn-success' id='siguiente' name'siguiente' value='Siguiente'>
+                                            <input type='submit' class='btn btn-success' id='siguienter4' name'siguiente' value='Siguiente' disabled>
                                         </div> 
                                         <input type='hidden' name='section' value='r5'>
                                     
@@ -279,24 +306,6 @@ class RegistroController {
 
                     </div>
                 
-                <div class='modal fade' id='añadir' tabindex='-1' role='dialog' aria-labelledby='Añadir localidad' aria-hidden='true'>
-                    <div class='modal-dialog' role='document'>
-                      <div class='modal-content'>
-                        <div class='modal-header'>
-                          <h2 class='modal-title' >Añadir localidad</h2>
-                          
-                        </div>
-                        <div class='modal-body'>
-                          <label for='nombre_localidad' class='form-label'>Nombre: </label>
-                          <input type='text' id='nombre_localidad' name='nombre_localidad' class='form-control' placeholder='Ej. Santander'>
-                        </div>
-                        <div class='modal-footer'>
-                          <button type='button' class='btn btn-secondary' data-dismiss='modal'>Cancelar</button>
-                          <button type='button' class='btn btn-primary'>Añadir</button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
 ";
 
                 return $formulario;
@@ -314,25 +323,35 @@ class RegistroController {
                             <div class='form-group'>
                                 <label for='username' class='control-label'>Nombre de usuario</label>
                                 <input type='input' class='form-control' name='username' id='username'>
+                                <label id='userError' class='control-label marginb15px'></label>
                             </div>
                             
                             <div class='form-group'>
+                            <row>
                                 <label for='passw' class='control-label'>Contraseña</label>
-                                <input type='input' class='form-control' name='passw' id='passw'>
+                            </row>
+                            <row>
+                                <input type='password' class='form-control marginb15px fl-left' name='passw' id='passw'><span id='verPass' class='fl-left btn glyphicon glyphicon-eye-open' title='Ver contraseña'></span>
+                            </row>
+                            <row>
+                                <label id='passError' class='control-label errorLabel'></label>
+                            </row>
                             </div>
                             
                             <div class='form-group'>
                                 <label for='passwR' class='control-label'>Repita la contraseña</label>
-                                <input type='input' class='form-control' name='passwR' id='passwR'>
+                                <input type='password' class='form-control' name='passwR' id='passwR'>
+                                <label id='passwRerror' class='control-label errorLabel'></label>
                             </div>
                             
                             <div class='form-group'>
                                 <label for='email' class='control-label'>Email</label>
-                                <input type='email' class='form-control' name='email' id='email'>
+                                <input type='email' class='form-control' name='email' id='email' placeholder='ejemplo.email@servidor.xxx'>
+                                <label id='emailError' class='control-label errorLabel'></label>
                             </div>
 
                             <div class='form-group'>         
-                                <input type='submit' class='btn btn-success' id='siguiente' name'saltar' value='Registrar'>
+                                <input type='submit' class='btn btn-success' id='finalizar' name'finalizar' value='Registrar' disabled>
                             </div>
                         </div>    
 
@@ -342,19 +361,11 @@ class RegistroController {
                 </form>
                 
 ";
-
-
-//                  echo "Conduce: " . $_POST['conduce'];
-//                echo $_SESSION['registro_permiso'];
-//                echo $_SESSION['registro_tipovehiculo'];
-//                echo $_SESSION['registro_matricula'];
-//                echo $_SESSION['registro_descrip'];
-
                 return $formulario;
             case 'rfin':
                 $model->registrarUsuario();
-                session_destroy();
-                //header("Location: ../principal/princi.php");
+                session_destroy(); //Destruimos la sesión para limpiar los datos
+                header("Location: ../pasajero/pasajero.php");
                 break;
             default:
                 return "NOOOOOOOOPE, tenemos esto: " . $proceso;

@@ -5,7 +5,6 @@ $controller = new IndexController();
 if (!isset($_SESSION['sesion'])) {
 
     $_SESSION['sesion'] = 1;
-
 }
 
 if (isset($_POST['login'])) {
@@ -79,7 +78,7 @@ if (isset($_POST['sesdes'])) {
                                 <input id="password" type="password" class="form-control" name="password" placeholder="Password">
                             </div>
                             <br>
-                            <input type="submit" class="input-group fl-left" value="Iniciar sesión" name="login">
+                            <input type="submit" class="btn btn-success fl-left" value="Iniciar sesión" name="login">
                             <a id="registro" href="../registro/registro.php" class="text-center" >¿No tienes cuenta? Regístrate</a>
                         </form> 
                     </div>
