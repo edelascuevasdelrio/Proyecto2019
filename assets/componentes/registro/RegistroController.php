@@ -368,7 +368,7 @@ class RegistroController {
                 header("Location: ../pasajero/pasajero.php");
                 break;
             default:
-                return "NOOOOOOOOPE, tenemos esto: " . $proceso;
+                //return "NOOOOOOOOPE, tenemos esto: " . $proceso;
         }
     }
 
