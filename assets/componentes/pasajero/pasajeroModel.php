@@ -11,7 +11,8 @@
  *
  * @author Enrique de las Cueva
  */
-require_once 'C:\xampp\htdocs\Proyecto2019Git\assets\bbdd\credenciales.php';
+require_once $_SERVER['DOCUMENT_ROOT']."/Proyecto2019Git/assets/bbdd/credenciales.php";
+//require_once 'C:\xampp\htdocs\Proyecto2019Git\assets\bbdd\credenciales.php';
 //require_once '/hosting/ecuevas/www/assets/bbdd/credenciales.php';
 //session_start();
 
@@ -133,4 +134,68 @@ class PasajeroModel {
         return $salida;
     }
 
+     /**
+     * FUNCION: localidadesUsuarios
+     * 
+     * INPUTS: -
+     * 
+     * OUTPUTS: salida (string)
+     * 
+     * DESCRIPCION: Pide a la BBDD una lista de las localidades y las añade al desplegable
+     * 
+     * NOTAS:
+     */
+    public function localidadesUsuarios() {
+        //VARIABLES
+        $con = self::conectar();
+        $salida = "";
+
+        //SQL CONTRA LA BBDD
+        $sentencia = $con->prepare("SELECT * FROM localidad ORDER BY nombre");
+        $sentencia->execute();
+
+        //RECOGEMOS LOS RESULTADOS Y CONSTRUIMOS EL HTML
+        $resultado = $sentencia->fetch();
+        while ($resultado != null) {
+            $salida .= "<option value='" . $resultado[0] . "'>" . $resultado[1] . "</option>";
+            $resultado = $sentencia->fetch();
+        }
+
+        return $salida;
+    }
+    
+    /**
+     * FUNCION: localidadesCentros
+     * 
+     * INPUTS: -
+     * 
+     * OUTPUTS: salida (string)
+     * 
+     * DESCRIPCION: Pide a la BBDD una lista de las localidades que tienen centros asociados y
+     *              las añade al desplegable
+     * 
+     * NOTAS:
+     */
+    public function localidadesCentros() {
+        //VARIABLES
+        $con = self::conectar();
+        
+        //SQL CONTRA LA BBDD
+        $sentencia = $con->prepare("SELECT * FROM localidad where id in ( SELECT localidad from centro) ORDER BY nombre");
+        $sentencia->execute();
+
+        //RECOGEMOS LOS RESULTADOS Y CONSTRUIMOS EL HTML
+        $resultado = $sentencia->fetch();
+        while ($resultado != null) {
+            $salida .= "<option value='" . $resultado[0] . "'>" . $resultado[1] . "</option>";
+
+            $resultado = $sentencia->fetch();
+        }
+
+        return $salida;
+    }
+    
+    
+    
+    
 }

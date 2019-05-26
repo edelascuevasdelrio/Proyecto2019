@@ -13,11 +13,10 @@ $proceso = 'inicio';
 $argumentos = "";
 
 
-if(isset($_SESSION['usuario'])){
-   
+if (isset($_SESSION['usuario'])) {
+
     $_SESSION['idUsuario'] = $controller->recibeDatos('idUsuario', "");
 }
-
 ?>
 <html>
     <head>
@@ -59,9 +58,9 @@ if(isset($_SESSION['usuario'])){
                             </ul>
                         </li>
                         <li><a href="#">Page 2</a></li>
-                        <li id='addAnuncio'><a href='#' data-toggle='modal' data-target='#addAnuncio'>Publicar anuncio</a></li>
+                        <li id='addAnuncio'><a href='#' data-toggle='modal' data-target='#añadir'>Publicar anuncio</a></li>
                     </ul>
-                    
+
                 </div>
             </nav>
         </div>
@@ -73,80 +72,77 @@ if(isset($_SESSION['usuario'])){
         <div class="container">
             <?php
             echo $controller->recibeDatos($proceso, $argumentos);
-
             ?>
         </div>
 
         <div class='modal fade' id='añadir' tabindex='-1' role='dialog' aria-labelledby='Añadir localidad' aria-hidden='true'>
-                    <div class='modal-dialog' role='document'>
-                      <div class='modal-content'>
-                        <div class='modal-header'>
-                          <h2 class='modal-title' >Añadir localidad</h2>
-                          
-                        </div>
-                        <div class='modal-body'>
-                          <label for='nombre_localidad' class='form-label'>Nombre: </label>
-                          <input type='text' id='nombre_localidad' name='nombre_localidad' class='form-control' placeholder='Ej. Santander'>
-                        </div>
-                        <div class='modal-footer'>
-                          <button type='button' class='btn btn-secondary' data-dismiss='modal'>Cancelar</button>
-                          <button id='anadir' type='button' class='btn btn-primary'>Añadir</button>
-                        </div>
-                      </div>
+            <div class='modal-dialog' role='document'>
+                <div class='modal-content'>
+                    <div class='modal-header'>
+                        <h2 class='modal-title' >Añadir localidad</h2>
+
                     </div>
-                  </div>
-        
-        
-        
-        
-        
-        <div class='modal fade' id='addAnuncio' tabindex='-1' role='dialog' aria-labelledby='Nuevo anuncio' aria-hidden='true'>
-                    <div class='modal-dialog' role='document'>
-                      <div class='modal-content'>
-                        <div class='modal-header'>
-                          <h2 class='modal-title' >Nuevo anuncio</h2>
-                          
+                    <div class='modal-body'>
+
+                        <div class="form-group">
+                            <label for='localidadSalida' class='form-label'>Desde... </label>
+                            <select id='localidadSalida' name='localidadSalida' class='form-control'>
+                                <?php
+                                    echo "<option></option>";
+                                    echo $controller ->recibeDatos('cargaDesde', "");
+                                ?>
+                            </select>
                         </div>
-                        <div class='modal-body'>
-                          <label for='localidadSalida' class='form-label'>Desde... </label>
-                          <select id='localidadSalida' name='localidadSalida' class='form-control'>
-                              <option>CAMBIAMOS</option>
-                              <option>ESTO POR</option>
-                              <option>UN METODO</option>
-                              <option>QUE LAS CARGUE SOLITO</option>
-                          </select>
-                          <label for='localidadDestino' class='form-label'>Hasta... </label>
-                          <select id='localidadDestino' name='localidadDestino' class='form-control'>
-                              <option>CAMBIAMOS</option>
-                              <option>ESTO POR</option>
-                              <option>UN METODO</option>
-                              <option>QUE LAS CARGUE SOLITO</option>
-                          </select>
-                          <label for='horario' class='form-label'>Horario </label>
-                          <select id='horario' name='horario' class='form-control'>
-                              <option value='diurno'>Diurno</option>
-                              <option value='nocturno'>Nocturno</option>
-                          </select>
-                          <label for='periodo' class='form-label'>Periodo </label>
-                          <select id='periodo' name='periodo' class='form-control'>
-                              <option value='semanal'>Semanal</option>
-                              <option value='mensual'>Mensual</option>
-                              <option value='trimestral'>Trimestral</option>
-                              <option value='cuatrimestral'>Cuatrimestral</option>
-                          </select>
-                          <label for='plazas' class='form-label'>Plazas </label>
-                          <select id='plazas' name='plazas' class='form-control'>
-                              <option>Que nos lo llene un for hasta 9 o así</option>
-                          </select>
-                          
-                          
+                        <div class="form-group">
+                            <label for='localidadDestino' class='form-label'>Hasta... </label>
+                            <select id='localidadDestino' name='localidadDestino' class='form-control'>
+                                <?php
+                                    echo "<option></option>";
+                                    echo $controller ->recibeDatos('cargaHasta', "");
+                                ?>
+                            </select>
                         </div>
-                        <div class='modal-footer'>
-                          <button type='button' class='btn btn-secondary' data-dismiss='modal'>Cancelar</button>
-                          <button id='anadir' type='button' class='btn btn-primary'>Publicar</button>
+                        <div class="form-group">
+                            <label for='horario' class='form-label'>Horario </label>
+                            <select id='horario' name='horario' class='form-control'>
+                                <option value='diurno'>Diurno</option>
+                                <option value='nocturno'>Nocturno</option>
+                            </select>
                         </div>
-                      </div>
+                        <div class="form-group">
+                            <label for='periodo' class='form-label'>Periodo </label>
+                            <select id='periodo' name='periodo' class='form-control'>
+                                <option value='semanal'>Semanal</option>
+                                <option value='mensual'>Mensual</option>
+                                <option value='trimestral'>Trimestral</option>
+                                <option value='cuatrimestral'>Cuatrimestral</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for='plazas' class='form-label'>Plazas </label>
+                            <select id='plazas' name='plazas' class='form-control'>
+                                <?php
+                                    for ($index = 1; $index < 10; $index++) {
+                                        echo "<option value='$index'>$index</option>";
+                                    }
+                                ?>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for='precio' class='form-label'>Precio / persona </label>
+                            <input type="text" id='presona' name='periodo' class='form-control'>
+                                
+                        </div>
+
                     </div>
-                  </div>
+                    <div class='modal-footer'>
+                        <button type='button' class='btn btn-secondary' data-dismiss='modal'>Cancelar</button>
+                        <button id='anadir' type='button' class='btn btn-primary'>Añadir</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
     </body>
 </html>
