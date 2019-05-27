@@ -8,10 +8,29 @@ jQuery(document).ready(init);
 
 
 function init(){
-    jQuery('#addAnuncio').click(addAnuncio);
+    jQuery('#añadir').click(addAnuncio);
 }
 
 
 function addAnuncio(){
+    
+    var opciones = {
+        url: "ajax/funciones.php",
+        type: "POST",
+        data: {
+            proceso: 'addAnuncio',
+            localidadSalida: jQuery('#localidadSalida').val(),
+            localidadDestino: jQuery('#localidadDestino').val(),
+            horario: jQuery('#horario').val(),
+            periodo: jQuery('#periodo').val(),
+            plazas: jQuery('#plazas').val(),
+            precio: jQuery('#precio').val()
+        }
+        };
+        
+        jQuery.ajax(opciones)
+                .done(function (responseText){
+                    //////////////////////////////////////////////////////////
+        });
     
 }

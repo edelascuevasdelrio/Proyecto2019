@@ -26,9 +26,16 @@ class PasajeroController {
                 return $html;
             case 'idUsuario':
                 $id = $con->usuarioAsession();
-                
                 return $id;
-
+                
+            case 'cargaDesde':
+                $options = $con ->localidadesUsuarios() ;
+                return $options;
+                
+            case 'cargaHasta':
+                $options = $con ->localidadesCentros();
+                return $options;
+                
         }
     }
 
