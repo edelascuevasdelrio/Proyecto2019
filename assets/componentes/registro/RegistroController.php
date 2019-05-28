@@ -365,10 +365,10 @@ class RegistroController {
             case 'rfin':
                 $model->registrarUsuario();
                 session_destroy(); //Destruimos la sesión para limpiar los datos
-                header("Location: ../pasajero/pasajero.php");
+                header("Location: ../principal/princi.php");
                 break;
             default:
-                return "NOOOOOOOOPE, tenemos esto: " . $proceso;
+                //return "NOOOOOOOOPE, tenemos esto: " . $proceso;
         }
     }
 

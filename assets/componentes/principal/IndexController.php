@@ -29,14 +29,22 @@ class IndexController {
             case 'login':
                 //Hacemos una llamada al metodo login del modelo. Este devuelve true si existe en la BBDD
                 //un usuario con esas credenciales.
-                if ($model->login($args[0], $args[1])) {
+                $loged = $model->login($args[0], $args[1]);
+                if ($loged === 'true') {
                     //En caso de que exista, iniciamos una sesión y pasamos a la siguiente página
                     session_start();
                     $_SESSION['logged'] = "yes";
+                    $_SESSION['usuario'] = $args[0];
+
                     header('Location: ../pasajero/pasajero.php');
                     
                 } else {
-                    $_SESSION['logged'] = "no";
+                    if($loged === "noactivo"){
+                        $_SESSION['logged'] = "noactivo";
+                    }else{
+                        $_SESSION['logged'] = "no";
+                    }
+                    
                 }
                 break;
                 

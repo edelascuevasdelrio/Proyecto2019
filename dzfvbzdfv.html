@@ -12,35 +12,122 @@ and open the template in the editor.
         <link href="assets/librerias/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
-        <div>TODO write content</div>
+        <header>
+            <div id="cabecera" class="container-fluid">
+                <div class="row">
+                    <div id="titulo" class="col-md-12 col-sm-12">
+                        <img id="logo" class="fl-left" src="../../img/logos/LOGO128.png">
+                        <h1>Operación esto tiene que reventar</h1>
+                        <p>Una frase con gancho irá aqui (un slogan, vaya)</p>
+                    </div>
+                </div>
+                <nav class="navbar navbar-inverse">
+                    <div class="container-fluid">
+                        <div class="navbar-header">
+                            <a class="navbar-brand" href="#">WebSiteName</a>
+                        </div>
+                        <ul class="nav navbar-nav mr-auto">
+                            <li class="active"><a href="#">Home</a></li>
+                            <li class="dropdown">
+                                <a class="dropdown-toggle" data-toggle="dropdown" href="#">Conductor
+                                    <span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#">Mis anuncios</a></li>
+                                    <li><a href="#">Mis datos</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="../principal/princi.php">LogOUT</a></li>
+                            <li id='addAnuncio'><a href='#' data-toggle='modal' data-target='#añadir'>Publicar anuncio simple</a></li>
+                        </ul>
+
+                    </div>
+                </nav>
+            </div>
+
+
+        </header>
+
+
+        <div class="container">
+            <div class="col-md-5 col-sm-5">
+
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <h2>Detalles</h2>
+                    </div>
+                    <div class="panel-body">
+                        <div>
+                            <label>- Origen:</label>
+                            Santander
+                        </div>
+                        <div>
+                            <label>- Destino:</label>
+                            Santander
+                        </div>
+                        <div>
+                            <label>- Centro:</label>
+                            Linares
+                        </div>
+                        <div>
+                            <label>- Horario:</label>
+                            Mañanas
+                        </div>
+                        <div>
+                            <label>- Periodo:</label>
+                            
+                        </div>
+                        <div>
+                            <label>- Plazas:</label>
+                          
+                        </div>
+                        <div>
+                            <label>- Precio por pasajero:</label>
+                            
+                        </div>
+                    </div>
+                </div>
+
+
+
+            </div>
+
+            <div class="col-md-5 col-sm-5 col-md-offset-2 col-sm-offset-2">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <h2>Conductor</h2>
+                    </div>
+                    <div class="panel-body">
+                        <div>
+                            <label>- Nombre:</label>
+                            Paquito
+                        </div>
+                        <div>
+                            <label>- Edad:</label>
+                            32
+                        </div>
+                        <div>
+                            <label>- Telefono:</label>
+                            666555444
+                        </div>
+                        <div>
+                            <label>- Vehiculo:</label>
+                            Coche
+                        </div>
+                        <div>
+                            <label>- Descripción:</label>
+                            Blanco como el caballo de santiago
+                        </div>
+                        <div>
+                            <label>- Media valoraciones:</label>
+                            4,2
+                        </div>
+                    </div>
+
+                </div>
+
+
+            </div>
+        </div>
         
-        
-        
-        <table class="table table-hover">
-            <thead>
-                <tr>
-                    <th>aaaaaaaaaaaaaaaaa</th>
-                    <th>bbbbbbbbbbbbbbbbb</th>
-                    <th>ccccccccccccccccc</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>1111111111111111</td>
-                    <td>1111111111111111</td>
-                    <td>1111111111111111</td>
-                </tr>
-                <tr>
-                    <td>2222222222222222</td>
-                    <td>2222222222222222</td>
-                    <td>2222222222222222</td>
-                </tr>
-                <tr>
-                    <td>3333333333333333</td>
-                    <td>3333333333333333</td>
-                    <td>3333333333333333</td>
-                </tr>
-            </tbody>
-        </table>
     </body>
 </html>

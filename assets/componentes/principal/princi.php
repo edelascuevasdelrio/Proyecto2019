@@ -1,4 +1,5 @@
 <?php
+
 require_once './IndexController.php';
 $controller = new IndexController();
 
@@ -11,9 +12,9 @@ if (isset($_POST['login'])) {
     $controller->recibeDatos('login', [$_POST['usuario'], $_POST['password']]);
 }
 
-if (isset($_POST['sesdes'])) {
-    session_destroy();
-}
+//if (isset($_POST['sesdes'])) {
+//    session_destroy();
+//}
 ?>
 
 <html>
@@ -64,6 +65,8 @@ if (isset($_POST['sesdes'])) {
                             if (isset($_SESSION['logged'])) {
                                 if ($_SESSION['logged'] == "no") {
                                     echo "Error en las credenciales";
+                                }else{
+                                    echo "Tu usuario no está activo! Consulta con un administrador";
                                 }
                             }
                             ?></label>

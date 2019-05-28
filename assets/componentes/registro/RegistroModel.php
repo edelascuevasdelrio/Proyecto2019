@@ -1,6 +1,6 @@
 <?php
-//require_once $_SERVER['DOCUMENT_ROOT']."/Proyecto2019Git/assets/bbdd/credenciales.php";
-require_once 'C:\xampp\htdocs\Proyecto2019Git\assets\bbdd\credenciales.php';
+require_once $_SERVER['DOCUMENT_ROOT']."/Proyecto2019Git/assets/bbdd/credenciales.php";
+//require_once 'C:\xampp\htdocs\Proyecto2019Git\assets\bbdd\credenciales.php';
 //require_once '/hosting/ecuevas/www/assets/bbdd/credenciales.php';
 
 

@@ -7,20 +7,18 @@
  */
 
 /**
- * Description of pasajeroModel
+ * Description of conductorModel
  *
  * @author Enrique de las Cueva
  */
 require_once $_SERVER['DOCUMENT_ROOT']."/Proyecto2019Git/assets/bbdd/credenciales.php";
 //require_once 'C:\xampp\htdocs\Proyecto2019Git\assets\bbdd\credenciales.php';
 //require_once '/hosting/ecuevas/www/assets/bbdd/credenciales.php';
-//session_start();
+session_start();
 
-class PasajeroModel {
-    //put your code here
+class conductorModel {
     
-
-    /**
+     /**
      * FUNCION: conectar
      * 
      * INPUTS: -
@@ -53,41 +51,7 @@ class PasajeroModel {
 
         return $objetoPDO;
     }
-
-    /**
-     * FUNCION:usuarioAsession
-     * 
-     * INPUTS: -
-     * 
-     * OUTPUTS: $idUsuario (int)
-     * 
-     * DESCRIPCION: Sube a la sesion los datos que se puedan necesitar del usuario, en funcion de su username.
-     * 
-     * NOTAS:
-     */
-    function usuarioAsession($usuario){
-        $con = self::conectar();
-        //obtenemos el id del usuario segun su username
-        $stmt_idUsuario = $con ->prepare("SELECT id FROM usuario WHERE user = '$usuario'");
-        $stmt_idUsuario ->execute();
-        $idUsuario = $stmt_idUsuario->fetch()[0];
-//        echo $idUsuario; //Aquí si se muestra
-        
-        return $idUsuario;
-        
-    }
     
-    /**
-     * FUNCION: buscaAnuncios
-     * 
-     * INPUTS: -
-     * 
-     * OUTPUTS: $salida (string)
-     * 
-     * DESCRIPCION: Recoge los datos de los anuncios de la BBDD
-     * 
-     * NOTAS:
-     */
     function buscaAnuncios() {
         //Conectamos con la base de datos
         $con = self::conectar();
@@ -95,7 +59,7 @@ class PasajeroModel {
         //Debido a que necesitamo dos resultados de destino, que no tienen por qué ser el mismo,
         //tendremos que hacer dos consultas para obetener los nombres de las localidades
         //1º Obtenemos los datos de los distintos anuncios
-        $stmt = $con->prepare("SELECT * FROM anuncio"); //IGUAL AÑADIR UN ORDER BY, O AÑADIRLOS CON UNOS "FILTROS"
+        $stmt = $con->prepare("SELECT * FROM anuncio WHERE id_usuario = '" . $_SESSION['idUsuario'] . "'"); 
         $stmt->execute();
 
         $resultado = $stmt->fetch();
@@ -133,69 +97,6 @@ class PasajeroModel {
 
         return $salida;
     }
-
-     /**
-     * FUNCION: localidadesUsuarios
-     * 
-     * INPUTS: -
-     * 
-     * OUTPUTS: salida (string)
-     * 
-     * DESCRIPCION: Pide a la BBDD una lista de las localidades y las añade al desplegable
-     * 
-     * NOTAS:
-     */
-    public function localidadesUsuarios() {
-        //VARIABLES
-        $con = self::conectar();
-        $salida = "";
-
-        //SQL CONTRA LA BBDD
-        $sentencia = $con->prepare("SELECT * FROM localidad ORDER BY nombre");
-        $sentencia->execute();
-
-        //RECOGEMOS LOS RESULTADOS Y CONSTRUIMOS EL HTML
-        $resultado = $sentencia->fetch();
-        while ($resultado != null) {
-            $salida .= "<option value='" . $resultado[0] . "'>" . $resultado[1] . "</option>";
-            $resultado = $sentencia->fetch();
-        }
-
-        return $salida;
-    }
-    
-    /**
-     * FUNCION: localidadesCentros
-     * 
-     * INPUTS: -
-     * 
-     * OUTPUTS: salida (string)
-     * 
-     * DESCRIPCION: Pide a la BBDD una lista de las localidades que tienen centros asociados y
-     *              las añade al desplegable
-     * 
-     * NOTAS:
-     */
-    public function localidadesCentros() {
-        //VARIABLES
-        $con = self::conectar();
-        
-        //SQL CONTRA LA BBDD
-        $sentencia = $con->prepare("SELECT * FROM localidad where id in ( SELECT localidad from centro) ORDER BY nombre");
-        $sentencia->execute();
-
-        //RECOGEMOS LOS RESULTADOS Y CONSTRUIMOS EL HTML
-        $resultado = $sentencia->fetch();
-        while ($resultado != null) {
-            $salida .= "<option value='" . $resultado[0] . "'>" . $resultado[1] . "</option>";
-
-            $resultado = $sentencia->fetch();
-        }
-
-        return $salida;
-    }
-    
-    
     
     
 }

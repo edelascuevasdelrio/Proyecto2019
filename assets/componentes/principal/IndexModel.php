@@ -70,9 +70,15 @@ class IndexModel {
 
         //Si el resultado es null, quiere decir que no hay usuario con esos datos, por lo que devuelve false.
         if ($resultado == null) {
-            return false;
+            
+            return 'false';
         } else {
-            return true;
+            if($resultado['activo'] == 0){
+                return "noactivo";
+            }else {
+                return 'true';
+            }
+            
         }
     }
 

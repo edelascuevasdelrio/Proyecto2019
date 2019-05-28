@@ -1,0 +1,11 @@
+drop table acuerdo;
+drop table centro;
+drop table coche;
+drop table conductor;
+drop table localidad;
+drop table pasajero;
+drop table persona;
+drop table rol;
+drop table usuario;
+drop table usuario_centro;
+drop table valoracion;
