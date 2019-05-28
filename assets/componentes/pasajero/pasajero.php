@@ -14,8 +14,9 @@ $argumentos = "";
 
 
 if (isset($_SESSION['usuario'])) {
-
-    $_SESSION['idUsuario'] = $controller->recibeDatos('idUsuario', "");
+    
+    $_SESSION['idUsuario'] = $controller->recibeDatos('idUsuario', $_SESSION['usuario']);
+    echo "<input type='hidden' id='idUsuario' value='" . $_SESSION['idUsuario'] . "'>";
 }
 ?>
 <html>
@@ -28,7 +29,7 @@ if (isset($_SESSION['usuario'])) {
         <script src="../../librerias/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
         <!-- Propio -->
         <link href="../../css/pasajero/styles.css" rel="stylesheet" type="text/css"/>
-
+        <script src="js/funciones.js" type="text/javascript"></script>
 
         <title>Pasajero - Encuentra tu viaje</title>
     </head>
@@ -44,21 +45,20 @@ if (isset($_SESSION['usuario'])) {
             <nav class="navbar navbar-inverse">
                 <div class="container-fluid">
                     <div class="navbar-header">
-                        <a class="navbar-brand" href="#">WebSiteName</a>
+                        <a class="navbar-brand" href="./pasajero.php">Home</a>
                     </div>
                     <ul class="nav navbar-nav mr-auto">
-                        <li class="active"><a href="#">Home</a></li>
+                        
                         <li class="dropdown">
-                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Page 1
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Conductor
                                 <span class="caret"></span></a>
                             <ul class="dropdown-menu">
-                                <li><a href="../principal/princi.php">LogOUT</a></li>
-                                <li><a href="#">Page 1-2</a></li>
-                                <li><a href="#">Page 1-3</a></li>
+                                <li><a href="../conductor/conductor.php?sec=misanuncios">Mis anuncios</a></li>
+                                <li><a href="../conductor/conductor.php?sec=misdatos">Mis datos</a></li>
                             </ul>
                         </li>
-                        <li><a href="#">Page 2</a></li>
-                        <li id='addAnuncio'><a href='#' data-toggle='modal' data-target='#añadir'>Publicar anuncio</a></li>
+                        <li><a href="../principal/princi.php">LogOUT</a></li>
+                        <li id='addAnuncio'><a href='#' data-toggle='modal' data-target='#añadir'>Publicar anuncio simple</a></li>
                     </ul>
 
                 </div>
@@ -69,7 +69,7 @@ if (isset($_SESSION['usuario'])) {
     </header>
 
     <body>
-        <div class="container">
+        <div class="container" id="cuerpo">
             <?php
             echo $controller->recibeDatos($proceso, $argumentos);
             ?>
@@ -118,26 +118,26 @@ if (isset($_SESSION['usuario'])) {
                                 <option value='cuatrimestral'>Cuatrimestral</option>
                             </select>
                         </div>
-                        <div class="form-group">
+<!--                        <div class="form-group">
                             <label for='plazas' class='form-label'>Plazas </label>
                             <select id='plazas' name='plazas' class='form-control'>
-                                <?php
-                                    for ($index = 1; $index < 10; $index++) {
-                                        echo "<option value='$index'>$index</option>";
-                                    }
-                                ?>
+                                //<?php
+//                                    for ($index = 1; $index < 10; $index++) {
+//                                        echo "<option value='$index'>$index</option>";
+//                                    }
+//                                ?>
                             </select>
-                        </div>
-                        <div class="form-group">
+                        </div>-->
+<!--                        <div class="form-group">
                             <label for='precio' class='form-label'>Precio / persona </label>
                             <input type="text" id='presona' name='periodo' class='form-control'>
                                 
-                        </div>
+                        </div>-->
 
                     </div>
                     <div class='modal-footer'>
                         <button type='button' class='btn btn-secondary' data-dismiss='modal'>Cancelar</button>
-                        <button id='anadir' type='button' class='btn btn-primary'>Añadir</button>
+                        <button id='btnanadir' type='button' class='btn btn-primary'>Añadir</button>
                     </div>
                 </div>
             </div>

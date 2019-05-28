@@ -25,7 +25,7 @@ class PasajeroController {
                 $html = self::cargaTablaAnuncios();
                 return $html;
             case 'idUsuario':
-                $id = $con->usuarioAsession();
+                $id = $con->usuarioAsession($argumentos);
                 return $id;
                 
             case 'cargaDesde':
@@ -55,7 +55,7 @@ class PasajeroController {
     function cargaTablaAnuncios() {
         $con = new PasajeroModel();
         
-        $cabecera = ['Usuario', 'Punto de salida', 'Destino', 'Centro de estudios', 'Horario', 'Periodo'];
+        $cabecera = ['Usuario', 'Punto de salida', 'Destino', 'Centro de estudios', 'Horario', 'Periodo', 'ID'];
         $contenido = $con ->buscaAnuncios();
 
         return self::generaTabla($cabecera, $contenido);  
@@ -83,9 +83,9 @@ class PasajeroController {
             </thead>
             <tbody>";
                 foreach ($contenido as $value) {
-                    $salida .="<tr id='".$value[0]."'>";
+                    $salida .="<tr id='".$value[count($value)-1]."'>";
                     foreach ($value as $key => $value2){
-                        $salida.= "<td id='".$value[0].$key."'>$value2</td>";
+                        $salida.= "<td id='".$value[count($value)-1]."_".$key."'>".ucfirst($value2)."</td>";
                     }
                     
                     $salida .="</tr>";

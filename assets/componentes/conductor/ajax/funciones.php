@@ -1,15 +1,11 @@
 <?php
 
-/*
+/* 
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
-require_once '../pasajeroModel.php';
-
-
-
+require_once '../conductorModel.php';
 if (isset($_POST['proceso'])) {
     switch ($_POST['proceso']) {
         case 'addAnuncio':
@@ -23,38 +19,6 @@ if (isset($_POST['proceso'])) {
     }
 }
 
-/**
- * FUNCION: addAnuncio
- * 
- * INPUTS: -
- * 
- * OUTPUTS: -
- * 
- * DESCRIPCION: Realiza la insercion del nuevo anuncio en la BBDD
- * 
- * NOTAS: SOLO incluye los datos básicos, los insert completos, estan en el componente de Conductor
- */
-function addAnuncio() {
-    //conectamos con la base de datos
-    $con = new PasajeroModel();
-    $model = $con->conectar();
-
-    //preparamos la sentencia de 
-    $stmt = $model->prepare("INSERT INTO anuncio values (NULL, :id_usuario, :salida, :destino, NULL, :horario, :periodo, NULL, NULL)");
-    $stmt->bindParam(":id_usuario", $_POST['idUsuario']);
-    $stmt->bindParam(":salida", $_POST['localidadSalida']);
-    $stmt->bindParam(":destino", $_POST['localidadDestino']);
-    $stmt->bindParam(":horario", $_POST['horario']);
-    $stmt->bindParam(":periodo", $_POST['periodo']);
-
-    //lanzamos la consulta
-    try {
-        $stmt->execute();
-        echo "OK";
-    } catch (Exception $ex) {
-        echo $ex->getMessage();
-    }
-}
 
 /**
  * FUNCION: cargaDetalle
@@ -69,7 +33,7 @@ function addAnuncio() {
  */
 function cargaDetalle($idAnuncio) {
     //conectamos con la bbdd
-    $con = new PasajeroModel();
+    $con = new ConductorModel();
     $model = $con->conectar();
 
     //obtenemos lo datos necesarios de las distintas tablas:
