@@ -47,7 +47,7 @@ require_once './conductorController.php';
                                 </ul>
                             </li>
                             <li><a href="../principal/princi.php">LogOUT</a></li>
-                            <li id='addAnuncio'><a href='#' data-toggle='modal' data-target='#añadir'>Publicar anuncio simple</a></li>
+                            
                         </ul>
 
                     </div>
@@ -58,6 +58,8 @@ require_once './conductorController.php';
         </header>
         <section>
             <div class='container' id="cuerpo">
+                <h2 class="text-center">Mis viajes publicados</h2>
+                <h4 class="text-center">Aquí podrás editar los viajes que hayas publicado anteriormente</h4>
                 <?php
                 $controller = new ConductorController();
                 $argumentos = "";
@@ -71,9 +73,7 @@ require_once './conductorController.php';
                     }
                 }
 
-                if (isset($_GET['misanuncios'])) {
-                    
-                }
+
                 ?>
             </div>
         </section>

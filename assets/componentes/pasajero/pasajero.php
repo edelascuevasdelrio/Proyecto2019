@@ -70,6 +70,9 @@ if (isset($_SESSION['usuario'])) {
 
     <body>
         <div class="container" id="cuerpo">
+            
+            <h2 class="text-center">Encuentra tu viaje</h2>
+            
             <?php
             echo $controller->recibeDatos($proceso, $argumentos);
             ?>

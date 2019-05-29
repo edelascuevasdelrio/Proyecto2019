@@ -28,6 +28,11 @@ class ConductorController {
                 $html = self::cargaTablaAnuncios();
                 
                 return $html;
+            case 'editaAnuncio':
+                $html = self::editarAnuncio($argumentos);
+                return $html;
+            default:
+                
         }
         
     }
@@ -96,5 +101,7 @@ class ConductorController {
         
         return $salida;
     }
+ 
+
     
 }

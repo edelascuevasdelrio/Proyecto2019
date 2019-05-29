@@ -1,6 +1,6 @@
 <?php
 
-/* 
+/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -16,9 +16,11 @@ if (isset($_POST['proceso'])) {
             $html = cargaDetalle($_POST['idAnuncio']);
             echo $html;
             break;
+        case 'editaAnuncio':
+            $html = editarAnuncio($_POST['idAnuncio']);
+            echo $html;
     }
 }
-
 
 /**
  * FUNCION: cargaDetalle
@@ -59,17 +61,17 @@ function cargaDetalle($idAnuncio) {
     $localidadDestino = $stmt_localidad->fetch();
 
     //tabla cerntro
-    $stmt_centro = $model ->prepare("SELECT * FROM centro WHERE id = :id");
+    $stmt_centro = $model->prepare("SELECT * FROM centro WHERE id = :id");
     $stmt_centro->bindParam(":id", $resultado_anuncio['centro']);
     $stmt_centro->execute();
-    
-    $centro = $stmt_centro ->fetch();
-    
+
+    $centro = $stmt_centro->fetch();
+
     //tabla coche
-    $stmt_coche = $model ->prepare("SELECT * FROM coche ch, conductor c WHERE ch.id_propietario = c.id AND c.id_usuario = :idUsuario");
-    $stmt_coche ->bindParam(":idUsuario", $resultado_anuncio['id_usuario']);
-    $stmt_coche ->execute();
-    
+    $stmt_coche = $model->prepare("SELECT * FROM coche ch, conductor c WHERE ch.id_propietario = c.id AND c.id_usuario = :idUsuario");
+    $stmt_coche->bindParam(":idUsuario", $resultado_anuncio['id_usuario']);
+    $stmt_coche->execute();
+
     $coche = $stmt_coche->fetch();
 
     $html = "<div class='container'>
@@ -166,6 +168,82 @@ function cargaDetalle($idAnuncio) {
 
             </div>
         </div>";
-    
+
+    return $html;
+}
+
+/**
+ * FUNCION: editarAnuncio
+ * 
+ * INPUTS: $idAnuncio)
+ * 
+ * OUTPUTS: $salida (string)
+ * 
+ * DESCRIPCION: Prepara el HTML para la edición de un anuncio
+ * 
+ * NOTAS:
+ */
+function editarAnuncio($id) {
+    //conectamos con la bbdd
+    $con = new ConductorModel();
+    $model = $con->conectar();
+
+    //Buscamos los datos necesarios para cargar el detalle
+    $stmt_anuncio = $model->prepare("SELECT * FROM anuncio WHERE id = $id");
+    $stmt_anuncio->execute();
+    $anuncio = $stmt_anuncio->fetch();
+
+    $html = "<div class='container'>
+            <h1>Editar anuncio</h1>
+
+            <div class='form-group'>
+                <label>Salida</label>
+                <select class='form-control' id='salida'>".
+            
+                $con->localidadesUsuarios($anuncio['salida'])
+            ."
+                
+                </select>
+            </div>
+            <div class='form-group'>
+                <label>Destino</label>
+                <select id='destino' class='form-control'>".
+            
+                $con->localidadesCentros($anuncio['destino'])
+            ."</select>
+            </div>
+            <div class='form-group'>
+                <label>Centro</label>
+                <select id='centro' class='form-control'>".
+            
+                $con->cargaCentros($anuncio['centro'])
+            ."</select>
+            </div>
+            <div class='form-group'>
+                <label>horario</label>
+                <select id='horario' class='form-control'>
+                    <option>los 2 que hay</option>
+                </select>
+            </div>
+            <div class='form-group'>
+                <label>Periodo</label>
+                <select id='periodo' class='form-control'>
+                    <option>Uno de los catro</option>
+                </select>
+            </div>
+            <div class='form-group'>
+                <label>Plazas</label>
+                <input type='text' class='form-control' id='plazas'>
+                   
+            </div>
+            <div class='form-group'>
+                <label>Precio</label>
+                <input type='text' class='form-control' id='precio'>
+            </div>
+            
+            <button id='btnEditar' class='btn btn-success'>Editar</button>
+            <button id='btnCancelar' class='btn btn-danger'>Cancelar</button>
+        </div>";
+
     return $html;
 }

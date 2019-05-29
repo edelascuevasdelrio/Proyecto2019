@@ -16,7 +16,7 @@ and open the template in the editor.
             <div id="cabecera" class="container-fluid">
                 <div class="row">
                     <div id="titulo" class="col-md-12 col-sm-12">
-                        <img id="logo" class="fl-left" src="../../img/logos/LOGO128.png">
+                        <img id="logo" src="../../img/logos/LOGO128.png">
                         <h1>Operación esto tiene que reventar</h1>
                         <p>Una frase con gancho irá aqui (un slogan, vaya)</p>
                     </div>
@@ -49,85 +49,51 @@ and open the template in the editor.
 
 
         <div class="container">
-            <div class="col-md-5 col-sm-5">
+            <h1>Editar anuncio</h1>
 
-                <div class="panel panel-info">
-                    <div class="panel-heading">
-                        <h2>Detalles</h2>
-                    </div>
-                    <div class="panel-body">
-                        <div>
-                            <label>- Origen:</label>
-                            Santander
-                        </div>
-                        <div>
-                            <label>- Destino:</label>
-                            Santander
-                        </div>
-                        <div>
-                            <label>- Centro:</label>
-                            Linares
-                        </div>
-                        <div>
-                            <label>- Horario:</label>
-                            Mañanas
-                        </div>
-                        <div>
-                            <label>- Periodo:</label>
-                            
-                        </div>
-                        <div>
-                            <label>- Plazas:</label>
-                          
-                        </div>
-                        <div>
-                            <label>- Precio por pasajero:</label>
-                            
-                        </div>
-                    </div>
-                </div>
-
-
-
+            <div class="form-group">
+                <label>Salida</label>
+                <select class="form-control" id="salida">
+                    <option>Santander</option>
+                </select>
             </div>
-
-            <div class="col-md-5 col-sm-5 col-md-offset-2 col-sm-offset-2">
-                <div class="panel panel-info">
-                    <div class="panel-heading">
-                        <h2>Conductor</h2>
-                    </div>
-                    <div class="panel-body">
-                        <div>
-                            <label>- Nombre:</label>
-                            Paquito
-                        </div>
-                        <div>
-                            <label>- Edad:</label>
-                            32
-                        </div>
-                        <div>
-                            <label>- Telefono:</label>
-                            666555444
-                        </div>
-                        <div>
-                            <label>- Vehiculo:</label>
-                            Coche
-                        </div>
-                        <div>
-                            <label>- Descripción:</label>
-                            Blanco como el caballo de santiago
-                        </div>
-                        <div>
-                            <label>- Media valoraciones:</label>
-                            4,2
-                        </div>
-                    </div>
-
-                </div>
-
-
+            <div class="form-group">
+                <label>Destino</label>
+                <select id="destino" class="form-control">
+                    <option>Santander</option>
+                </select>
             </div>
+            <div class="form-group">
+                <label>Centro</label>
+                <select id="centro" class="form-control">
+                    <option>En función del destino</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>horario</label>
+                <select id="horario" class="form-control">
+                    <option>los 2 que hay</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Periodo</label>
+                <select id="periodo" class="form-control">
+                    <option>Uno de los catro</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Plazas</label>
+                <input type="text" class="form-control" id="plazas">
+                   
+            </div>
+            <div class="form-group">
+                <label>Precio</label>
+                <input type="text" class="form-control" id="precio">
+            </div>
+            
+            <button id="btnEditar" class="btn btn-success">Editar</button>
+            <button id="btnCancelar" class="btn btn-danger">Cancelar</button>
         </div>
-        
+
     </body>
 </html>
