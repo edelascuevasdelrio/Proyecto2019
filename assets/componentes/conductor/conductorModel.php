@@ -194,7 +194,8 @@ class conductorModel {
      * 
      * NOTAS: localidad es un "string" porque lo recibimos así desde el POST.
      */
-    function cargaCentros($localidad) {
+    function cargaCentros($idCentro, $localidad) {
+       
         //Preparamos la salida
         $salida = "";
 
@@ -210,12 +211,23 @@ class conductorModel {
         //Recogemos los resultados y construimos la SQL
         $resultado = $stmt->fetch();
         while ($resultado != null) {
-            $salida .= "<option value='" . $resultado[0] . "'>" . $resultado[1] . "</option>";
+            
+
+            if($idCentro == $resultado[0]){
+                fputs($log, "Coinciden \n\n");
+
+                $salida .= "<option value='" . $resultado[0] . "' selected>" . $resultado[1] . "</option>";
+            }else{
+                
+                $salida .= "<option value='" . $resultado[0] . "'>" . $resultado[1] . "</option>";
+            }
+            
 
             $resultado = $stmt->fetch();
         }
+      
+        return $salida;
 
-        echo $salida;
     }
 
 }

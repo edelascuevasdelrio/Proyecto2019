@@ -37,11 +37,11 @@ function clickFila() {
             idAnuncio: jQuery(this).attr('id')
         }
     };
-
+    
+//    alert(opciones['data']['idAnuncio']);
     jQuery.ajax(opciones)
             .done(function (responseText) {
-                alert("DONE");
-                alert(responseText);
+                console.log(responseText);
                 jQuery('#cuerpo').html(responseText);
             }).fail(function () {
         alert("ERRRROOOOOR");
@@ -62,6 +62,7 @@ function clickFila() {
  * NOTAS:
  */
 function editarAnuncio() {
+    console.log("EDITAR ANUNCIO");
     var opciones = {
         url: "ajax/funciones.php",
         type: "POST",
@@ -73,8 +74,7 @@ function editarAnuncio() {
 
     jQuery.ajax(opciones)
             .done(function (responseText) {
-                alert("DONE");
-                alert(responseText);
+                
                 jQuery('#cuerpo').html(responseText);
             }).fail(function () {
         alert("ERRRROOOOOR");
