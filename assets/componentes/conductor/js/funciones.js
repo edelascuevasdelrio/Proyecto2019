@@ -10,6 +10,7 @@ jQuery(document).ready(init);
 function init() {
     console.log("INIT DESDE CONDUCTOR");
     jQuery('tr').click(clickFila);
+
 }
 
 
@@ -28,21 +29,22 @@ function clickFila() {
     console.log("click en la fila");
     //location.href = "../conductor/conductor.php?id=" + jQuery(this).attr('id');
     //alert(jQuery(this).attr('id'));
-
+    sessionStorage.setItem("idAnuncio", jQuery(this).attr('id'));
     var opciones = {
         url: "ajax/funciones.php",
         type: "POST",
         data: {
-            proceso: 'editaAnuncio',
+            proceso: 'formEditarAnuncio',
             idAnuncio: jQuery(this).attr('id')
         }
     };
-    
+
 //    alert(opciones['data']['idAnuncio']);
     jQuery.ajax(opciones)
             .done(function (responseText) {
-                console.log(responseText);
                 jQuery('#cuerpo').html(responseText);
+                jQuery('#btnEditar').click(editarAnuncio);
+//                jQuery('#destino').change(recargarDestinos);
             }).fail(function () {
         alert("ERRRROOOOOR");
     });
@@ -50,14 +52,15 @@ function clickFila() {
 
 }
 
+
 /**
  * FUNCION: editarAnuncio
  * 
- * INPUTS: $idAnuncio)
+ * INPUTS: $idAnuncio
  * 
- * OUTPUTS: $salida (string)
+ * OUTPUTS: -
  * 
- * DESCRIPCION: Hace una peticion para recibir un HTML con los datos
+ * DESCRIPCION: Coge los nuevos datos del formulario y actualiza el registro correspondiente en la bbdd
  * 
  * NOTAS:
  */
@@ -67,19 +70,47 @@ function editarAnuncio() {
         url: "ajax/funciones.php",
         type: "POST",
         data: {
-            proceso: 'editaAnuncio',
-            idAnuncio: jQuery(this).attr('id')
+            proceso: 'editarAnuncio',
+            idAnuncio: sessionStorage.getItem("idAnuncio"),
+            datos: {
+                
+                salida: jQuery('#salida').val(),
+                destino: jQuery('#destino').val(),
+                centro: jQuery('#centro').val(),
+                horario: jQuery('#horario').val(),
+                periodo: jQuery('#periodo').val(),
+                plazas: jQuery('#plazas').val(),
+                precio: jQuery('#precio').val()
+            }
         }
     };
-
-    jQuery.ajax(opciones)
-            .done(function (responseText) {
-                
-                jQuery('#cuerpo').html(responseText);
-            }).fail(function () {
-        alert("ERRRROOOOOR");
-    });
-
-
-}
     
+    jQuery.ajax(opciones).done(function(responseText){
+       // header("Location: conductor.php?sec=misanuncios&stat=success");
+       $(location).attr('href', "conductor.php?sec=misanuncios&stat=success");
+       alert(responseText);
+    }).fail(function(){
+        //header("Location: conductor.php?sec=misanuncios&stat=fail");
+        $(location).attr('href', "conductor.php?sec=misanuncios&stat=fail");
+        alert(responseText);
+    });
+    
+}
+
+
+function recargarDestinos(){
+    var opciones = {
+        url: "ajax/funciones.php",
+        type: "POST",
+        data: {
+            proceso: 'recargarCentros',
+            idLocalidad: jQuery('#destino').val()
+            
+        }
+    };
+    
+     jQuery.ajax(opciones).done(function(responseText){
+        jQuery('#destino').html(responseText);
+       alert(responseText);
+    });
+}

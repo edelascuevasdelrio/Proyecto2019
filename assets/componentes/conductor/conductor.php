@@ -42,8 +42,8 @@ require_once './conductorController.php';
                                 <a class="dropdown-toggle" data-toggle="dropdown" href="#">Conductor
                                     <span class="caret"></span></a>
                                 <ul class="dropdown-menu">
-                                    <li><a href="../conductor/conductor.php?sec=misanuncios">Mis anuncios</a></li>
-                                    <li><a href="../conductor/conductor.php?sec=misdatos">Mis datos</a></li>
+                                    <li><a href="conductor.php?sec=misanuncios">Mis anuncios</a></li>
+                                    <li><a href="conductor.php?sec=misdatos">Mis datos</a></li>
                                 </ul>
                             </li>
                             <li><a href="../principal/princi.php">LogOUT</a></li>

@@ -214,7 +214,7 @@ class conductorModel {
             
 
             if($idCentro == $resultado[0]){
-                fputs($log, "Coinciden \n\n");
+                
 
                 $salida .= "<option value='" . $resultado[0] . "' selected>" . $resultado[1] . "</option>";
             }else{

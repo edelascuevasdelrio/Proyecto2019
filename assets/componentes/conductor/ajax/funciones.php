@@ -16,9 +16,15 @@ if (isset($_POST['proceso'])) {
             $html = cargaDetalle($_POST['idAnuncio']);
             echo $html;
             break;
-        case 'editaAnuncio':
-            $html = editaAnuncio($_POST['idAnuncio']);
+        case 'formEditarAnuncio':
+            $html = formEditarAnuncio($_POST['idAnuncio']);
             echo $html;
+            break;
+        case 'editarAnuncio':
+            $html = editarAnuncio($_POST['idAnuncio'], $_POST['datos']);
+            echo $html;
+            break;
+        
     }
 }
 
@@ -173,9 +179,9 @@ function cargaDetalle($idAnuncio) {
 }
 
 /**
- * FUNCION: editarAnuncio
+ * FUNCION: formEditarAnuncio
  * 
- * INPUTS: $idAnuncio)
+ * INPUTS: $id
  * 
  * OUTPUTS: $salida (string)
  * 
@@ -183,7 +189,7 @@ function cargaDetalle($idAnuncio) {
  * 
  * NOTAS:
  */
-function editaAnuncio($id) {
+function formEditarAnuncio($id) {
     //conectamos con la bbdd
     $con = new ConductorModel();
     $model = $con->conectar();
@@ -193,12 +199,52 @@ function editaAnuncio($id) {
     $stmt_anuncio->execute();
     $anuncio = $stmt_anuncio->fetch();
 
+    //preparamos algunos en concreto 
     if ($anuncio['horario'] == "diurno") {
         $horario = "<option value='diurno' selected>Diurno</option>"
-                . "<option value='nocturno>Nocturno</option>";
+                . "<option value='nocturno'>Nocturno</option>";
     } else {
         $horario = "<option value='diurno'>Diurno</option>"
                 . "<option value='nocturno' selected>Nocturno</option>";
+    }
+
+    if ($anuncio['plazas'] != NULL) {
+        $plazas = "<input type='text' class='form-control' id='plazas' value='" . $anuncio['plazas'] . "'>";
+    } else {
+        $plazas = "<input type='text' class='form-control' id='plazas'>";
+    }
+
+    if ($anuncio['precio'] != NULL) {
+        $precio = "<input type='text' class='form-control' id='precio' value='" . $anuncio['precio'] . "'>";
+    } else {
+        $precio = "<input type='text' class='form-control' id='precio'>";
+    }
+
+    switch ($anuncio['periodo']) {
+        case "semanal":
+            $periodo = "<option value='semanal' selected>Semanal</option>
+                    <option value='mensual'>Mensual</option>
+                    <option value='trimestral'>Trimestral</option>
+                    <option value='cuatrimestral'>Cuatrimestral</option>";
+            break;
+        case "mensual":
+            $periodo = "<option value='semanal'>Semanal</option>
+                    <option value='mensual' selected>Mensual</option>
+                    <option value='trimestral'>Trimestral</option>
+                    <option value='cuatrimestral'>Cuatrimestral</option>";
+            break;
+        case "trimestral":
+            $periodo = "<option value='semanal' selected>Semanal</option>
+                    <option value='mensual'>Mensual</option>
+                    <option value='trimestral' selected>Trimestral</option>
+                    <option value='cuatrimestral'>Cuatrimestral</option>";
+            break;
+        case "cuatrimestral":
+            $periodo = "<option value='semanal' selected>Semanal</option>
+                    <option value='mensual'>Mensual</option>
+                    <option value='trimestral'>Trimestral</option>
+                    <option value='cuatrimestral' selected>Cuatrimestral</option>";
+            break;
     }
 
     $html = "<div class='container'>
@@ -207,53 +253,53 @@ function editaAnuncio($id) {
             <div class='form-group'>
                 <label>Salida</label>
                 <select class='form-control' id='salida'>
-                <option></option>".
-
-    $con->localidadesUsuarios($anuncio['salida'])
-    ."
+                <option></option>" .
+            $con->localidadesUsuarios($anuncio['salida'])
+            . "
                 
                 </select>
             </div>
             <div class='form-group'>
                 <label>Destino</label>
                 <select id='destino' class='form-control'>
-                <option></option>".
-
-    $con->localidadesCentros($anuncio['destino'])
-    ."</select>
+                <option></option>" .
+            $con->localidadesCentros($anuncio['destino'])
+            . "</select>
             </div>
             <div class='form-group'>
                 <label>Centro</label>
                 <select id='centro' class='form-control'>
-                <option></option>".
-                    $con->cargaCentros($anuncio['centro'], $anuncio['destino'])
-                ."</select>
+                <option></option>" .
+            $con->cargaCentros($anuncio['centro'], $anuncio['destino'])
+            . "</select>
             </div>
             <div class='form-group'>
                 <label>Horario</label>
                 <select id='horario' class='form-control'>
-                <option></option>".
-                    $horario
-                ."</select>
+                <option></option>" .
+            $horario
+            . "</select>
             </div>
             <div class='form-group'>
-                <label>Horario</label>
-                <select id='horario' class='form-control'>
-                <option></option>".
-                    $horario
-                ."</select>
+                <label>Periodo</label>
+                <select id='periodo' class='form-control'>
+                    <option></option>".
+            $periodo.
+            "</select>
             </div>
 
             
             
             <div class='form-group'>
-                <label>Plazas</label>
-                <input type='text' class='form-control' id='plazas'>
+                <label>Plazas</label>" .
+            $plazas . "
+                
                    
             </div>
             <div class='form-group'>
-                <label>Precio</label>
-                <input type='text' class='form-control' id='precio'>
+                <label>Precio</label>" .
+            $precio . "
+                
             </div>
             
             <button id='btnEditar' class='btn btn-success'>Editar</button>
@@ -263,4 +309,45 @@ function editaAnuncio($id) {
 
 
     return $html;
+}
+
+
+/**
+ * FUNCION: editarAnuncio
+ * 
+ * INPUTS: 
+ * 
+ * OUTPUTS: -
+ * 
+ * DESCRIPCION: Realiza la actualizacion de la base de datos
+ * 
+ * NOTAS:
+ */
+function editarAnuncio($idAnuncio, $datos){
+    //conectamos con la bbdd
+    $con = new ConductorModel();
+    $model = $con->conectar();
+    
+    print_r($datos);
+    $model ->beginTransaction();
+    
+    try{
+        $stmt = $model ->prepare("UPDATE anuncio SET salida = :salida, destino = :destino, centro = :centro, horario = :horario, periodo = :periodo, plazas = :plazas, precio = :precio WHERE id = :idAnuncio");
+        $stmt->bindParam(":idAnuncio", $idAnuncio);
+        $stmt->bindParam(":salida", $datos['salida']);
+        $stmt->bindParam(":destino", $datos['destino']);
+        $stmt->bindParam(":centro", $datos['centro']);
+        $stmt->bindParam(":horario", $datos['horario']);
+        $stmt->bindParam(":periodo", $datos['periodo']);
+        $stmt->bindParam(":plazas", $datos['plazas']);
+        $stmt->bindParam(":precio", $datos['precio']);
+        
+        $stmt->execute();
+        $model->commit();
+    } catch (Exception $ex) {
+        $model->rollBack();
+        
+        echo $ex->getMessage();
+        
+    }
 }
