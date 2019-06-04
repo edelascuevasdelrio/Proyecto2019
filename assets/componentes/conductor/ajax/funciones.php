@@ -24,7 +24,14 @@ if (isset($_POST['proceso'])) {
             $html = editarAnuncio($_POST['idAnuncio'], $_POST['datos']);
             echo $html;
             break;
-        
+        case 'recargarCentros':
+            $html = recargarAnuncios($_POST['idLocalidad']);
+            echo $html;
+            break;
+        case 'nuevoAnuncio':
+            $html = nuevoAnuncio();
+            echo $html;
+            break;
     }
 }
 
@@ -234,13 +241,13 @@ function formEditarAnuncio($id) {
                     <option value='cuatrimestral'>Cuatrimestral</option>";
             break;
         case "trimestral":
-            $periodo = "<option value='semanal' selected>Semanal</option>
+            $periodo = "<option value='semanal'>Semanal</option>
                     <option value='mensual'>Mensual</option>
                     <option value='trimestral' selected>Trimestral</option>
                     <option value='cuatrimestral'>Cuatrimestral</option>";
             break;
         case "cuatrimestral":
-            $periodo = "<option value='semanal' selected>Semanal</option>
+            $periodo = "<option value='semanal'>Semanal</option>
                     <option value='mensual'>Mensual</option>
                     <option value='trimestral'>Trimestral</option>
                     <option value='cuatrimestral' selected>Cuatrimestral</option>";
@@ -253,7 +260,7 @@ function formEditarAnuncio($id) {
             <div class='form-group'>
                 <label>Salida</label>
                 <select class='form-control' id='salida'>
-                <option></option>" .
+                " .
             $con->localidadesUsuarios($anuncio['salida'])
             . "
                 
@@ -262,29 +269,29 @@ function formEditarAnuncio($id) {
             <div class='form-group'>
                 <label>Destino</label>
                 <select id='destino' class='form-control'>
-                <option></option>" .
+                " .
             $con->localidadesCentros($anuncio['destino'])
             . "</select>
             </div>
             <div class='form-group'>
                 <label>Centro</label>
                 <select id='centro' class='form-control'>
-                <option></option>" .
+               " .
             $con->cargaCentros($anuncio['centro'], $anuncio['destino'])
             . "</select>
             </div>
             <div class='form-group'>
                 <label>Horario</label>
                 <select id='horario' class='form-control'>
-                <option></option>" .
+                " .
             $horario
             . "</select>
             </div>
             <div class='form-group'>
                 <label>Periodo</label>
                 <select id='periodo' class='form-control'>
-                    <option></option>".
-            $periodo.
+                    <option></option>" .
+            $periodo .
             "</select>
             </div>
 
@@ -311,7 +318,6 @@ function formEditarAnuncio($id) {
     return $html;
 }
 
-
 /**
  * FUNCION: editarAnuncio
  * 
@@ -323,31 +329,141 @@ function formEditarAnuncio($id) {
  * 
  * NOTAS:
  */
-function editarAnuncio($idAnuncio, $datos){
+function editarAnuncio($idAnuncio, $datos) {
     //conectamos con la bbdd
     $con = new ConductorModel();
     $model = $con->conectar();
-    
+
     print_r($datos);
-    $model ->beginTransaction();
-    
-    try{
-        $stmt = $model ->prepare("UPDATE anuncio SET salida = :salida, destino = :destino, centro = :centro, horario = :horario, periodo = :periodo, plazas = :plazas, precio = :precio WHERE id = :idAnuncio");
+    $model->beginTransaction();
+    try {
+        if ($datos['centro'] == "NULL") {
+            $sql = "UPDATE anuncio SET salida = :salida, destino = :destino, centro = NULL, horario = :horario, periodo = :periodo, plazas = :plazas, precio = :precio WHERE id = :idAnuncio";
+            $stmt = $model->prepare($sql);
+            
+        } else {
+            $sql = "UPDATE anuncio SET salida = :salida, destino = :destino, centro = :centro, horario = :horario, periodo = :periodo, plazas = :plazas, precio = :precio WHERE id = :idAnuncio";
+            $stmt = $model->prepare($sql);
+            $stmt->bindParam(":centro", $datos['centro']);
+        }
+         
+
+       
         $stmt->bindParam(":idAnuncio", $idAnuncio);
         $stmt->bindParam(":salida", $datos['salida']);
         $stmt->bindParam(":destino", $datos['destino']);
-        $stmt->bindParam(":centro", $datos['centro']);
+        
         $stmt->bindParam(":horario", $datos['horario']);
         $stmt->bindParam(":periodo", $datos['periodo']);
         $stmt->bindParam(":plazas", $datos['plazas']);
         $stmt->bindParam(":precio", $datos['precio']);
-        
+
         $stmt->execute();
         $model->commit();
     } catch (Exception $ex) {
         $model->rollBack();
-        
+
         echo $ex->getMessage();
-        
     }
+}
+
+/**
+ * FUNCION: recargarAnuncio
+ * 
+ * INPUTS: 
+ * 
+ * OUTPUTS: -
+ * 
+ * DESCRIPCION: Realiza la actualizacion de la base de datos
+ * 
+ * NOTAS:
+ */
+function recargarAnuncios($idAnuncio) {
+    $con = new ConductorModel();
+
+    $salida = $con->cargaCentros("", $idAnuncio);
+    return $salida;
+}
+
+function nuevoAnuncio(){
+    //conectamos con la bbdd
+    $con = new ConductorModel();
+  
+    
+    //preparamos algunos en concreto 
+  
+        $horario = "<option value='diurno'>Diurno</option>"
+                . "<option value='nocturno'>Nocturno</option>";
+        $plazas = "<input type='text' class='form-control' id='plazas'>";
+
+        $precio = "<input type='text' class='form-control' id='precio'>";
+        $periodo = "<option value='semanal'>Semanal</option>
+                    <option value='mensual'>Mensual</option>
+                    <option value='trimestral'>Trimestral</option>
+                    <option value='cuatrimestral'>Cuatrimestral</option>";
+           
+    
+
+    $html = "<div class='container'>
+            <h1>Editar anuncio</h1>
+
+            <div class='form-group'>
+                <label>Salida</label>
+                <select class='form-control' id='salida'>
+                " .
+            $con->localidadesUsuarios(0)
+            . "
+                
+                </select>
+            </div>
+            <div class='form-group'>
+                <label>Destino</label>
+                <select id='destino' class='form-control'>
+                <option></option>" .
+            $con->localidadesCentros(0)
+            . "</select>
+            </div>
+            <div class='form-group'>
+                <label>Centro</label>
+                <select id='centro' class='form-control'>
+               " .
+            $con->cargaCentros(0,0)
+            . "</select>
+            </div>
+            <div class='form-group'>
+                <label>Horario</label>
+                <select id='horario' class='form-control'>
+                " .
+            $horario
+            . "</select>
+            </div>
+            <div class='form-group'>
+                <label>Periodo</label>
+                <select id='periodo' class='form-control'>
+                    <option></option>" .
+            $periodo .
+            "</select>
+            </div>
+
+            
+            
+            <div class='form-group'>
+                <label>Plazas</label>" .
+            $plazas . "
+                
+                   
+            </div>
+            <div class='form-group'>
+                <label>Precio</label>" .
+            $precio . "
+                
+            </div>
+            
+            <button id='btnEditar' class='btn btn-success'>Editar</button>
+            <button id='btnCancelar' class='btn btn-danger'>Cancelar</button>
+        </div>";
+
+
+
+    return $html;
 }

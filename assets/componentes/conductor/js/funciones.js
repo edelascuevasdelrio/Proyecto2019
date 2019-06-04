@@ -8,6 +8,8 @@ jQuery(document).ready(init);
 
 
 function init() {
+    jQuery('#menuSuperior').append("<li><a id='nuevoAnuncio' href='#'>Publicar anuncio completo</a></li>");
+     jQuery('#nuevoAnuncio').click(nuevoAnuncio);
     console.log("INIT DESDE CONDUCTOR");
     jQuery('tr').click(clickFila);
 
@@ -44,7 +46,8 @@ function clickFila() {
             .done(function (responseText) {
                 jQuery('#cuerpo').html(responseText);
                 jQuery('#btnEditar').click(editarAnuncio);
-//                jQuery('#destino').change(recargarDestinos);
+                jQuery('#btnCancelar').click(cancelarEdicion);
+                jQuery('#destino').change(recargarDestinos);
             }).fail(function () {
         alert("ERRRROOOOOR");
     });
@@ -73,7 +76,6 @@ function editarAnuncio() {
             proceso: 'editarAnuncio',
             idAnuncio: sessionStorage.getItem("idAnuncio"),
             datos: {
-                
                 salida: jQuery('#salida').val(),
                 destino: jQuery('#destino').val(),
                 centro: jQuery('#centro').val(),
@@ -84,33 +86,58 @@ function editarAnuncio() {
             }
         }
     };
-    
-    jQuery.ajax(opciones).done(function(responseText){
-       // header("Location: conductor.php?sec=misanuncios&stat=success");
-       $(location).attr('href', "conductor.php?sec=misanuncios&stat=success");
-       alert(responseText);
-    }).fail(function(){
-        //header("Location: conductor.php?sec=misanuncios&stat=fail");
+
+    jQuery.ajax(opciones).done(function (responseText) {
+
+        $(location).attr('href', "conductor.php?sec=misanuncios&stat=success");
+        alert("Anuncio editado");
+//        alert(responseText);
+    }).fail(function (responseText) {
+
         $(location).attr('href', "conductor.php?sec=misanuncios&stat=fail");
         alert(responseText);
     });
-    
+
 }
 
 
-function recargarDestinos(){
+function recargarDestinos() {
+    console.log("RECARGAR DESTINOS");
     var opciones = {
         url: "ajax/funciones.php",
         type: "POST",
         data: {
             proceso: 'recargarCentros',
             idLocalidad: jQuery('#destino').val()
-            
+
         }
     };
-    
-     jQuery.ajax(opciones).done(function(responseText){
-        jQuery('#destino').html(responseText);
-       alert(responseText);
+
+    jQuery.ajax(opciones).done(function (responseText) {
+        jQuery('#centro').html(responseText);
+
+    });
+}
+
+function cancelarEdicion() {
+
+    $(location).attr('href', "conductor.php?sec=misanuncios");
+
+}
+
+function nuevoAnuncio(){
+    var opciones = {
+        url: "ajax/funciones.php",
+        type: "POST",
+        data: {
+            proceso: 'nuevoAnuncio'
+        }
+    };
+
+    jQuery.ajax(opciones).done(function (responseText) {
+        jQuery('#cuerpo').html(responseText);
+        //jQuery('#btnEditar').click(editarAnuncio);
+        jQuery('#btnCancelar').click(cancelarEdicion);
+        jQuery('#destino').change(recargarDestinos);
     });
 }

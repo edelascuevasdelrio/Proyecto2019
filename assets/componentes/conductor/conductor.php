@@ -36,7 +36,7 @@ require_once './conductorController.php';
                         <div class="navbar-header">
                             <a class="navbar-brand" href="../pasajero/pasajero.php">Home</a>
                         </div>
-                        <ul class="nav navbar-nav mr-auto">
+                        <ul id="menuSuperior" class="nav navbar-nav mr-auto">
 
                             <li class="dropdown">
                                 <a class="dropdown-toggle" data-toggle="dropdown" href="#">Conductor

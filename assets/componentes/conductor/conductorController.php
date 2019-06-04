@@ -25,6 +25,7 @@ class ConductorController {
                 return $html;
                 
             case 'misanuncios':
+                
                 $html = self::cargaTablaAnuncios();
                 
                 return $html;

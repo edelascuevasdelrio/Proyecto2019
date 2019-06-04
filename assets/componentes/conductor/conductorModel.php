@@ -197,7 +197,7 @@ class conductorModel {
     function cargaCentros($idCentro, $localidad) {
        
         //Preparamos la salida
-        $salida = "";
+        $salida = "<option value='NULL'></option>";
 
         //Nos conectampos a la base de datos
         $con = new ConductorModel();
