@@ -125,6 +125,40 @@ function cancelarEdicion() {
 
 }
 
+function insentarAnuncio(){
+    console.log("INSENTAR ANUNCIO");
+    var opciones = {
+        url: "ajax/funciones.php",
+        type: "POST",
+        data: {
+            proceso: 'insentarAnuncio',
+            
+            datos: {
+              
+                salida: jQuery('#salida').val(),
+                destino: jQuery('#destino').val(),
+                centro: jQuery('#centro').val(),
+                horario: jQuery('#horario').val(),
+                periodo: jQuery('#periodo').val(),
+                plazas: jQuery('#plazas').val(),
+                precio: jQuery('#precio').val()
+            }
+        }
+    };
+
+    jQuery.ajax(opciones).done(function (responseText) {
+
+        $(location).attr('href', "conductor.php?sec=misanuncios&stat=success");
+        alert("Anuncio insertado");
+        alert(responseText);
+    }).fail(function (responseText) {
+
+        $(location).attr('href', "conductor.php?sec=misanuncios&stat=fail");
+        alert(responseText);
+    });
+}
+
+
 function nuevoAnuncio(){
     var opciones = {
         url: "ajax/funciones.php",
@@ -136,8 +170,9 @@ function nuevoAnuncio(){
 
     jQuery.ajax(opciones).done(function (responseText) {
         jQuery('#cuerpo').html(responseText);
-        //jQuery('#btnEditar').click(editarAnuncio);
+        jQuery('#btnEditar').click(insentarAnuncio);
         jQuery('#btnCancelar').click(cancelarEdicion);
         jQuery('#destino').change(recargarDestinos);
     });
 }
+

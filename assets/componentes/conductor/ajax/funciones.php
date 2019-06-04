@@ -32,9 +32,13 @@ if (isset($_POST['proceso'])) {
             $html = nuevoAnuncio();
             echo $html;
             break;
+        case 'insentarAnuncio':{
+            $html = insentarAnuncio($_POST['datos']);
+            echo $html;
+            break;
     }
 }
-
+}
 /**
  * FUNCION: cargaDetalle
  * 
@@ -340,19 +344,18 @@ function editarAnuncio($idAnuncio, $datos) {
         if ($datos['centro'] == "NULL") {
             $sql = "UPDATE anuncio SET salida = :salida, destino = :destino, centro = NULL, horario = :horario, periodo = :periodo, plazas = :plazas, precio = :precio WHERE id = :idAnuncio";
             $stmt = $model->prepare($sql);
-            
         } else {
             $sql = "UPDATE anuncio SET salida = :salida, destino = :destino, centro = :centro, horario = :horario, periodo = :periodo, plazas = :plazas, precio = :precio WHERE id = :idAnuncio";
             $stmt = $model->prepare($sql);
             $stmt->bindParam(":centro", $datos['centro']);
         }
-         
 
-       
+
+
         $stmt->bindParam(":idAnuncio", $idAnuncio);
         $stmt->bindParam(":salida", $datos['salida']);
         $stmt->bindParam(":destino", $datos['destino']);
-        
+
         $stmt->bindParam(":horario", $datos['horario']);
         $stmt->bindParam(":periodo", $datos['periodo']);
         $stmt->bindParam(":plazas", $datos['plazas']);
@@ -385,24 +388,24 @@ function recargarAnuncios($idAnuncio) {
     return $salida;
 }
 
-function nuevoAnuncio(){
+function nuevoAnuncio() {
     //conectamos con la bbdd
     $con = new ConductorModel();
-  
-    
-    //preparamos algunos en concreto 
-  
-        $horario = "<option value='diurno'>Diurno</option>"
-                . "<option value='nocturno'>Nocturno</option>";
-        $plazas = "<input type='text' class='form-control' id='plazas'>";
 
-        $precio = "<input type='text' class='form-control' id='precio'>";
-        $periodo = "<option value='semanal'>Semanal</option>
+
+    //preparamos algunos en concreto 
+
+    $horario = "<option value='diurno'>Diurno</option>"
+            . "<option value='nocturno'>Nocturno</option>";
+    $plazas = "<input type='text' class='form-control' id='plazas'>";
+
+    $precio = "<input type='text' class='form-control' id='precio'>";
+    $periodo = "<option value='semanal'>Semanal</option>
                     <option value='mensual'>Mensual</option>
                     <option value='trimestral'>Trimestral</option>
                     <option value='cuatrimestral'>Cuatrimestral</option>";
-           
-    
+
+
 
     $html = "<div class='container'>
             <h1>Editar anuncio</h1>
@@ -427,7 +430,7 @@ function nuevoAnuncio(){
                 <label>Centro</label>
                 <select id='centro' class='form-control'>
                " .
-            $con->cargaCentros(0,0)
+            $con->cargaCentros(0, 0)
             . "</select>
             </div>
             <div class='form-group'>
@@ -467,3 +470,35 @@ function nuevoAnuncio(){
 
     return $html;
 }
+
+/**
+ * FUNCION: insertarAnuncio
+ * 
+ * INPUTS: 
+ * 
+ * OUTPUTS: -
+ * 
+ * DESCRIPCION: Realiza la insercion de la base de datos
+ * 
+ * NOTAS:
+ */
+function insentarAnuncio($datos) {
+    //conectamos con la bbdd
+    $con = new ConductorModel();
+    $model = $con->conectar();
+
+    $sql = "INSERT INTO anuncio VALUES (NULL,:idUsuario,:salida,:destino,:centro,:horario,:periodo,:plazas,:precio)";
+    $stmt = $model->prepare($sql);
+
+    $stmt->bindParam(":idUsuario", $_SESSION['idUsuario']);
+    $stmt->bindParam(":salida", $datos['salida']);
+    $stmt->bindParam(":destino", $datos['destino']);
+    $stmt->bindParam(":centro", $datos['centro']);
+    $stmt->bindParam(":horario", $datos['horario']);
+    $stmt->bindParam(":periodo", $datos['periodo']);
+    $stmt->bindParam(":plazas", $datos['plazas']);
+    $stmt->bindParam(":precio", $datos['precio']);
+
+    $stmt->execute();
+}
+

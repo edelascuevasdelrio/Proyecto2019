@@ -56,11 +56,14 @@ require_once './conductorController.php';
 
 
         </header>
+        
+        
         <section>
             <div class='container' id="cuerpo">
                 <h2 class="text-center">Mis viajes publicados</h2>
                 <h4 class="text-center">Aquí podrás editar los viajes que hayas publicado anteriormente</h4>
                 <?php
+     
                 $controller = new ConductorController();
                 $argumentos = "";
 

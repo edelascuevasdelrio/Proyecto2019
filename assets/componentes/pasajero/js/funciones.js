@@ -10,6 +10,7 @@ jQuery(document).ready(init);
 function init(){
     jQuery('#btnanadir').click(addAnuncio);
     jQuery('tr').click(clickFila);
+
 }
 
     /**
