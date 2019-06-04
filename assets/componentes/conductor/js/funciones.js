@@ -9,7 +9,7 @@ jQuery(document).ready(init);
 
 function init() {
     jQuery('#menuSuperior').append("<li><a id='nuevoAnuncio' href='#'>Publicar anuncio completo</a></li>");
-     jQuery('#nuevoAnuncio').click(nuevoAnuncio);
+    jQuery('#nuevoAnuncio').click(nuevoAnuncio);
     console.log("INIT DESDE CONDUCTOR");
     jQuery('tr').click(clickFila);
 
@@ -47,6 +47,7 @@ function clickFila() {
                 jQuery('#cuerpo').html(responseText);
                 jQuery('#btnEditar').click(editarAnuncio);
                 jQuery('#btnCancelar').click(cancelarEdicion);
+                jQuery('#btnBorrar').click(borrarAnuncio);
                 jQuery('#destino').change(recargarDestinos);
             }).fail(function () {
         alert("ERRRROOOOOR");
@@ -120,21 +121,19 @@ function recargarDestinos() {
 }
 
 function cancelarEdicion() {
-
     $(location).attr('href', "conductor.php?sec=misanuncios");
-
 }
 
-function insentarAnuncio(){
+function insentarAnuncio() {
     console.log("INSENTAR ANUNCIO");
     var opciones = {
         url: "ajax/funciones.php",
         type: "POST",
         data: {
             proceso: 'insentarAnuncio',
-            
+
             datos: {
-              
+
                 salida: jQuery('#salida').val(),
                 destino: jQuery('#destino').val(),
                 centro: jQuery('#centro').val(),
@@ -150,7 +149,7 @@ function insentarAnuncio(){
 
         $(location).attr('href', "conductor.php?sec=misanuncios&stat=success");
         alert("Anuncio insertado");
-        alert(responseText);
+        //alert(responseText);
     }).fail(function (responseText) {
 
         $(location).attr('href', "conductor.php?sec=misanuncios&stat=fail");
@@ -159,7 +158,7 @@ function insentarAnuncio(){
 }
 
 
-function nuevoAnuncio(){
+function nuevoAnuncio() {
     var opciones = {
         url: "ajax/funciones.php",
         type: "POST",
@@ -176,3 +175,27 @@ function nuevoAnuncio(){
     });
 }
 
+function borrarAnuncio() {
+    var mensaje;
+    var opcion = confirm("¿Estás seguro que desea eliminar el anuncio?");
+    if (opcion) {
+        var opciones = {
+            url: "ajax/funciones.php",
+            type: "POST",
+            data: {
+                proceso: 'borrarAnuncio',
+                idAnuncio: sessionStorage.getItem("idAnuncio") 
+            }
+        };
+
+
+        jQuery.ajax(opciones).done(function (responseText) {
+            alert("Se ha eliminado el anuncio");
+            cancelarEdicion();
+           // alert(responseText);
+        }).fail(function (responseText){
+            alert("ERROR");
+            alert(responseText);
+        });
+    }
+}

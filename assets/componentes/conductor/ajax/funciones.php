@@ -32,13 +32,17 @@ if (isset($_POST['proceso'])) {
             $html = nuevoAnuncio();
             echo $html;
             break;
-        case 'insentarAnuncio':{
+        case 'insentarAnuncio':
             $html = insentarAnuncio($_POST['datos']);
+            echo $html;
+            break;
+        case 'borrarAnuncio':
+            $html = borrarAnuncio($_POST['idAnuncio']);
             echo $html;
             break;
     }
 }
-}
+
 /**
  * FUNCION: cargaDetalle
  * 
@@ -314,7 +318,8 @@ function formEditarAnuncio($id) {
             </div>
             
             <button id='btnEditar' class='btn btn-success'>Editar</button>
-            <button id='btnCancelar' class='btn btn-danger'>Cancelar</button>
+            <button id='btnBorrar' class='btn btn-danger'>Borrar</button>
+            <button id='btnCancelar' class='btn'>Cancelar</button>
         </div>";
 
 
@@ -502,3 +507,12 @@ function insentarAnuncio($datos) {
     $stmt->execute();
 }
 
+function borrarAnuncio($idAnuncio){
+    $con = new ConductorModel();
+    $model = $con ->conectar();
+    
+    $stmt = $model->prepare("DELETE FROM anuncio WHERE id = :id");
+    $stmt ->bindParam(":id", $idAnuncio);
+    
+    $stmt->execute();
+}
