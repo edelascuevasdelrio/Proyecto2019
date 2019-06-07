@@ -125,7 +125,7 @@ class PasajeroModel {
             $stmt_centro ->execute();
             $nombre_centro = $stmt_centro ->fetch()[0];
             
-            $array_salida = [$username, $salida_l, $destino_l, $nombre_centro, $resultado['horario'], $resultado['periodo'],$resultado['id']];
+            $array_salida = [$username, $salida_l, $destino_l, $nombre_centro, $resultado['horario'], $resultado['periodo'],$resultado['plazas']];
 
             array_push($salida, $array_salida);
             $resultado = $stmt->fetch();

@@ -113,7 +113,7 @@ if (isset($_SESSION['usuario'])) {
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for='periodo' class='form-label'>Periodo </label>
+                            <label for='precio' class='form-label'>Periodo </label>
                             <select id='periodo' name='periodo' class='form-control'>
                                 <option value='semanal'>Semanal</option>
                                 <option value='mensual'>Mensual</option>

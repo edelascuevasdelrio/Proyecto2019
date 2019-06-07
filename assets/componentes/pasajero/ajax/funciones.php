@@ -150,13 +150,13 @@ function cargaDetalle($idAnuncio) {
                         <div>
                             <label>- Precio por pasajero:</label>" .
             $resultado_anuncio['precio']
-            . "
+            . " €
                             
                         </div>
                     </div>
                 </div>
 
-
+                <button id='btnApuntar' class='btn btn-success'>Reservar plaza</button>
 
             </div>
 

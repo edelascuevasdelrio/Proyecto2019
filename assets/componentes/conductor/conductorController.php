@@ -38,6 +38,19 @@ class ConductorController {
         
     }
     
+    
+    
+    /**
+     * FUNCION: cargaMisdatos
+     * 
+     * INPUTS: -
+     * 
+     * OUTPUTS: -
+     * 
+     * DESCRIPCION: Hace peticiones a la bbdd para obtener todos los datos sobre el conductor
+     * 
+     * NOTAS: ESPECIFICO PARA UN UNICO USUARIO
+     */
     function cargaMisdatos(){
         
     }
