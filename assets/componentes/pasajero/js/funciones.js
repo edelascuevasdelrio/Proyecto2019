@@ -7,27 +7,27 @@
 jQuery(document).ready(init);
 
 
-function init(){
+function init() {
     jQuery('#btnanadir').click(addAnuncio);
     jQuery('tr').click(clickFila);
 
 }
 
-    /**
-     * FUNCION: addAnuncio
-     * 
-     * INPUTS: -
-     * 
-     * OUTPUTS: -
-     * 
-     * DESCRIPCION: Hace una peticion AJAX para insertar un nuevo anuncio.
-     * 
-     * NOTAS: SOLO incluye los datos básicos, los insert completos, estan en el componente de Conductor
-     */
-function addAnuncio(){
-    
+/**
+ * FUNCION: addAnuncio
+ * 
+ * INPUTS: -
+ * 
+ * OUTPUTS: -
+ * 
+ * DESCRIPCION: Hace una peticion AJAX para insertar un nuevo anuncio.
+ * 
+ * NOTAS: SOLO incluye los datos básicos, los insert completos, estan en el componente de Conductor
+ */
+function addAnuncio() {
 
-    
+
+
     var opciones = {
         url: "ajax/funciones.php",
         type: "POST",
@@ -41,32 +41,33 @@ function addAnuncio(){
             plazas: jQuery('#plazas').val(),
             precio: jQuery('#precio').val()
         }
-        };
-        
-        jQuery.ajax(opciones)
-                .done(function (responseText){
-                   //alert(responseText);
-                   location.reload(true);
-        });
-    
+    };
+
+    jQuery.ajax(opciones)
+            .done(function (responseText) {
+                //alert(responseText);
+                location.reload(true);
+            });
+
 }
 
-    /**
-     * FUNCION: clickFila
-     * 
-     * INPUTS: -
-     * 
-     * OUTPUTS: -
-     * 
-     * DESCRIPCION: Recoge la fila y hace una petición de los datos relacionados
-     * 
-     * NOTAS: 
-     */
-function clickFila(){
+/**
+ * FUNCION: clickFila
+ * 
+ * INPUTS: -
+ * 
+ * OUTPUTS: -
+ * 
+ * DESCRIPCION: Recoge la fila y hace una petición de los datos relacionados
+ * 
+ * NOTAS: 
+ */
+function clickFila() {
     //console.log("CLICK FILA");
     //location.href = "../conductor/conductor.php?id=" + jQuery(this).attr('id');
-    //alert(jQuery(this).attr('id'));
+    //alert();
 
+    sessionStorage.setItem("idAnuncio",jQuery(this).attr('id'));
     var opciones = {
         url: "ajax/funciones.php",
         type: "POST",
@@ -74,13 +75,49 @@ function clickFila(){
             proceso: 'cargaDetalle',
             idAnuncio: jQuery(this).attr('id')
         }
-        };
-        
-        jQuery.ajax(opciones)
-                .done(function (responseText){
-                   
-                    jQuery('#cuerpo').html(responseText);
-        });
-    
+    };
+
+    jQuery.ajax(opciones)
+            .done(function (responseText) {
+
+                jQuery('#cuerpo').html(responseText);
+                jQuery("#btnApuntar").click(reservaPlaza);
+               
+            });
+             
+
+
+}
+
+/**
+ * FUNCION: reservaPlaza
+ * 
+ * INPUTS: -
+ * 
+ * OUTPUTS: -
+ * 
+ * DESCRIPCION: Hace una peticion AJAX para reserva una plaza
+ * 
+ * NOTAS: 
+ */
+function reservaPlaza() {
+
+
+
+
+    var opciones = {
+        url: "ajax/funciones.php",
+        type: "POST",
+        data: {
+            proceso: 'reservaPlaza',
+            idAnuncio: sessionStorage.getItem('idAnuncio')
+        }
+    };
+
+    jQuery.ajax(opciones)
+            .done(function (responseText) {
+                alert(responseText);
+                location.reload(true);
+            });
 
 }

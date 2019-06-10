@@ -30,3 +30,7 @@ label{
 .errorLabel{
     color: red;
 }
+
+td:last-of-type {
+    display: none;
+}

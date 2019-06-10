@@ -95,7 +95,7 @@ class PasajeroModel {
         //Debido a que necesitamo dos resultados de destino, que no tienen por qué ser el mismo,
         //tendremos que hacer dos consultas para obetener los nombres de las localidades
         //1º Obtenemos los datos de los distintos anuncios
-        $stmt = $con->prepare("SELECT * FROM anuncio"); //IGUAL AÑADIR UN ORDER BY, O AÑADIRLOS CON UNOS "FILTROS"
+        $stmt = $con->prepare("SELECT * FROM anuncio WHERE plazas > 0"); //IGUAL AÑADIR UN ORDER BY, O AÑADIRLOS CON UNOS "FILTROS"
         $stmt->execute();
 
         $resultado = $stmt->fetch();
@@ -125,7 +125,7 @@ class PasajeroModel {
             $stmt_centro ->execute();
             $nombre_centro = $stmt_centro ->fetch()[0];
             
-            $array_salida = [$username, $salida_l, $destino_l, $nombre_centro, $resultado['horario'], $resultado['periodo'],$resultado['plazas']];
+            $array_salida = [$username, $salida_l, $destino_l, $nombre_centro, $resultado['horario'], $resultado['periodo'],$resultado['plazas'],$resultado['id']];
 
             array_push($salida, $array_salida);
             $resultado = $stmt->fetch();

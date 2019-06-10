@@ -96,6 +96,7 @@ class PasajeroController {
             </tbody>
         </table>";
         
+        
         return $salida;
     }
 
