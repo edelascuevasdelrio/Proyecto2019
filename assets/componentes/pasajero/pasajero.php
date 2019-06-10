@@ -16,6 +16,7 @@ $argumentos = "";
 if (isset($_SESSION['usuario'])) {
     
     $_SESSION['idUsuario'] = $controller->recibeDatos('idUsuario', $_SESSION['usuario']);
+    $_SESSION['idConductor'] = $controller->recibeDatos('idConductor', $_SESSION['idUsuario']);
     echo "<input type='hidden' id='idUsuario' value='" . $_SESSION['idUsuario'] . "'>";
 }
 ?>

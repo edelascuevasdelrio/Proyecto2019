@@ -27,6 +27,9 @@ class PasajeroController {
             case 'idUsuario':
                 $id = $con->usuarioAsession($argumentos);
                 return $id;
+            case 'idConductor':
+                $id = $con->conductorAsession($argumentos);
+                return $id;
                 
             case 'cargaDesde':
                 $options = $con ->localidadesUsuarios() ;

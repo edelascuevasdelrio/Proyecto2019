@@ -71,9 +71,36 @@ class PasajeroModel {
         $stmt_idUsuario = $con ->prepare("SELECT id FROM usuario WHERE user = '$usuario'");
         $stmt_idUsuario ->execute();
         $idUsuario = $stmt_idUsuario->fetch()[0];
+        
+        
 //        echo $idUsuario; //Aquí si se muestra
         
         return $idUsuario;
+        
+    }
+    
+    /**
+     * FUNCION:conductorAsession
+     * 
+     * INPUTS: -
+     * 
+     * OUTPUTS: $idUsuario (int)
+     * 
+     * DESCRIPCION: Sube a la sesion el ID del usuario, en funcion de su username.
+     * 
+     * NOTAS:
+     */
+    function conductorAsession($usuario){
+        $con = self::conectar();
+        //obtenemos el id del usuario segun su username
+        $stmt_idConductor = $con ->prepare("SELECT id FROM conductor WHERE id_usuario = '$usuario'");
+        $stmt_idConductor ->execute();
+        $idConductor = $stmt_idConductor->fetch()[0];
+        
+        
+//        echo $idUsuario; //Aquí si se muestra
+        
+        return $idConductor;
         
     }
     

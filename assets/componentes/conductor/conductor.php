@@ -43,7 +43,7 @@ require_once './conductorController.php';
                                     <span class="caret"></span></a>
                                 <ul class="dropdown-menu">
                                     <li><a href="conductor.php?sec=misanuncios">Mis anuncios</a></li>
-                                    <li><a href="conductor.php?sec=misdatos">Mis datos</a></li>
+                                    <li><a href="conductor.php?sec=misacuerdos">Acuerdos</a></li>
                                 </ul>
                             </li>
                             <li><a href="../principal/princi.php">LogOUT</a></li>
@@ -72,10 +72,10 @@ require_once './conductorController.php';
                         <h4 class="text-center">Aquí podrás editar los viajes que hayas publicado anteriormente</h4>';
                         echo $controller->recibeDatos('misanuncios', $argumentos);
                     }
-                    if ($_GET['sec'] == 'misdatos') {
-                        echo '<h2 class="text-center">Mis acuerdos</h2>
+                    if ($_GET['sec'] == 'misacuerdos') {
+                        echo '<h2 class="text-center">Acuerdos</h2>
                         <h4 class="text-center">Aquí podrás ver quienes se han apuntado a tus anuncios</h4>';
-                        echo $controller->recibeDatos('misdatos', $argumentos);
+                        echo $controller->recibeDatos('misacuerdos', $argumentos);
                         
                     }
                 }
