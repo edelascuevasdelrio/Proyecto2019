@@ -195,7 +195,7 @@ class conductorModel {
      * NOTAS: localidad es un "string" porque lo recibimos así desde el POST.
      */
     function cargaCentros($idCentro, $localidad) {
-       
+
         //Preparamos la salida
         $salida = "<option value='NULL'></option>";
 
@@ -211,23 +211,74 @@ class conductorModel {
         //Recogemos los resultados y construimos la SQL
         $resultado = $stmt->fetch();
         while ($resultado != null) {
-            
 
-            if($idCentro == $resultado[0]){
-                
+
+            if ($idCentro == $resultado[0]) {
+
 
                 $salida .= "<option value='" . $resultado[0] . "' selected>" . $resultado[1] . "</option>";
-            }else{
-                
+            } else {
+
                 $salida .= "<option value='" . $resultado[0] . "'>" . $resultado[1] . "</option>";
             }
-            
+
 
             $resultado = $stmt->fetch();
         }
-      
-        return $salida;
 
+        return $salida;
+    }
+
+    /**
+     * FUNCION: misAcuerdos
+     * 
+     * INPUTS: -
+     * 
+     * OUTPUTS: salida (String)
+     * 
+     * DESCRIPCION: Hace una consulta a la bbdd para obtener los acuerdos que se ha relizado con sus anuncios
+     * 
+     * NOTAS: localidad es un "string" porque lo recibimos así desde el POST.
+     */
+    function misAcuerdos() {
+        //Nos conectampos a la base de datos
+        $con = new ConductorModel();
+        $media = $con->conectar();
+
+        //PREPARAMOS DATOS:
+        $html = "";
+        //1º los ID de los acuerdos en los que se es el conductor:
+        $stmt_idAnuncios = $media->prepare("SELECT DISTINCT id_anuncio FROM acuerdo WHERE id_conductor = :idConductor");
+        $stmt_idAnuncios->bindParam(":idConductor", $_SESSION['idConductor']);
+        $stmt_idAnuncios->execute();
+
+        $idAnuncios = $stmt_idAnuncios->fetch();
+        foreach ($idAnuncios as $value) {
+
+            //2º Por cada anuncio, hacemos una consulta de los apuntados a ese anuncio
+                //2-1 Datos del anuncio
+            $stmt_Anuncio= $media->prepare("SELECT * FROM anuncio WHERE id = '$value'");
+            $stmt_Anuncio ->execute();
+            $anuncio = $stmt_Anuncio -> fetch()[0];
+                //2-2 Nombres de salida y de destino
+            $stmt_localidad = $con->prepare("SELECT nombre FROM localidad WHERE id = :id");
+            $stmt_localidad->bindParam(":id", $anuncio['salida']);
+            $stmt_localidad->execute();
+            $salida = $stmt_localidad->fetch()[0];
+
+            $stmt_localidad->bindParam(":id", $anuncio['destino']);
+            $stmt_localidad->execute();
+            $destino = $stmt_localidad->fetch();
+                //2-3 El usuario
+                //TENEMOS EL ID DEL PASAJERO, QUE SE ASOCIA CON EL DE UN USUARIO --> HAY QUE HACER ESA SELECT PARA SACAR EL NOMBRE DEL USUARIO
+            
+   
+            
+            //3ºConstruimos el HTML
+            $html .= "<h2>$salida - $destino (".$anuncio['periodo'].")";
+            
+        }
+        return $html;
     }
 
 }

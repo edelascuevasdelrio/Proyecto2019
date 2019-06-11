@@ -71,9 +71,36 @@ class PasajeroModel {
         $stmt_idUsuario = $con ->prepare("SELECT id FROM usuario WHERE user = '$usuario'");
         $stmt_idUsuario ->execute();
         $idUsuario = $stmt_idUsuario->fetch()[0];
+        
+        
 //        echo $idUsuario; //Aquí si se muestra
         
         return $idUsuario;
+        
+    }
+    
+    /**
+     * FUNCION:conductorAsession
+     * 
+     * INPUTS: -
+     * 
+     * OUTPUTS: $idUsuario (int)
+     * 
+     * DESCRIPCION: Sube a la sesion el ID del usuario, en funcion de su username.
+     * 
+     * NOTAS:
+     */
+    function conductorAsession($usuario){
+        $con = self::conectar();
+        //obtenemos el id del usuario segun su username
+        $stmt_idConductor = $con ->prepare("SELECT id FROM conductor WHERE id_usuario = '$usuario'");
+        $stmt_idConductor ->execute();
+        $idConductor = $stmt_idConductor->fetch()[0];
+        
+        
+//        echo $idUsuario; //Aquí si se muestra
+        
+        return $idConductor;
         
     }
     
@@ -95,7 +122,7 @@ class PasajeroModel {
         //Debido a que necesitamo dos resultados de destino, que no tienen por qué ser el mismo,
         //tendremos que hacer dos consultas para obetener los nombres de las localidades
         //1º Obtenemos los datos de los distintos anuncios
-        $stmt = $con->prepare("SELECT * FROM anuncio"); //IGUAL AÑADIR UN ORDER BY, O AÑADIRLOS CON UNOS "FILTROS"
+        $stmt = $con->prepare("SELECT * FROM anuncio WHERE plazas > 0"); //IGUAL AÑADIR UN ORDER BY, O AÑADIRLOS CON UNOS "FILTROS"
         $stmt->execute();
 
         $resultado = $stmt->fetch();
@@ -125,7 +152,7 @@ class PasajeroModel {
             $stmt_centro ->execute();
             $nombre_centro = $stmt_centro ->fetch()[0];
             
-            $array_salida = [$username, $salida_l, $destino_l, $nombre_centro, $resultado['horario'], $resultado['periodo'],$resultado['plazas']];
+            $array_salida = [$username, $salida_l, $destino_l, $nombre_centro, $resultado['horario'], $resultado['periodo'],$resultado['plazas'],$resultado['id']];
 
             array_push($salida, $array_salida);
             $resultado = $stmt->fetch();

@@ -20,6 +20,10 @@ if (isset($_POST['proceso'])) {
             $html = cargaDetalle($_POST['idAnuncio']);
             echo $html;
             break;
+        case 'reservaPlaza':
+            $salida = reservaPlaza($_POST['idAnuncio']);
+            echo $salida;
+            break;
     }
 }
 
@@ -95,17 +99,17 @@ function cargaDetalle($idAnuncio) {
     $localidadDestino = $stmt_localidad->fetch();
 
     //tabla cerntro
-    $stmt_centro = $model ->prepare("SELECT * FROM centro WHERE id = :id");
+    $stmt_centro = $model->prepare("SELECT * FROM centro WHERE id = :id");
     $stmt_centro->bindParam(":id", $resultado_anuncio['centro']);
     $stmt_centro->execute();
-    
-    $centro = $stmt_centro ->fetch();
-    
+
+    $centro = $stmt_centro->fetch();
+
     //tabla coche
-    $stmt_coche = $model ->prepare("SELECT * FROM coche ch, conductor c WHERE ch.id_propietario = c.id AND c.id_usuario = :idUsuario");
-    $stmt_coche ->bindParam(":idUsuario", $resultado_anuncio['id_usuario']);
-    $stmt_coche ->execute();
-    
+    $stmt_coche = $model->prepare("SELECT * FROM coche ch, conductor c WHERE ch.id_propietario = c.id AND c.id_usuario = :idUsuario");
+    $stmt_coche->bindParam(":idUsuario", $resultado_anuncio['id_usuario']);
+    $stmt_coche->execute();
+
     $coche = $stmt_coche->fetch();
 
     $html = "<div class='container'>
@@ -202,6 +206,66 @@ function cargaDetalle($idAnuncio) {
 
             </div>
         </div>";
-    
+
     return $html;
+}
+
+/**
+ * FUNCION: reservaPlaza
+ * 
+ * INPUTS: $idAnuncio (int)
+ * 
+ * OUTPUTS: -
+ * 
+ * DESCRIPCION: Inserta una nueva acuerdo y actualizalas plazas
+ * 
+ * NOTAS: NO permite editar
+ */
+function reservaPlaza($idAnuncio) {
+
+    //conectamos con la base de datos
+    $con = new PasajeroModel();
+    $model = $con->conectar();
+
+    //obtenemos datos del anuncio
+    $stmt_anuncio = $model->prepare("SELECT * FROM anuncio WHERE id = $idAnuncio");
+    $stmt_anuncio->execute();
+    $anuncio = $stmt_anuncio->fetch();
+
+    //obtenemos datos que necesitamos para la insecion
+    $stmt_conductor = $model->prepare("SELECT id FROM conductor WHERE id_usuario = :idUsuario");
+    $stmt_conductor ->bindParam(":idUsuario", $anuncio['id_usuario']);
+    $stmt_conductor->execute();
+    $idConductor = $stmt_conductor->fetch();
+    
+    
+    $stmt_pasajero = $model->prepare("SELECT id FROM pasajero WHERE id_usuario = " . $anuncio['id_usuario']);
+    $stmt_pasajero->execute();
+    $idPasajero =  $stmt_pasajero->fetch();
+
+    $model->beginTransaction();
+    try {
+        $stmt_insert = $model->prepare("INSERT INTO acuerdo VALUES (NULL, :id_conductor, :id_pasajero, :id_anuncio, CURRENT_DATE(), :periodo, :precio)");
+        $stmt_insert->bindParam(":id_conductor", $idConductor[0]);
+        $stmt_insert->bindParam(":id_pasajero", $idPasajero[0]);
+        $stmt_insert->bindParam(":id_anuncio", $idAnuncio);
+        $stmt_insert->bindParam(":periodo", $anuncio['periodo']);
+        $stmt_insert->bindParam(":precio", $anuncio['precio']);
+
+        $stmt_insert->execute();
+
+        $stmt_update = $model->prepare("UPDATE anuncio SET plazas = :plazas WHERE id = $idAnuncio");
+        $plazas = $anuncio['plazas'];
+        $plazas--;
+        $stmt_update->bindParam(":plazas", $plazas);
+
+        $stmt_update->execute();
+        $model->commit();
+        
+        return "Plaza reservada correctamente";
+        
+    } catch (Exception $ex) {
+        $model->rollBack();
+        return $ex->getMessage();
+    }
 }

@@ -11,35 +11,31 @@
  *
  * @author Enrique de las Cueva
  */
-
 require_once './conductorModel.php';
 
 class ConductorController {
+
     //put your code here
-    
-    public function recibeDatos($proceso, $argumentos){
-        
-        switch($proceso){
-            case 'misdatos':
-                $html = self::cargaMisdatos();
+
+    public function recibeDatos($proceso, $argumentos) {
+
+        switch ($proceso) {
+            case 'misacuerdos':
+                $html = self::cargaMisacuerdos();
                 return $html;
-                
+
             case 'misanuncios':
-                
+
                 $html = self::cargaTablaAnuncios();
-                
+
                 return $html;
             case 'editaAnuncio':
                 $html = self::editarAnuncio($argumentos);
                 return $html;
             default:
-                
         }
-        
     }
-    
-    
-    
+
     /**
      * FUNCION: cargaMisdatos
      * 
@@ -47,15 +43,16 @@ class ConductorController {
      * 
      * OUTPUTS: -
      * 
-     * DESCRIPCION: Hace peticiones a la bbdd para obtener todos los datos sobre el conductor
+     * DESCRIPCION: Muestra un resumen de los acuerdos (Los anuncios + quienes están apuntados
      * 
      * NOTAS: ESPECIFICO PARA UN UNICO USUARIO
      */
-    function cargaMisdatos(){
+    function cargaMisacuerdos() {
+        
+        $con = new ConductorModel();
         
     }
-    
-    
+
     /**
      * FUNCION: cargaTablaAnuncio
      * 
@@ -71,11 +68,11 @@ class ConductorController {
      */
     function cargaTablaAnuncios() {
         $con = new ConductorModel();
-        
-        $cabecera = ['Usuario', 'Punto de salida', 'Destino', 'Centro de estudios', 'Horario', 'Periodo', 'ID'];
-        $contenido = $con ->buscaAnuncios();
 
-        return self::generaTabla($cabecera, $contenido);  
+        $cabecera = ['Usuario', 'Punto de salida', 'Destino', 'Centro de estudios', 'Horario', 'Periodo', 'ID'];
+        $contenido = $con->buscaAnuncios();
+
+        return self::generaTabla($cabecera, $contenido);
     }
 
     /**
@@ -90,32 +87,29 @@ class ConductorController {
      * NOTAS:
      */
     function generaTabla($cabecera, $contenido) {
-            $salida="<table class='table table-hover'>
+        $salida = "<table class='table table-hover'>
             <thead>
                 <tr>";
-                    foreach ($cabecera as $value) {
-                        $salida.= "<th>$value</th>";
-                    }
-                $salida.="</tr>
+        foreach ($cabecera as $value) {
+            $salida .= "<th>$value</th>";
+        }
+        $salida .= "</tr>
             </thead>
             <tbody>";
-                foreach ($contenido as $value) {
-                    $salida .="<tr id='".$value[count($value)-1]."'>";
-                    foreach ($value as $key => $value2){
-                        $salida.= "<td id='".$value[count($value)-1]."_".$key."'>".ucfirst($value2)."</td>";
-                    }
-                    
-                    $salida .="</tr>";
-                        
-                    }
-        
-                $salida .="
+        foreach ($contenido as $value) {
+            $salida .= "<tr id='" . $value[count($value) - 1] . "'>";
+            foreach ($value as $key => $value2) {
+                $salida .= "<td id='" . $value[count($value) - 1] . "_" . $key . "'>" . ucfirst($value2) . "</td>";
+            }
+
+            $salida .= "</tr>";
+        }
+
+        $salida .= "
             </tbody>
         </table>";
-        
+
         return $salida;
     }
- 
 
-    
 }

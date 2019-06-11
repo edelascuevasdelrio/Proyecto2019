@@ -43,7 +43,7 @@ require_once './conductorController.php';
                                     <span class="caret"></span></a>
                                 <ul class="dropdown-menu">
                                     <li><a href="conductor.php?sec=misanuncios">Mis anuncios</a></li>
-                                    <li><a href="conductor.php?sec=misdatos">Mis datos</a></li>
+                                    <li><a href="conductor.php?sec=misacuerdos">Acuerdos</a></li>
                                 </ul>
                             </li>
                             <li><a href="../principal/princi.php">LogOUT</a></li>
@@ -60,8 +60,7 @@ require_once './conductorController.php';
         
         <section>
             <div class='container' id="cuerpo">
-                <h2 class="text-center">Mis viajes publicados</h2>
-                <h4 class="text-center">Aquí podrás editar los viajes que hayas publicado anteriormente</h4>
+                
                 <?php
      
                 $controller = new ConductorController();
@@ -69,10 +68,15 @@ require_once './conductorController.php';
 
                 if (isset($_GET['sec'])) {
                     if ($_GET['sec'] == 'misanuncios') {
+                        echo '<h2 class="text-center">Mis viajes publicados</h2>
+                        <h4 class="text-center">Aquí podrás editar los viajes que hayas publicado anteriormente</h4>';
                         echo $controller->recibeDatos('misanuncios', $argumentos);
                     }
-                    if ($_GET['sec'] == 'misdatos') {
-                        echo $controller->recibeDatos('misdatos', $argumentos);
+                    if ($_GET['sec'] == 'misacuerdos') {
+                        echo '<h2 class="text-center">Acuerdos</h2>
+                        <h4 class="text-center">Aquí podrás ver quienes se han apuntado a tus anuncios</h4>';
+                        echo $controller->recibeDatos('misacuerdos', $argumentos);
+                        
                     }
                 }
 
@@ -80,8 +84,9 @@ require_once './conductorController.php';
                 ?>
             </div>
         </section>
+        
 
 
-        <a href="../pasajero/pasajero.php">Volver</a>
+        
     </body>
 </html>
