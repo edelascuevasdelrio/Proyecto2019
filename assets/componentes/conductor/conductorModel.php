@@ -253,30 +253,51 @@ class conductorModel {
         $stmt_idAnuncios->execute();
 
         $idAnuncios = $stmt_idAnuncios->fetch();
-        foreach ($idAnuncios as $value) {
+        while ($idAnuncios != null) {
 
             //2º Por cada anuncio, hacemos una consulta de los apuntados a ese anuncio
-                //2-1 Datos del anuncio
-            $stmt_Anuncio= $media->prepare("SELECT * FROM anuncio WHERE id = '$value'");
-            $stmt_Anuncio ->execute();
-            $anuncio = $stmt_Anuncio -> fetch()[0];
-                //2-2 Nombres de salida y de destino
-            $stmt_localidad = $con->prepare("SELECT nombre FROM localidad WHERE id = :id");
+            //2-1 Datos del anuncio
+            $stmt_Anuncio = $media->prepare("SELECT * FROM anuncio WHERE id = :id");
+            $stmt_Anuncio->bindParam(":id", $idAnuncios[0]);
+            $stmt_Anuncio->execute();
+            $anuncio = $stmt_Anuncio->fetch();
+
+
+            //2-1-1 Nombres de salida, de destino y periodo
+            $stmt_localidad = $media->prepare("SELECT nombre FROM localidad WHERE id = :id");
             $stmt_localidad->bindParam(":id", $anuncio['salida']);
             $stmt_localidad->execute();
             $salida = $stmt_localidad->fetch()[0];
 
             $stmt_localidad->bindParam(":id", $anuncio['destino']);
             $stmt_localidad->execute();
-            $destino = $stmt_localidad->fetch();
-                //2-3 El usuario
-                //TENEMOS EL ID DEL PASAJERO, QUE SE ASOCIA CON EL DE UN USUARIO --> HAY QUE HACER ESA SELECT PARA SACAR EL NOMBRE DEL USUARIO
-            
-   
-            
-            //3ºConstruimos el HTML
-            $html .= "<h2>$salida - $destino (".$anuncio['periodo'].")";
-            
+            $destino = $stmt_localidad->fetch()[0];
+
+
+
+            //print_r($anuncio);
+            $html .= "<h2>$salida - $destino (";
+            $html .= ucfirst($anuncio['periodo']) . ")</h2><hr>";
+
+            //2-2 Usuarios apuntados en ese anuncio
+            $stmt_idsPasajero = $media->prepare("SELECT id_pasajero FROM acuerdo WHERE id_anuncio = $idAnuncios[0]");
+            $stmt_idsPasajero->execute();
+
+            $id_pasajero = $stmt_idsPasajero->fetch();
+
+            $html .= "<ul>";
+            while ($id_pasajero != null) {
+                $stmt_username = $media->prepare("SELECT user, nombre, apellidos FROM usuario u, persona p WHERE u.id = p.id_usuario AND u.id = $id_pasajero[0]");
+                $stmt_username->execute();
+                $usuario = $stmt_username->fetch();
+                
+                $html .= "<li><b>Username:</b> " . $usuario[0] . " <b>Nombre y apellidos:</b> " . $usuario[1] . " " . $usuario[2] ."</li>";
+                $id_pasajero = $stmt_idsPasajero->fetch();
+            }
+            $html .= "</ul>";
+
+
+            $idAnuncios = $stmt_idAnuncios->fetch();
         }
         return $html;
     }

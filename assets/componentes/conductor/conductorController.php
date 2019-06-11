@@ -51,6 +51,8 @@ class ConductorController {
         
         $con = new ConductorModel();
         
+        $html =$con->misAcuerdos();
+        return $html;
     }
 
     /**
