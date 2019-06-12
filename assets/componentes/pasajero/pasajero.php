@@ -49,7 +49,7 @@ if (isset($_SESSION['usuario'])) {
                         <a class="navbar-brand" href="./pasajero.php">Home</a>
                     </div>
                     <ul class="nav navbar-nav mr-auto">
-                        
+                        <li><a href="../principal/princi.php">LogOUT</a></li>
                         
                         <?php
                        
@@ -61,7 +61,10 @@ if (isset($_SESSION['usuario'])) {
                                 <li><a href='../conductor/conductor.php?sec=misanuncios'>Mis anuncios</a></li>
                                 <li><a href='../conductor/conductor.php?sec=misacuerdos'>Acuerdos</a></li>
                             </ul>
-                        </li>";
+                        </li>
+                        <li id='addAnuncio'><a href='#' data-toggle='modal' data-target='#añadir'>Publicar anuncio simple</a></li>
+                        ";
+                            
                         }
                         
                         
@@ -71,8 +74,8 @@ if (isset($_SESSION['usuario'])) {
                         
                         
                         
-                        <li><a href="../principal/princi.php">LogOUT</a></li>
-                        <li id='addAnuncio'><a href='#' data-toggle='modal' data-target='#añadir'>Publicar anuncio simple</a></li>
+                        
+                        
                     </ul>
 
                 </div>
@@ -135,21 +138,6 @@ if (isset($_SESSION['usuario'])) {
                                 <option value='cuatrimestral'>Cuatrimestral</option>
                             </select>
                         </div>
-<!--                        <div class="form-group">
-                            <label for='plazas' class='form-label'>Plazas </label>
-                            <select id='plazas' name='plazas' class='form-control'>
-                                //<?php
-//                                    for ($index = 1; $index < 10; $index++) {
-//                                        echo "<option value='$index'>$index</option>";
-//                                    }
-//                                ?>
-                            </select>
-                        </div>-->
-<!--                        <div class="form-group">
-                            <label for='precio' class='form-label'>Precio / persona </label>
-                            <input type="text" id='presona' name='periodo' class='form-control'>
-                                
-                        </div>-->
 
                     </div>
                     <div class='modal-footer'>
