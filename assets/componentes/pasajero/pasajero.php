@@ -50,14 +50,27 @@ if (isset($_SESSION['usuario'])) {
                     </div>
                     <ul class="nav navbar-nav mr-auto">
                         
-                        <li class="dropdown">
-                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Conductor
-                                <span class="caret"></span></a>
-                            <ul class="dropdown-menu">
-                                <li><a href="../conductor/conductor.php?sec=misanuncios">Mis anuncios</a></li>
-                                <li><a href="../conductor/conductor.php?sec=misdatos">Mis datos</a></li>
+                        
+                        <?php
+                       
+                        if($controller->recibeDatos("isConductor", $argumentos) == '1'){
+                            echo "<li class='dropdown'>
+                            <a class='dropdown-toggle' data-toggle='dropdown' href='#'>Conductor
+                                <span class='caret'></span></a>
+                            <ul class='dropdown-menu'>
+                                <li><a href='../conductor/conductor.php?sec=misanuncios'>Mis anuncios</a></li>
+                                <li><a href='../conductor/conductor.php?sec=misacuerdos'>Acuerdos</a></li>
                             </ul>
-                        </li>
+                        </li>";
+                        }
+                        
+                        
+                        ?>
+                        
+                        
+                        
+                        
+                        
                         <li><a href="../principal/princi.php">LogOUT</a></li>
                         <li id='addAnuncio'><a href='#' data-toggle='modal' data-target='#añadir'>Publicar anuncio simple</a></li>
                     </ul>

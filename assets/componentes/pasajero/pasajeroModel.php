@@ -105,6 +105,28 @@ class PasajeroModel {
     }
     
     /**
+     * FUNCION:isConductor
+     * 
+     * INPUTS: -
+     * 
+     * OUTPUTS: $salida (boolean)
+     * 
+     * DESCRIPCION: Comprueba si tiene rol de conductor
+     * 
+     * NOTAS:
+     */
+    
+    function isConductor(){
+        $con = self::conectar();
+        $stmt_rol = $con->prepare("SELECT conductor FROM rol WHERE id_usuario = :id");
+        $stmt_rol->bindParam(":id", $_SESSION['idUsuario']);
+        $stmt_rol->execute();
+        
+        $valor = $stmt_rol->fetch()[0];
+        return $valor;
+    }
+    
+    /**
      * FUNCION: buscaAnuncios
      * 
      * INPUTS: -

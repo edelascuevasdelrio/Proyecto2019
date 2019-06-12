@@ -38,7 +38,9 @@ class PasajeroController {
             case 'cargaHasta':
                 $options = $con ->localidadesCentros();
                 return $options;
-                
+            case 'isConductor':
+                $valor = $con ->isConductor();
+                return $valor;
         }
     }
 
