@@ -287,11 +287,11 @@ class conductorModel {
 
             $html .= "<ul>";
             while ($id_pasajero != null) {
-                $stmt_username = $media->prepare("SELECT user, nombre, apellidos FROM usuario u, persona p WHERE u.id = p.id_usuario AND u.id = $id_pasajero[0]");
+                $stmt_username = $media->prepare("SELECT user, nombre, apellidos FROM usuario u, persona p, pasajero pa WHERE u.id = p.id_usuario AND pa.id_usuario = u.ID AND pa.id = $id_pasajero[0]");
                 $stmt_username->execute();
                 $usuario = $stmt_username->fetch();
                 
-                $html .= "<li><b>Username:</b> " . $usuario[0] . " <b>Nombre y apellidos:</b> " . $usuario[1] . " " . $usuario[2] ."</li>";
+                $html .= "<li><b>Username:</b> " . $usuario[0] . " <br><b>Nombre y apellidos:</b> " . $usuario[1] . " " . $usuario[2] ."</li><br>";
                 $id_pasajero = $stmt_idsPasajero->fetch();
             }
             $html .= "</ul>";

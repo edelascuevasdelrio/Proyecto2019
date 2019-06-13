@@ -86,7 +86,7 @@ class PasajeroModel {
      * 
      * OUTPUTS: $idUsuario (int)
      * 
-     * DESCRIPCION: Sube a la sesion el ID del usuario, en funcion de su username.
+     * DESCRIPCION: Sube a la sesion el ID de Conductor, en funcion de su ID.
      * 
      * NOTAS:
      */
@@ -101,6 +101,31 @@ class PasajeroModel {
 //        echo $idUsuario; //Aquí si se muestra
         
         return $idConductor;
+        
+    }
+    
+    /**
+     * FUNCION:pasajeroAsession
+     * 
+     * INPUTS: -
+     * 
+     * OUTPUTS: $idUsuario (int)
+     * 
+     * DESCRIPCION: Sube a la sesion el ID de pasajero, en funcion de su ID de usuario.
+     * 
+     * NOTAS:
+     */
+    function pasajeroAsession($usuario){
+        $con = self::conectar();
+        //obtenemos el id del usuario segun su username
+        $stmt_idPasajero = $con ->prepare("SELECT id FROM pasajero WHERE id_usuario = '$usuario'");
+        $stmt_idPasajero ->execute();
+        $idPasajero = $stmt_idPasajero->fetch()[0];
+        
+        
+//        echo $idUsuario; //Aquí si se muestra
+        
+        return $idPasajero;
         
     }
     

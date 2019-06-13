@@ -76,7 +76,8 @@ require_once './conductorController.php';
                         echo '<h2 class="text-center">Acuerdos</h2>
                         <h4 class="text-center">Aquí podrás ver quienes se han apuntado a tus anuncios</h4>';
                         echo $controller->recibeDatos('misacuerdos', $argumentos);
-                        
+                        //$alert = $controller->recibeDatos('misacuerdos', $argumentos);
+                        //echo "<script>alert('$alert');</script>";
                     }
                 }
 
