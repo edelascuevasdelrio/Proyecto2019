@@ -7,7 +7,7 @@
  */
 
 require_once '../pasajeroModel.php';
-
+session_start();
 
 
 if (isset($_POST['proceso'])) {
@@ -239,15 +239,15 @@ function reservaPlaza($idAnuncio) {
     $idConductor = $stmt_conductor->fetch();
     
     
-    $stmt_pasajero = $model->prepare("SELECT id FROM pasajero WHERE id_usuario = " . $anuncio['id_usuario']);
-    $stmt_pasajero->execute();
-    $idPasajero =  $stmt_pasajero->fetch();
+//    $stmt_pasajero = $model->prepare("SELECT id FROM pasajero WHERE id_usuario = " . $_SESSION['idPasajero']);
+//    $stmt_pasajero->execute();
+//    $idPasajero =  $stmt_pasajero->fetch();
 
     $model->beginTransaction();
     try {
         $stmt_insert = $model->prepare("INSERT INTO acuerdo VALUES (NULL, :id_conductor, :id_pasajero, :id_anuncio, CURRENT_DATE(), :periodo, :precio)");
         $stmt_insert->bindParam(":id_conductor", $idConductor[0]);
-        $stmt_insert->bindParam(":id_pasajero", $idPasajero[0]);
+        $stmt_insert->bindParam(":id_pasajero", $_SESSION['idPasajero']);
         $stmt_insert->bindParam(":id_anuncio", $idAnuncio);
         $stmt_insert->bindParam(":periodo", $anuncio['periodo']);
         $stmt_insert->bindParam(":precio", $anuncio['precio']);

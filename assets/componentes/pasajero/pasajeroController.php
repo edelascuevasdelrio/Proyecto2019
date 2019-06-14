@@ -19,7 +19,7 @@ class PasajeroController {
 
     public function recibeDatos($proceso, $argumentos) {
         $con = new PasajeroModel();
-        
+
         switch ($proceso) {
             case 'inicio':
                 $html = self::cargaTablaAnuncios();
@@ -30,16 +30,19 @@ class PasajeroController {
             case 'idConductor':
                 $id = $con->conductorAsession($argumentos);
                 return $id;
-                
+            case 'idPasajero':
+                $id = $con->pasajeroAsession($argumentos);
+                return $id;
+
             case 'cargaDesde':
-                $options = $con ->localidadesUsuarios() ;
+                $options = $con->localidadesUsuarios();
                 return $options;
-                
+
             case 'cargaHasta':
-                $options = $con ->localidadesCentros();
+                $options = $con->localidadesCentros();
                 return $options;
             case 'isConductor':
-                $valor = $con ->isConductor();
+                $valor = $con->isConductor();
                 return $valor;
         }
     }
@@ -59,11 +62,11 @@ class PasajeroController {
      */
     function cargaTablaAnuncios() {
         $con = new PasajeroModel();
-        
-        $cabecera = ['Usuario', 'Punto de salida', 'Destino', 'Centro de estudios', 'Horario', 'Periodo', 'Plazas disponibles'];
-        $contenido = $con ->buscaAnuncios();
 
-        return self::generaTabla($cabecera, $contenido);  
+        $cabecera = ['Usuario', 'Punto de salida', 'Destino', 'Centro de estudios', 'Horario', 'Periodo', 'Plazas disponibles'];
+        $contenido = $con->buscaAnuncios();
+
+        return self::generaTabla($cabecera, $contenido);
     }
 
     /**
@@ -78,30 +81,29 @@ class PasajeroController {
      * NOTAS:
      */
     function generaTabla($cabecera, $contenido) {
-            $salida="<table class='table table-hover'>
+        $salida = "<table class='table table-hover'>
             <thead>
                 <tr>";
-                    foreach ($cabecera as $value) {
-                        $salida.= "<th id='cabecera" . $value ."'>$value</th>";
-                    }
-                $salida.="</tr>
+        foreach ($cabecera as $value) {
+            $salida .= "<th id='cabecera" . $value . "'>$value</th>";
+        }
+        $salida .= "</tr>
             </thead>
             <tbody>";
-                foreach ($contenido as $value) {
-                    $salida .="<tr id='".$value[count($value)-1]."'>";
-                    foreach ($value as $key => $value2){
-                        $salida.= "<td id='".$value[count($value)-1]."_".$key."'>".ucfirst($value2)."</td>";
-                    }
-                    
-                    $salida .="</tr>";
-                        
-                    }
-        
-                $salida .="
+        foreach ($contenido as $value) {
+            $salida .= "<tr id='" . $value[count($value) - 1] . "'>";
+            foreach ($value as $key => $value2) {
+                $salida .= "<td id='" . $value[count($value) - 1] . "_" . $key . "'>" . ucfirst($value2) . "</td>";
+            }
+
+            $salida .= "</tr>";
+        }
+
+        $salida .= "
             </tbody>
         </table>";
-        
-        
+
+
         return $salida;
     }
 
