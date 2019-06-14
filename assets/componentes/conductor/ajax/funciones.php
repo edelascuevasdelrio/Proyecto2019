@@ -413,7 +413,7 @@ function nuevoAnuncio() {
 
 
     $html = "<div class='container'>
-            <h1>Editar anuncio</h1>
+            <h1>Añadir anuncio</h1>
 
             <div class='form-group'>
                 <label>Salida</label>
@@ -467,7 +467,7 @@ function nuevoAnuncio() {
                 
             </div>
             
-            <button id='btnEditar' class='btn btn-success'>Editar</button>
+            <button id='btnEditar' class='btn btn-success'>Guardar</button>
             <button id='btnCancelar' class='btn btn-danger'>Cancelar</button>
         </div>";
 
