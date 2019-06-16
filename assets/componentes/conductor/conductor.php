@@ -47,7 +47,7 @@ require_once './conductorController.php';
                                 </ul>
                             </li>
                             <li><a href="../principal/princi.php">LogOUT</a></li>
-                            
+                            <li><a href="../miespacio/miespacio.php">Mi espacio</a></li>
                         </ul>
 
                     </div>

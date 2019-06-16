@@ -72,7 +72,7 @@ if (isset($_SESSION['usuario'])) {
                         
                         ?>
                         
-                        
+                        <li><a href="../miespacio/miespacio.php">Mi espacio</a></li>
                         
                         
                         

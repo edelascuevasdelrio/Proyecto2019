@@ -9,6 +9,13 @@ and open the template in the editor.
 */
 
 
+#cabecera{
+    background-color: lightblue;
+    
+    padding: 10px;
+    margin-bottom: 1%;
+}
+
 .login{
     background-color: #6699cc;
     
