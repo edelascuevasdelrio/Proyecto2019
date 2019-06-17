@@ -162,6 +162,7 @@ $(document).ready(init);
  */
 function init() {
     //Asignamos los eventos a los distintos componentes
+    jQuery('#volver').click(volver);
     jQuery('#dni').blur(validaFormatoDNI);
     jQuery('#telefono').blur(validaTelefono);
     jQuery('#nombre').blur(validarNombre);
@@ -195,11 +196,27 @@ function init() {
     jQuery('#verPass').mousedown(verPass);
     jQuery('#verPass').mouseup(ocultarPass);
 
+    
     revisaFlags();
 
     todoComprobadoR_uno();
 }
 
+/**
+ * FUNCION: volver()
+ * 
+ * INPUTS: -
+ * 
+ * OUTPUTS: -
+ * 
+ * DESCRIPCION: Vuelve a la página principal
+ * 
+ * NOTAS: 
+ */
+
+function volver(){
+    jQuery(location).attr("href", "../principal/princi.php");
+}
 /**
  * FUNCION: validaDNI
  * 

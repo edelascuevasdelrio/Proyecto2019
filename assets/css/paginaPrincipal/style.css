@@ -10,12 +10,47 @@ and open the template in the editor.
 
 
 #cabecera{
-    background-color: lightblue;
-    
+    background-color: #00e5e5;
+    font-family: 'Arvo', serif;
+    font-size: 1.09em !important;
     padding: 10px;
     margin-bottom: 1%;
 }
 
+.salto{
+    margin-bottom: 1%;
+}
+
+#cuerpo{
+    font-family: 'Roboto', sans-serif;
+    font-size: 18px !important;
+}
+
+#cabecera h1{
+    font-family: 'Permanent Marker', cursive;
+}
+
+.fl-left{
+    float: left;
+}
+
+.form-control{
+       width: 90%; 
+    }
+    
+.text-center{
+     margin-bottom: 2%;
+}
+
+.btn-success{
+    border: 1px solid #005b5b;
+    background-color: #32cece;
+}
+
+.btn-success:hover{
+    border: 1px solid #005b5b;
+    background-color: #00a0a0;
+}
 .login{
     background-color: #6699cc;
     
@@ -28,15 +63,18 @@ and open the template in the editor.
     
 }
 
-.cambiar1{
+.divs{
     border: 1px solid black;
-    padding: 5px;
-    border-radius: 5px; 
+    border-radius: 15px;
+    padding: 0px 10px;
+    margin-right: 4%;
 }
 
-.fl-left{
-    float: left;
+.interior{
+    margin: 0px 10px;
 }
+
+
 
 
 #registro{
@@ -48,10 +86,6 @@ and open the template in the editor.
     margin: 1%;
 }
 
-#cabecera{
-    margin: 2% 0%;
-    margin-top:1%;
-}
 #usuario, #password{
     
 }

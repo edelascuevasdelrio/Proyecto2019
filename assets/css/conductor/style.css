@@ -7,11 +7,27 @@ and open the template in the editor.
     Created on : 27-may-2019, 11:30:37
     Author     : Enrique de las Cueva
 */
+
+
 #cabecera{
-    background-color: lightblue;
-    
+    background-color: #00e5e5;
+    font-family: 'Arvo', serif;
+    font-size: 1.09em !important;
     padding: 10px;
     margin-bottom: 1%;
+}
+
+.salto{
+    margin-bottom: 1%;
+}
+
+#cuerpo{
+    font-family: 'Roboto', sans-serif;
+    font-size: 18px !important;
+}
+
+#cabecera h1{
+    font-family: 'Permanent Marker', cursive;
 }
 
 .fl-left{
@@ -22,6 +38,20 @@ and open the template in the editor.
        width: 90%; 
     }
     
+.text-center{
+     margin-bottom: 2%;
+}
+
+.btn-success{
+    border: 1px solid #005b5b;
+    background-color: #32cece;
+}
+
+.btn-success:hover{
+    border: 1px solid #005b5b;
+    background-color: #00a0a0;
+}
+
 #conducesi{
     margin-left: 10px;
 }
@@ -39,3 +69,14 @@ label{
 .errorLabel{
     color: red;
 }
+
+.panel-info {
+   border-color: #005b5b !important;
+}
+
+.panel-heading{
+    color: #007272 !important;
+    background-color: #b2f7f7 !important;
+    border-color: #005b5b !important;
+}
+

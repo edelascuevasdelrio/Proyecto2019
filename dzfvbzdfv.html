@@ -10,6 +10,19 @@ and open the template in the editor.
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="assets/librerias/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+        <style>
+            .datos{
+                border: 1px solid black;
+                border-radius: 15px;
+                padding: 0px 15px;
+                margin-bottom: 10px;
+            }
+        
+        
+        
+        
+        
+        </style>
     </head>
     <body>
         <header>
@@ -49,12 +62,93 @@ and open the template in the editor.
 
 
         <div class="container">
-            <h1>Albacete - Santander</h1>
+            <div class="datos">
+                <h3>Datos personales</h3>
+                <div class="form-group">
+                    <label class="form-label">Nombre</label>
+                    <input type="text" id="nombre" class="form-control" value="ESTO CAMBIA SEGUN EL USUARIO, PILLALO DE LA BBDD">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Apellidos</label>
+                    <input type="text" id="apellidos" class="form-control" value="ESTO CAMBIA SEGUN EL USUARIO, PILLALO DE LA BBDD">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">E-mail</label>
+                    <input type="text" id="email" class="form-control" value="ESTO CAMBIA SEGUN EL USUARIO, PILLALO DE LA BBDD">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Telefono</label>
+                    <input type="text" id="telefono" class="form-control" value="ESTO CAMBIA SEGUN EL USUARIO, PILLALO DE LA BBDD">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Horario</label>
+                    <select id="horario" class="form-control">
+                        <option value='diurno'>Diurno</option>
+                        <option value='nocturno'>Nocturno</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Saludo</label>
+                    <input type="text" id="telefono" class="form-control" value="ESTO CAMBIA SEGUN EL USUARIO, PILLALO DE LA BBDD">
+                </div>
+            </div>
+         
+            <div class="datos">
+                <h3>Pasajero</h3>
+                <div class="form-group">
+                    <label class="form-label">Origen</label>
+                    <select id="origen" class="form-control">
+                        <option>ESTOS LOS PILLAS DE LOCALIDADES; Y EL VALUE IGUAL QUE EL NOMBRE</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Centro de estudios</label>
+                    <select id="origen" class="form-control">
+                        <option>ESTOS LOS PILLAS DE centros; Y EL VALUE es un ID</option>
+                    </select>
+                </div>
+            </div>
+            <div class="datos">
+                <h3>Conductor (SOLO se muestra si los es)</h3>
+                <div class="form-group">
+                    <label class="form-label">Tipo de permiso</label>
+                    <select id="origen" class="form-control">
+                        <option>ESTOS mira a ver como están en el registro </option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Tipo de vehiculo</label>
+                    <select id="origen" class="form-control">
+                        <option>ESTOS mira a ver como están en el registro</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Matricula</label>
+                    <input type="text" id="matricula" class="form-control" value="ESTO CAMBIA SEGUN EL USUARIO, PILLALO DE LA BBDD">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Descripción</label>
+                    <input type="text" id="descripción" class="form-control" value="ESTO CAMBIA SEGUN EL USUARIO, PILLALO DE LA BBDD">
+                </div>
+            </div>
             
-            <ul>
-                <li>Paquito (Semanal) </li>
-            </ul>
+            <button id="Guardar" class="btn btn-success">Guardar cambios</button>
+            
+            
         </div>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+      
 
     </body>
 </html>

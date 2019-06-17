@@ -59,7 +59,9 @@ class RegistroController {
         if (isset($_POST['destino'])) {
             $_SESSION['registro_destino'] = $_POST['destino'];
         }
-
+        
+    
+        
         //Cuarta sección
         if(isset($_POST['conduce'])){
             $_SESSION['conduce'] = $_POST['conduce'];
@@ -262,9 +264,9 @@ class RegistroController {
                                             <label for='permiso' class='control-label'>Permiso de conducir</label>
                                             <select class='form-control' name='permiso'>
                                                 <option value='B'>B</option>
-                                                <option value='B'>A1</option>
-                                                <option value='B'>A2</option>
-                                                <option value='B'>A</option>
+                                                <option value='A1'>A1</option>
+                                                <option value='A2'>A2</option>
+                                                <option value='A'>A</option>
                                             </select>
                                         </div>
                                         <div class='form-group'>

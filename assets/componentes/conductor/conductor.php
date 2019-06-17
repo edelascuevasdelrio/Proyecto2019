@@ -17,6 +17,10 @@ require_once './conductorController.php';
         <!-- Booststrap -->
         <link href="../../librerias/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
         <script src="../../librerias/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+        <!-- Fuentes -->
+        <link href="https://fonts.googleapis.com/css?family=Permanent+Marker&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Arvo&display=swap" rel="stylesheet">
         <!-- Propio -->
         <link href="../../css/conductor/style.css" rel="stylesheet" type="text/css"/>
         <script src="js/funciones.js" type="text/javascript"></script>
@@ -24,11 +28,11 @@ require_once './conductorController.php';
     <body>
         <header>
             <div id="cabecera" class="container-fluid">
-                <div class="row">
+                <div class="row salto">
                     <div id="titulo" class="col-md-12 col-sm-12">
                         <img id="logo" class="fl-left" src="../../img/logos/LOGO128.png">
-                        <h1>Operación esto tiene que reventar</h1>
-                        <p>Una frase con gancho irá aqui (un slogan, vaya)</p>
+                        <h1>Lift 2 school</h1>
+                        <p>Más rápido. Más comodo. Más cercano.</p>
                     </div>
                 </div>
                 <nav class="navbar navbar-inverse">
@@ -46,8 +50,9 @@ require_once './conductorController.php';
                                     <li><a href="conductor.php?sec=misacuerdos">Acuerdos</a></li>
                                 </ul>
                             </li>
-                            <li><a href="../principal/princi.php">LogOUT</a></li>
+                            
                             <li><a href="../miespacio/miespacio.php">Mi espacio</a></li>
+                            <li><a href="../principal/princi.php">LogOUT</a></li>
                         </ul>
 
                     </div>
@@ -56,13 +61,12 @@ require_once './conductorController.php';
 
 
         </header>
-        
-        
+
+
         <section>
             <div class='container' id="cuerpo">
-                
+
                 <?php
-     
                 $controller = new ConductorController();
                 $argumentos = "";
 
@@ -80,14 +84,12 @@ require_once './conductorController.php';
                         //echo "<script>alert('$alert');</script>";
                     }
                 }
-
-
                 ?>
             </div>
         </section>
-        
 
 
-        
+
+
     </body>
 </html>

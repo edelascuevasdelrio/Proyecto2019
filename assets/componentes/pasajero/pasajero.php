@@ -30,6 +30,10 @@ if (isset($_SESSION['usuario'])) {
         <!-- Booststrap -->
         <link href="../../librerias/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
         <script src="../../librerias/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+        <!-- Fuentes -->
+        <link href="https://fonts.googleapis.com/css?family=Permanent+Marker&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Arvo&display=swap" rel="stylesheet">
         <!-- Propio -->
         <link href="../../css/pasajero/styles.css" rel="stylesheet" type="text/css"/>
         <script src="js/funciones.js" type="text/javascript"></script>
@@ -38,11 +42,11 @@ if (isset($_SESSION['usuario'])) {
     </head>
     <header>
         <div id="cabecera" class="container-fluid">
-            <div class="row">
+            <div class="salto row">
                 <div id="titulo" class="col-md-12 col-sm-12">
                     <img id="logo" class="fl-left" src="../../img/logos/LOGO128.png">
-                    <h1>Operación esto tiene que reventar</h1>
-                    <p>Una frase con gancho irá aqui (un slogan, vaya)</p>
+                    <h1>Lift 2 school</h1>
+                    <p>Más rápido. Más comodo. Más cercano.</p>
                 </div>
             </div>
             <nav class="navbar navbar-inverse">
@@ -51,8 +55,7 @@ if (isset($_SESSION['usuario'])) {
                         <a class="navbar-brand" href="./pasajero.php">Home</a>
                     </div>
                     <ul class="nav navbar-nav mr-auto">
-                        <li><a href="../principal/princi.php">LogOUT</a></li>
-                        
+ 
                         <?php
                        
                         if($controller->recibeDatos("isConductor", $argumentos) == '1'){
@@ -64,6 +67,10 @@ if (isset($_SESSION['usuario'])) {
                                 <li><a href='../conductor/conductor.php?sec=misacuerdos'>Acuerdos</a></li>
                             </ul>
                         </li>
+                        <li><a href='../miespacio/miespacio.php'>Mi espacio</a></li>
+                        
+                        
+                         <li><a href='../principal/princi.php'>LogOUT</a></li>
                         <li id='addAnuncio'><a href='#' data-toggle='modal' data-target='#añadir'>Publicar anuncio simple</a></li>
                         ";
                             
@@ -71,9 +78,6 @@ if (isset($_SESSION['usuario'])) {
                         
                         
                         ?>
-                        
-                        <li><a href="../miespacio/miespacio.php">Mi espacio</a></li>
-                        
                         
                         
                         
@@ -97,11 +101,11 @@ if (isset($_SESSION['usuario'])) {
             ?>
         </div>
 
-        <div class='modal fade' id='añadir' tabindex='-1' role='dialog' aria-labelledby='Añadir localidad' aria-hidden='true'>
+        <div class='modal fade' id='añadir' tabindex='-1' role='dialog' aria-labelledby='Publicar anuncio' aria-hidden='true'>
             <div class='modal-dialog' role='document'>
                 <div class='modal-content'>
                     <div class='modal-header'>
-                        <h2 class='modal-title' >Añadir localidad</h2>
+                        <h2 class='modal-title' >Publicar anuncio</h2>
 
                     </div>
                     <div class='modal-body'>

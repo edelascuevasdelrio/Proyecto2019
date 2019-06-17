@@ -8,14 +8,53 @@ and open the template in the editor.
     Author     : Enriq
 */
 
+
 #cabecera{
-    background-color: lightblue;
-    
+    background-color: #00e5e5;
+    font-family: 'Arvo', serif;
+    font-size: 1.09em !important;
     padding: 10px;
     margin-bottom: 1%;
 }
 
+.salto{
+    margin-bottom: 1%;
+}
+
+#cuerpo{
+    font-family: 'Roboto', sans-serif;
+    font-size: 18px !important;
+}
+
+#cabecera h1{
+    font-family: 'Permanent Marker', cursive;
+}
 
 .fl-left{
     float: left;
 }
+
+.form-control{
+       width: 90%; 
+    }
+    
+.text-center{
+     margin-bottom: 2%;
+}
+
+.btn-success{
+    border: 1px solid #005b5b;
+    background-color: #32cece;
+}
+
+.btn-success:hover{
+    border: 1px solid #005b5b;
+    background-color: #00a0a0;
+}
+
+.datos{
+                border: 1px solid grey;
+                border-radius: 15px;
+                padding: 0px 15px;
+                margin-bottom: 10px;
+            }

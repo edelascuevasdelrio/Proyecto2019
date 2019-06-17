@@ -64,11 +64,11 @@ $controller->recogeDatos();
     <body>
         <header>
             <div id="cabecera" class="container-fluid">
-                <div class="row">
+                <div class="row salto">
                     <div id="titulo" class="col-md-12 col-sm-12">
                         <img id="logo" class="fl-left" src="../../img/logos/LOGO64.png">
-                        <h1>Operación esto tiene que reventar</h1>
-                        <h3> </h3>
+                        <h1>Lift 2 school</h1>
+                        <p>Más rápido. Más comodo. Más cercano.</p>
                     </div>
                 </div>
             </div>
@@ -77,21 +77,22 @@ $controller->recogeDatos();
 
 
         <section>
-            <div class="col-md-4 col-md-offset-4">
+            <div class="cuerpo col-md-4 col-md-offset-4">
                 <?php
                 //Pedimos al controlador el formulario correspondiente
                 echo $controller->recibeDatos($proceso, $argumentos)
                 ?>
+                <button id="volver" class='btn btn-success'>Volver</button>
             </div>
 
-
+            
         </section>
 
 
         <footer>
-            
-                
-            
+
+
+
         </footer>
 
 

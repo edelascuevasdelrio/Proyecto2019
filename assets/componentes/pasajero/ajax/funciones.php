@@ -116,7 +116,7 @@ function cargaDetalle($idAnuncio) {
             <div class='col-md-5 col-sm-5'>
 
                 <div class='panel panel-info'>
-                    <div class='panel-heading'>
+                    <div class='panel-heading detalle'>
                         <h2>Detalles</h2>
                     </div>
                     <div class='panel-body'>
