@@ -66,7 +66,7 @@ $controller->recogeDatos();
             <div id="cabecera" class="container-fluid">
                 <div class="row salto">
                     <div id="titulo" class="col-md-12 col-sm-12">
-                        <img id="logo" class="fl-left" src="../../img/logos/LOGO64.png">
+                        <a href="../principal/princi.php"><img id="logo" class="fl-left" src="../../img/logos/LOGO128.png"></a>
                         <h1>Lift 2 school</h1>
                         <p>Más rápido. Más comodo. Más cercano.</p>
                     </div>
